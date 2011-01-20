@@ -1,0 +1,17 @@
+nginx.main:
+    user:         www-data
+    group:        www-data
+    pid:          /var/run/nginx.pid
+
+nginx.events:
+    connections:  4096
+    use:          epoll
+    multi_accept: on
+
+nginx.sites:
+    domain.com:
+        catchall:  true
+        domain:    domain.com
+    domain2.com:
+        catchall:  false
+        domain:    domain2.com
