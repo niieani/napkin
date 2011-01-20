@@ -27,6 +27,7 @@
 - ability to set source IP/domain for 'allow' per-domain
 - SSL cert creator
 - MySQL database creation along with user or prefix user_ permission granting
+- memcached support
 - YAML storage:
 
 ./config.main.yml
