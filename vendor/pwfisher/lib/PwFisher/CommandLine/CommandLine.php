@@ -12,8 +12,7 @@ namespace PwFisher\CommandLine;
  *
  * @author              Patrick Fisher <patrick@pwfisher.com>
  * @since               August 21, 2009
- * @package             Framework
- * @subpackage          Env
+ * @url                 http://pwfisher.com/nucleus/index.php?itemid=45
  */
 class CommandLine {
 
