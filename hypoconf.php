@@ -1,43 +1,5 @@
 #!/usr/bin/env php
 <?php
-/*
-    TODO:
-- std::out generation (instead file output) as arg option
-- Insert all relative nginx data
-- Insert all PHP-FPM generation data
-- Case is LINUX, MAC, BSD - change epoll
-- Automatic recommended options for RAM/CPU (if not specified)
-- Debug option
-- Ability to quickly turn-off single website and replace with placeholder ("maintainance in progress")
-- Ability to quickly turn-off a user and all of his websites
-- Create directories (and users) for websites
-- Automatic symlinks for all websites in one directory (enables quick listing of all websites on the server)
-- Site-add wizard
-- Defaults config file (where to store all websites, in what structure)
-- Option to automatically reload nginx after applying
-- Failsafe modify (only modify a website when using "modifySite", not "modify")
-- Add option to chroot all sites by default
-- Add option to run PHP-FPM under different user or user-by-site
-- Specify output file(s) in config and use that as default (-o=filename.yml only override)
-- Multi-file output (with includes) and single-file output
-- Simple switches - CGI: PHP; CGI: Passanger; etc. (mutually exclusive, pick one)
-- ovz-web-panel integration and GUI interface
-- multiple server support
-- per-site per-location deny (like /pma deny all)
-- ability to set source IP/domain for 'allow' per-domain
-- SSL cert creator
-- MySQL database creation along with user or prefix user_ permission granting
-- memcached support
-- YAML storage:
-
-./config.main.yml
-./templates/website.yml
-./templates/website.php.yml
-./templates/website-ssl.yml
-./websites/%server_hostname%/%username%.yml
-
-*/
-
 require_once __DIR__.'/autoload.php';
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
