@@ -39,7 +39,7 @@
 require_once __DIR__.'/autoload.php';
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
-use Libs\CommandLine\CommandLine;
+use PwFisher\CommandLine\CommandLine;
 
 $cmdline = new CommandLine;
 $args = $cmdline->parseArgs($argv);
