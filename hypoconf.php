@@ -56,8 +56,7 @@ if ($argc <= 1 || in_array($argv[1], array('--help', '-help', '-h', '-?')))
 	hypoconf modifySite -o=<filename.yml> [source.yml] [siteToModify] [chainToModify] [modification]
 	hypoconf generateOne -o=<filename.yml> [source.yml]
 	hypoconf generateAll -o=<filename.yml> [path]
-
-<?
+<?php
 }
 
 if(isset($args['d']))
