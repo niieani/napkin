@@ -1,0 +1,103 @@
+hypoconf = hc (alias)
+
+hc enable site.com
+hc disable site.com
+hc enable username
+hc disable username --placeholder="Quota exceded"
+hc dis site.com,web.com --placeholder=/home/stuff/placeholderIndex/
+
+(will ask if the username has the same name as a website, you can force username recognition with: hc en !username)
+
+For adding sites:
+hc add site.com [username] [+template]
+(if username not specified using default template read from configuration file)
+
+For adding users:
+hc add !username
+(add a user, if you don't specify ! and input something without a dot hc will ask you if you're adding a user or a site)
+(if there's a unix user by the same name, hc will ask if you want to link to that user)
+
+For setting defaults:
+hc set default [chainName[.subChain]] [value]
+
+For settings in specific websites:
+hc set site.com [chainName[.subChain]] [value]
+
+For setting a template (starts with +)
+hc set +mytemplate [chainName[.subChain]] [value]
+
+hc generate site.com
+hc generate all
+(can be set to automatically regenerate the config file after set function)
+
+hc parse test.yml
+
+hc reload
+(reload and/or restart and/or flush privileges of services that need it)
+
+hc reload -n
+(will only reload nginx, if any changes were made)
+
+hc reload -n -f
+(will force a nginx reload)
+
+hc move site.com [newUsername]
+
+examples:
+hc set default template mytemplate
+hc set default port 80
+hc set default +port 81 (will add another port without removing previous)
+hc set default nginx.port 80,81
+hc set site.com php yes
+hc set default chroot yes
+hc set default nginx.favicon-fix no
+hc set default,site.com chroot,ssl yes
+hc set default,site.com +hostname site2.com
+hc set +mytemplate php.display_errors yes
+hc set site.com database somedb
+hc drop someOtherDB (will drop the db and unassign it from the config file)
+hc unset default port 81
+hc set site.com access /phpmyadmin deny=all,allow=localhost&192.168.0.1
+hc set site.com +listing /files
+hc set -r site.com +access '^/files$' deny
+
+(setting port is same as nginx.port)
+(setting php is same as php.support)
+(if a sub-setting is unique then you can use it as a setting)
+(setting a database setting will always only ADD a database to the list, to remove use dropdb)
+(unset only works if there's an array of options specified for one setting)
+(bad things, like 'drop' will ask for confirmation, unless you force -f)
+(unsetting a database will just remove permissions for the user to access it)
+
+options and their abbreviations:
+enable   = en
+disable  = dis
+add      = a
+set      = s
+rename   = ren
+generate = gen
+reload   = load
+move     = mv
+dropdb   = drop
+unset    = us
+
+params:
+--stdout  = -s
+--verbose = -v
+--debug   = -!
+--force   = -f
+
+--all    = -a (by default only what's defined in the configuration file)
+--nginx  = -n
+--php    = -p
+--unix   = -u (unix user)
+--db     = -d (mysql user)
+
+
+Depracated:
+        hypoconf add|rename -o=<filename.yml> [source.yml] [chainName] [value]
+        hypoconf modify -o=<filename.yml> [source.yml] [chainToModify] [modification]
+        hypoconf modifySite -o=<filename.yml> [source.yml] [siteToModify] [chainToModify] [modification]
+        hypoconf generateOne -o=<filename.yml> [source.yml]
+        hypoconf generateAll -o=<filename.yml> [path]
+
