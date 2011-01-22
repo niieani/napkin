@@ -47,7 +47,7 @@ examples:
 hc set default template mytemplate
 hc set default port 80
 hc set default +port 81 (will add another port without removing previous)
-hc set default nginx.port 80,81
+hc set default nginx.port 80 81
 hc set site.com php yes
 hc set default chroot yes
 hc set default nginx.favicon-fix no
@@ -55,11 +55,11 @@ hc set default,site.com chroot,ssl yes
 hc set default,site.com +hostname site2.com
 hc set +mytemplate php.display_errors yes
 hc set site.com database somedb
+hc set site.com access /phpmyadmin deny=all allow=localhost,192.168.0.1
+hc set site.com +listing /files
+hc set site.com +access '^/files$' deny
 hc drop someOtherDB (will drop the db and unassign it from the config file)
 hc unset default port 81
-hc set site.com access /phpmyadmin deny=all,allow=localhost&192.168.0.1
-hc set site.com +listing /files
-hc set -r site.com +access '^/files$' deny
 
 (setting port is same as nginx.port)
 (setting php is same as php.support)
