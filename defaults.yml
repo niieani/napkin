@@ -1,10 +1,9 @@
 nginx:
-    port:
-                  80
-                  90
-    user:         www-data
-    group:        www-data
-    pid:          /var/run/nginx.pid
+    port:           80
+    options:        false
+    user:           www-data
+    group:          www-data
+    pid:            /var/run/nginx.pid
 
 nginx.events:
     connections:  4096

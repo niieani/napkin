@@ -1,0 +1,26 @@
+nginx:
+    user:         www-data
+    group:        www-data
+    pid:          /var/masakra/nginx.pid
+    options:      default
+    events:
+       connections:  4096
+       use:          epoll
+       multi_accept: on
+    sites:
+       domain.com:
+          port:
+            1: 80
+            2: 90
+            3: 130
+            4: ssl
+          catchall:  true
+          options:   false
+          domain:    
+            1: domain.com
+            2: .other.com
+       domain2.com:
+          port:      80
+          options:   false
+          catchall:  false
+          domain:    domain2.com

@@ -3,6 +3,10 @@
 // Include the Console_CommandLine package.
 require_once 'Console/CommandLine.php';
 require_once 'Console/CommandLine/Action.php';
+require_once __DIR__.'/autoload.php';
+
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Dumper;
 
 class ActionList extends Console_CommandLine_Action
 {
