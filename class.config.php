@@ -6,7 +6,7 @@ use Symfony\Component\Yaml\Dumper;
 
 require_once('tests/sprintfn.php');
 
-class Config
+class BracketConfig
 {
     public $params;
     public $scheme;
@@ -17,7 +17,11 @@ class Config
     public function returnConfig()
     {
         $output = sprintfn($this->scheme, makeList($this->params));
-	return array('output' => rtrim($output).';', 'scope' => $this->scope, 'level' => $this->level);
+	    return array(
+            'output' => rtrim($output).';', 
+            'scope' => $this->scope, 
+            'level' => $this->level
+            );
     }
 
     public function addScheme($scheme)
@@ -32,65 +36,68 @@ class Config
 
     public function set(array $params)
     {
-	foreach($params as $setting => $value)
-	{
-		$this->params[$setting] = $value;
-		// this is currently setting too many settings than required
-		// which is not optimal, but works
-	}
+        foreach($params as $setting => $value)
+        {
+            $this->params[$setting] = $value;
+            // this is currently setting too many settings than required
+            // which is not optimal, but works
+        }
     }
 
     public function __construct($scheme = NULL, $scope = NULL, $level = NULL, array $params = NULL)
     {
-	($scheme === NULL) ? : $this->addScheme($scheme);
-	($scope === NULL) ? $this->setScope('_ROOT') : $this->setScope($scope);
-	($params === NULL) ? : $this->set($params);
-	($level === NULL) ? $this->level = 0 : $this->level = $level;
+        ($scheme === NULL) ? : $this->addScheme($scheme);
+        ($scope === NULL) ? $this->setScope('_ROOT') : $this->setScope($scope);
+        ($params === NULL) ? : $this->set($params);
+        ($level === NULL) ? $this->level = 0 : $this->level = $level;
     }
 }
 
-class Nginx extends Config
-{
-    public function returnConfig()
-    {
-    }
-}
-
-class ConfigScope
+class BracketScope
 {
     private $config = array();
 
     public function addStem(array $stem)
     {
-	$scope = $stem['scope'];
-	$output = $stem['output'];
-	if (!isset($this->config[$scope])) $this->config[$scope] = NULL; //this shouldn't happen
-	foreach(preg_split("/(\r?\n)/", $output) as $line)
-	{
-	        for ($i = 0; $i < $stem['level']; $i++)
-	        {
-	                $this->config[$scope] .= "\t";
-	        }
-		$this->config[$scope] .= $line.PHP_EOL;
-	}
+        $scope = $stem['scope'];
+        $output = $stem['output'];
+        if (!isset($this->config[$scope])) $this->config[$scope] = NULL; //this shouldn't happen
+        foreach(preg_split("/(\r?\n)/", $output) as $line)
+        {
+            for ($i = 0; $i < $stem['level']; $i++)
+            {
+                $this->config[$scope] .= "\t";
+            }
+        	$this->config[$scope] .= $line.PHP_EOL;
+        }
     }
 
     public function returnScopes()
     {
-	$file = NULL;
-	foreach($this->config as $scope => $content)
-	{
-		($scope == '_ROOT') ? ($file .= $content.PHP_EOL) : ($file .= $scope.PHP_EOL.'{'.PHP_EOL.$content.'}'.PHP_EOL);
-	}
-	return $file;
+    	$file = NULL;
+    	foreach($this->config as $scope => $content)
+    	{
+    		($scope == '_ROOT') ? ($file .= $content.PHP_EOL) : ($file .= $scope.PHP_EOL.'{'.PHP_EOL.$content.'}'.PHP_EOL);
+    	}
+    	return $file;
     }
 }
 
-$confScope = new ConfigScope;
 
-$nginx['sites']['listen'] = new Config('listen %(port)s %(options)s', 'server', 1);
-$nginx['sites']['domain'] = new Config('server_name %(domain)s', 'server', 1);
-$nginx['pid'] = new Config('pid %(pid)s');
+class NginxConfig extends BracketConfig
+{
+}
+
+class NginxScope extends BracketScope
+{
+}
+
+
+$confScope = new NginxScope;
+
+$nginx['sites']['listen'] = new NginxConfig('listen %(port)s %(options)s', 'server', 1);
+$nginx['sites']['domain'] = new NginxConfig('server_name %(domain)s', 'server', 1);
+$nginx['pid'] = new NginxConfig('pid %(pid)s');
 
 $config = YAML::load('defaults.yml');
 setAll(&$config['nginx'], &$nginx);
@@ -101,7 +108,7 @@ if(isset($argv[1]))
 	$config = YAML::load($argv[1]);
 	foreach ($config['nginx']['sites'] as $key => $site)
 	{
-		$siteScope[$key] = new ConfigScope;
+		$siteScope[$key] = new NginxScope;
 		setAll($site, $nginx['sites']);
 		addAllStems(&$nginx['sites'], $siteScope[$key]);
 	}
@@ -120,19 +127,23 @@ function setAll($data, array $appconfs)
 {
 	foreach ($appconfs as $setting)
 	{
-	        //this is dirty, fix me (so many copies of the yaml array!)
-	        if(is_object($setting))
-		$setting->set($data);
+        //this is dirty, fix me (so many copies of the yaml array!)
+        if(is_object($setting))
+            $setting->set($data);
 	}
 }
 
-function addAllStems(array $appconfs, ConfigScope $scope)
+function addAllStems(array $appconfs, $scope)
 {
+    if(is_object( $scope ))
+    {
         foreach ($appconfs as $setting)
         {
-		if(is_object($setting))
-                $scope->addStem($setting->returnConfig());
+        	if(is_object($setting))
+                    $scope->addStem($setting->returnConfig());
         }
+    }
+    else throw new Exception("scope is not an object.");
 }
 
 function getCPUs()
