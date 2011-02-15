@@ -1,19 +1,19 @@
 nginx:
-    port:           80
+  _root:
     options:        false
     user:           www-data
     group:          www-data
     pid:            /var/run/nginx.pid
+    use:            epoll
+    connections:
+       limit: 4096
+       multi: on
+    log:
+      error:
+             file:      /var/log.default.log
+             style:     moj_default
 
-nginx.events:
-    connections:  4096
-    use:          epoll
-    multi_accept: on
-
-nginx.sites:
-    domain.com:
-        catchall:  true
-        domain:    domain.com
-    domain2.com:
-        catchall:  false
-        domain:    domain2.com
+  _defaults:
+      catchall:  false
+      port:      80
+      options:   false

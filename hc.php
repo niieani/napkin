@@ -5,14 +5,17 @@ require_once 'Console/CommandLine.php';
 require_once 'Console/CommandLine/Action.php';
 require_once __DIR__.'/autoload.php';
 
-use Symfony\Component\Yaml\Yaml;
+//use Symfony\Component\Yaml\Yaml;
 //use Symfony\Component\Yaml\Dumper;
 use Tools\LogCLI;
 use Tools\StringTools;
 use Tools\Tree;
 use Tools\FileOperation;
+use Applications\Nginx;
 use ConfigStyles\BracketConfig\NginxConfig;
 use ConfigStyles\BracketConfig\NginxScope;
+
+define('HC_DIR', __DIR__);
 
 /*
 class ActionList extends Console_CommandLine_Action
@@ -48,9 +51,9 @@ $parser = new Console_CommandLine(array(
 $parser->addOption('verbose', array(
     'short_name'  => '-v',
     'long_name'   => '--verbose',
-    'action'      => 'StoreTrue',
-    'default'     => false,
-    'description' => 'turn on verbose output'
+    'action'      => 'StoreInt',
+    'default'     => 1,
+    'description' => 'set verbose level output (-1 quiet, 5 debug level)'
 ));
 
 $parser->addOption('stdout', array(
@@ -224,7 +227,9 @@ try {
     $result = $parser->parse();
     if ($result->options)
     {
-        if ($result->options['verbose'] === true) define('VERBOSE', true);
+        //if ($result->options['verbose'] === true) LogCLI::SetVerboseLevel(2);
+        LogCLI::SetVerboseLevel($result->options['verbose']);
+        //else LogCLI::SetVerboseLevel(1);
     }
     if ($result->command_name) 
     {
@@ -244,52 +249,35 @@ try {
                 break;
             
             case 'generate':
-                $confScope = new NginxScope;
+                //$confScope = new NginxScope;
+                $nginxParse = new Nginx;
                 
-                $nginx['sites']['listen'] = new NginxConfig('listen %(port)s %(options)s', 'server', 1);
-                $nginx['sites']['domain'] = new NginxConfig('server_name %(domain)s', 'server', 1);
-                $nginx['pid'] = new NginxConfig('pid %(pid)s');
-                
-                $config = YAML::load('defaults.yml');
-                NginxConfig::setAll(&$config['nginx'], &$nginx);
-                NginxScope::addAllStems(&$nginx, &$confScope);
+                //$nginxParse->ParseFromYAML('defaults.yml');
+                $files[] = 'defaults.yml';
                 
                 if($result->command->args)
                 {
+                    
                     foreach($result->command->args['file'] as $file)
                     {
-                        LogCLI::Message('Loading file: '.$file);
+                        LogCLI::Message('Loading file: '.$file, 1);
                         if (file_exists($file))
                         {
-                            $config = YAML::load($file);
-                            LogCLI::Result('OK');
+                            $files[] = $file;
+                            LogCLI::Result(LogCLI::OK);
                         } else {
-                            LogCLI::Result('FAILED');
-                            LogCLI::Message("No such file: $file", 'FATAL');
+                            LogCLI::Result(LogCLI::FAIL);
+                            LogCLI::Fatal("No such file: $file");
                         }
                         // FIX ME
-                	}
+                    }
+                    //var_dump($files);
                     
-                    if (isset($config['nginx']['sites']))
-                    {
-                        foreach ($config['nginx']['sites'] as $key => $site)
-                        {
-                        	$siteScope[$key] = new NginxScope;
-                        	NginxConfig::setAll($site, $nginx['sites']);
-                        	NginxScope::addAllStems(&$nginx['sites'], $siteScope[$key]);
-                        }
-                    }
+                    
+                    $nginxParse->ParseFromYAMLs($files);
                 }
-                
-                if (isset($siteScope))
-                {
-                    foreach ($siteScope as $scope)
-                    {
-                    	$confScope->addStem(array('scope' => 'http', 'output' => $scope->returnScopes(), 'level' => 1));
-                    }
-                }
-                
-                echo $confScope->returnScopes();
+                    
+                echo $nginxParse->ReturnConfig();
                 
                 break;
             

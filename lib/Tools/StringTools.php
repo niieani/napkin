@@ -1,6 +1,7 @@
 <?php
 
 namespace Tools;
+use \Tools\LogCLI;
 
 class StringTools
 {
@@ -9,13 +10,31 @@ class StringTools
     {
         foreach($args as $k => $list)
         {
+            //echo $list.PHP_EOL;
             if (is_array($list))
             {
-                 $args[$k] = implode($delimiter, $list);
+                $args[$k] = self::rimplode($delimiter, $list);
+                //if(is_array($args[$k])) var_dump($list);
             }
         }
         return $args;
     }
+    
+    public static function rimplode( $glue, $pieces )
+    {
+      foreach( $pieces as $r_pieces )
+      {
+        if( is_array( $r_pieces ) )
+        {
+          $retVal[] = self::rimplode( $glue, $r_pieces );
+        }
+        else
+        {
+          $retVal[] = $r_pieces;
+        }
+      }
+      return implode( $glue, $retVal );
+    } 
     
     public static function delimit($value, $delimited = ',')
     {
@@ -104,7 +123,8 @@ class StringTools
     
             // programmer did not supply a value for the named argument found in the format string
             if (! array_key_exists($arg_key, $arg_nums)) {
-                user_error("sprintfn(): Missing argument '${arg_key}'", E_USER_WARNING);
+                LogCLI::MessageResult("Not set: '${arg_key}', skipping", 5, LogCLI::INFO);
+                //user_error("sprintfn(): Missing argument '${arg_key}'", E_USER_NOTICE);
                 return false;
             }
     

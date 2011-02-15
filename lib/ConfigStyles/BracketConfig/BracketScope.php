@@ -8,17 +8,31 @@ class BracketScope
 
     public function addStem(array $stem)
     {
-        $scope = $stem['scope'];
-        $output = $stem['output'];
-        if (!isset($this->config[$scope])) $this->config[$scope] = NULL; //this shouldn't happen
-        foreach(preg_split("/(\r?\n)/", $output) as $line)
+        if(strlen($stem['output'])>0)
         {
-            for ($i = 0; $i < $stem['level']; $i++)
+            $scope = $stem['scope'];
+            $output = $stem['output'];
+            if (!isset($this->config[$scope])) $this->config[$scope] = NULL; //this shouldn't happen
+            foreach(preg_split("/(\r?\n)/", $output) as $line)
             {
-                $this->config[$scope] .= "\t";
+                for ($i = 0; $i < $stem['level']; $i++)
+                {
+                    $this->config[$scope] .= "\t";
+                }
+                $this->config[$scope] .= $line.PHP_EOL;
             }
-            $this->config[$scope] .= $line.PHP_EOL;
         }
+    }
+    
+    public function orderScopes(array $orderedScopes)
+    {
+        $ordered = array();
+        foreach ($orderedScopes as $scopeName)
+        {
+            if(isset($this->config[$scopeName])) $ordered[$scopeName] = $this->config[$scopeName];
+        }
+        //merging in case somebody forgot to list all scopes
+        $this->config = array_merge($ordered, $this->config);
     }
     
     public function returnScopes()
@@ -37,11 +51,13 @@ class BracketScope
         {
             foreach ($appconfs as $setting)
             {
+                //echo "setting: ";
+                //var_dump($setting);
                 if(is_object($setting))
                         $scope->addStem($setting->returnConfig());
             }
         }
-        else throw new Exception("scope is not an object.");
+        else throw new \Exception("scope is not an object.");
     }
     
 }

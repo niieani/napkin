@@ -8,9 +8,11 @@ $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
     'Tools'                          => __DIR__.'/lib',
     'ConfigStyles'                   => __DIR__.'/lib',
+    'Applications'                   => __DIR__.'/lib',
     'Symfony'                        => __DIR__.'/vendor/symfony/lib',
     'PwFisher'                       => __DIR__.'/vendor/pwfisher/lib',
 ));
+//'Stems'                          => __DIR__.'/stems',
 
 /*
 $loader->registerPrefixes(array(
