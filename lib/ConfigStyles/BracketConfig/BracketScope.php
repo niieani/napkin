@@ -6,9 +6,9 @@ class BracketScope
 {
     private $config = array();
 
-    public function addStem(array $stem)
+    public function addStem($stem)
     {
-        if(strlen($stem['output'])>0)
+        if(isset($stem['output']) && strlen($stem['output'])>0)
         {
             $scope = $stem['scope'];
             $output = $stem['output'];
@@ -45,7 +45,7 @@ class BracketScope
     	return $file;
     }
     
-    public static function addAllStems(array $appconfs, $scope)
+    public static function addAllStems(array $appconfs, BracketScope $scope)
     {
         if(is_object( $scope ))
         {

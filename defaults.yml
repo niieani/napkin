@@ -4,7 +4,6 @@ nginx:
     user:           www-data
     group:          www-data
     pid:            /var/run/nginx.pid
-    use:            epoll
     connections:
        limit: 4096
        multi: on

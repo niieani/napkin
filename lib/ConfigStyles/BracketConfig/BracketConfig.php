@@ -37,6 +37,7 @@ class BracketConfig
 
     public function set(array $params)
     {
+        //var_dump($params);
         foreach($params as $setting => $value)
         {
             //if(!(is_array($this->params[$setting])))

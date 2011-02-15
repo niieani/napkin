@@ -277,7 +277,8 @@ try {
                     $nginxParse->ParseFromYAMLs($files);
                 }
                     
-                echo $nginxParse->ReturnConfig();
+                LogCLI::MessageResult('Printing configuration file', 1, LogCLI::INFO);
+                echo "\n".$nginxParse->ReturnConfigFile();
                 
                 break;
             
