@@ -18,6 +18,9 @@ LogCLI::Message('Testing', LogCLI::FATAL);
 
 LogCLI::MessageResult('Testing', LogCLI::WARN);
 
+
+need to add multilevel logging (when called two times, just nest instead of erroring)
+
 */
 
 namespace Tools;
@@ -48,21 +51,26 @@ class LogCLI
     const FATAL  = 6;
     
     const COLOR_RESET="\x1b[39;49;00m";
-    const COLOR_GREEN="\x1b[32;01m";
+    const RESET="\x1b[39;49;00m";
+    const GREEN_LIGHT = "\x1b[32;01m";
     
     const STATUS_OK ="[  OK  ]"; 
     const COLOR_OK = "\x1b[33;32m";
+    const GREEN = "\x1b[33;32m";
     
     const STATUS_INFO = "[ INFO ]"; 
     const COLOR_INFO = "\x1b[36;01m";
+    const BLUE = "\x1b[36;01m";
     
     const STATUS_WARN = "[ WARN ]"; 
     const COLOR_WARN = "\x1b[33;33m";
+    const YELLOW = "\x1b[33;33m";
     
     const STATUS_FAILED = "[FAILED]";
     const COLOR_FAILED="\x1b[31;31m";
+    const RED = "\x1b[31;31m";
     
-    const STATUS_UNKNOWN = "[ ???? ]"; 
+    const STATUS_UNKNOWN = "[   >> ]"; 
     const COLOR_UNKNOWN = "";
     
     const NoTimer = false;
@@ -77,10 +85,22 @@ class LogCLI
     private static $messageSet = false;
     private static $fatal = false;
     private static $verboseLevel = 0;
+    private static $nesting = 0;
 
     public static function SetVerboseLevel($level)
     {
         self::$verboseLevel = $level;
+    }
+    
+    private static function GenerateSpaces($howMany)
+    {
+        $spacing = '';
+        
+        for($i = 0; $i < $howMany; $i++)
+        {
+            $spacing .= ' ';
+        }
+        return $spacing;
     }
 
     public static function Message($message, $level = 1, $timerOn = true)
@@ -91,8 +111,17 @@ class LogCLI
                 //throw new \Exception('Previous result not set - defaulting to unknown.'); 
                 self::DisplayResult(); 
             }
-        
-            self::DisplayMessage($message);
+            
+            /*
+            $spacing = '';
+            
+            for($i = 0; $i < self::$nesting; $i++)
+            {
+                $spacing .= "   ";
+            }
+            */
+            
+            self::DisplayMessage(self::GenerateSpaces(self::$nesting*3).$message);
             //self::$messageSet = (self::$fatal === true) ? false : true;
             self::$messageSet = true;
         
@@ -103,6 +132,7 @@ class LogCLI
             }
         }
         self::$lastVerboseLevel = $level;
+        self::$nesting++;
     }
     
     
@@ -120,20 +150,21 @@ class LogCLI
         self::$messageSet = false;
     }
     
-    public static function Fatal($message)
-    {
-        self::Error('Unrecoverable error: '.$message);
-    }
-    
     public static function Fail($message)
     {
-        self::Error('Error: '.$message);
+        self::Error('[ERROR] '.$message);
+    }
+    
+    public static function Fatal($message)
+    {
+        self::Error('[UNRECOVERABLE ERROR] '.$message);
     }
     
     public static function Result($type = false)
     {
         if (self::$messageSet === false) { 
-            if (self::$lastVerboseLevel < self::$verboseLevel) trigger_error("Message not set", E_USER_NOTICE);
+            //if (self::$lastVerboseLevel < self::$verboseLevel) 
+            //trigger_error("Message not set", E_USER_NOTICE);
             //throw new \Exception('Message not set.'); 
             self::$lastMessageLength = 0; 
         }
@@ -141,7 +172,9 @@ class LogCLI
         {
             self::DisplayResult($type);
             self::$messageSet = false;
+            //echo self::$nesting;
         }
+        self::$nesting--;
     }
     public static function MessageResult($message, $level = 1, $type = null)
     {
@@ -166,7 +199,10 @@ class LogCLI
     {
         $output = (self::$displayTime === true) ? "\x20".self::getDateTime()."\x20" : "\x20";
         $output .= $message;
-        self::$lastMessageLength = strlen($output);
+        
+        $outputNoColors = preg_replace('#\\x1b\[[0-9][0-9];.*?[0-9][0-9]m#', '', $output);
+        
+        self::$lastMessageLength = strlen($outputNoColors);
         
         if ($type === self::FATAL)
         {
@@ -210,6 +246,7 @@ class LogCLI
             self::$timerRunning = false;
         }
         $outputTimerLength = ($outputTimer) ? (strlen($outputTimer)-1) : 0;
+                
         for($i = self::$lastMessageLength+$outputTimerLength+8; $i < self::$numCols-1; $i++)
         {
             $output .= "\x20";

@@ -11,8 +11,11 @@ nginx:
       error:
              file:      /var/log.default.log
              style:     moj_default
-
-  _defaults:
+  sites:
+    _defaults:
       catchall:  false
-      port:      80
+      listen:
+          port:    80
+          ip:      127.0.0.1
+          options: false
       options:   false

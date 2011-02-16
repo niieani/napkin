@@ -13,14 +13,19 @@ nginx:
              style:     moj_styl_sznyl
     sites:
        domain.com:
-          port:
-            1: 80
-            2: 90
-            3: 130
-            4: ssl
+          listen:
+            1:
+              port: 80
+              omaga: test
+            2: 
+              port: 90
+            3: 
+              port:    130
+              options: mama
           catchall:  true
+          ssl:       true
           options:   false
-          domain:    
+          domain:
             1: domain.com
             2: .other.com
        domain2.com:

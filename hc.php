@@ -242,10 +242,31 @@ try {
             case 'set':
                 if($result->command->args)
                 {
-                    var_dump(StringTools::typeList($result->command->args['name']));
-                    var_dump(Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'),$result->command->args['values']));
+                    $nginxParse = new Nginx;
+                    
+                    $files = array();
+                    //var_dump(StringTools::typeList($result->command->args['name']));
+                    
+                    //$files[] = 'defaults.yml';
+                    
+                    foreach(StringTools::typeList($result->command->args['name']) as $range)
+                    {
+                        if ($range['exclamation']) echo '!';
+                        else $files[] = $range['text'].'.yml';
+                    }
+                    
+                    $nginxParse->ParseFromYAMLs($files);
+                    
+                    $setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'),$result->command->args['values']));
+                    //var_dump($setting);
+                    $path = $nginxParse->TraverseDevinitionTree($setting);
+                    
+                    if ($path)
+                        $nginxParse->SetConfig($path, $setting);
+                    else LogCLI::Fail('No setting by name: '.end(array_keys($setting)));
+                    
+                    $nginxParse->ReturnYAML();
                 }
-                else displayHelp('_NoArgs');
                 break;
             
             case 'generate':
@@ -260,25 +281,12 @@ try {
                     
                     foreach($result->command->args['file'] as $file)
                     {
-                        LogCLI::Message('Loading file: '.$file, 1);
-                        if (file_exists($file))
-                        {
-                            $files[] = $file;
-                            LogCLI::Result(LogCLI::OK);
-                        } else {
-                            LogCLI::Result(LogCLI::FAIL);
-                            LogCLI::Fatal("No such file: $file");
-                        }
-                        // FIX ME
+                        $files[] = $file;
                     }
-                    //var_dump($files);
-                    
-                    
                     $nginxParse->ParseFromYAMLs($files);
                 }
-                    
-                LogCLI::MessageResult('Printing configuration file', 1, LogCLI::INFO);
-                echo "\n".$nginxParse->ReturnConfigFile();
+                
+                $nginxParse->PrintFile();
                 
                 break;
             

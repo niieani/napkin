@@ -2,6 +2,9 @@
 
 namespace Tools;
 
+use \Symfony\Component\Yaml\Yaml;
+use \Symfony\Component\Yaml\Dumper;
+
 class FileOperation
 {
     public static function getAllFilesByExtension($path='.', $extension = 'yml')
@@ -19,11 +22,12 @@ class FileOperation
     	return $Files;
     }
     
-    function YAMLtoFile($array, $file="tmp.yml")
+    public static function ToYAMLFile($array, $stdout = false, $file="tmp.yml")
     {
-            $dumper = new \Symfony\Component\Yaml\Dumper();
-            $yaml = $dumper->dump($array, 3);
-            file_put_contents(__DIR__.'/'.$file, $yaml);
+            $dumper = new Dumper();
+            $yaml = $dumper->dump($array, 6);
+            if ($stdout === false) file_put_contents(__DIR__.'/'.$file, $yaml);
+            else echo PHP_EOL.$yaml;
     }
     
 }

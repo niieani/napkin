@@ -8,20 +8,44 @@ class BracketScope
 
     public function addStem($stem)
     {
-        if(isset($stem['output']) && strlen($stem['output'])>0)
+        if(isset($stem['output']))
         {
-            $scope = $stem['scope'];
-            $output = $stem['output'];
-            if (!isset($this->config[$scope])) $this->config[$scope] = NULL; //this shouldn't happen
-            foreach(preg_split("/(\r?\n)/", $output) as $line)
+            $scope = &$stem['scope'];
+            $level = &$stem['level'];
+            (isset($stem['append'])) ? $append = &$stem['append'] : $append = null;
+            
+            if(!isset($this->config[$scope])) $this->config[$scope] = '';
+            
+            if(is_array($stem['output']))
             {
-                for ($i = 0; $i < $stem['level']; $i++)
+                foreach($stem['output'] as $output)
                 {
-                    $this->config[$scope] .= "\t";
+                    $this->config[$scope] .= self::AddTabsToLevel($output.$append, $level);
                 }
-                $this->config[$scope] .= $line.PHP_EOL;
+            }
+            
+            elseif(strlen($stem['output'])>0)
+            {
+                $output = &$stem['output'];
+                //if (!isset($this->config[$scope])) $this->config[$scope] = null; //this shouldn't happen
+                
+                $this->config[$scope] .= self::AddTabsToLevel($output.$append, $level);
             }
         }
+    }
+    
+    private static function AddTabsToLevel($string, $level)
+    {
+        $output = '';
+        foreach(preg_split("/(\r?\n)/", $string) as $line)
+        {
+            for ($i = 0; $i < $level; $i++)
+            {
+                $output .= "\t";
+            }
+            $output .= $line.PHP_EOL;
+        }
+        return $output;
     }
     
     public function orderScopes(array $orderedScopes)
@@ -57,7 +81,7 @@ class BracketScope
                         $scope->addStem($setting->returnConfig());
             }
         }
-        else throw new \Exception("scope is not an object.");
+        else throw new \Exception("Scope is not an object");
     }
     
 }
