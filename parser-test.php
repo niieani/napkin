@@ -1,15 +1,20 @@
 #!/usr/bin/env php
 <?php
-require_once 'Parser/ConfigParser.php';
+//require_once 'Parser/ConfigParser.php';
 require_once __DIR__.'/autoload.php';
 
 use Tools\LogCLI;
+use ConfigParser\ConfigParser;
 //require_once 'Parser/ConfigParser/Action/IPPort.php';
 
-LogCLI::SetVerboseLevel(4);
+//require_once 'Console/CommandLine.php';
+//$actionInfo = \Console_CommandLine::$actions;
+//var_dump($actionInfo);
+
+LogCLI::SetVerboseLevel(5);
 
 $config['root'] = array('user' => 'testowy', 'group' => 'group');
-//$config['events'] = array('user' => 'testowy', 'group' => 'group');
+$config['events'] = array('connections' => 1024, 'group' => 'group');
 //$config['http'] = array('user' => 'testowy', 'group' => 'group');
 $config['server'][0][] = array('domain'=>'koma.net');
 $config['server'][1][] = array('domain'=>'moma.com');
@@ -83,14 +88,14 @@ $parsers['root'] = new ConfigParser(array(
     'configuration' => &$config['root']
 ));
 
-$parsers['root']->addOption('user', array(
+$parsers['root']->addSetting('user', array(
     'path'        => 'user',
     'action'      => 'StoreStringFalse',
     'default'     => 'www-data',
     'description' => 'user that runs nginx'
 ));
 
-$parsers['root']->addOption('group', array(
+$parsers['root']->addSetting('group', array(
     'path'        => 'group',
     'action'      => 'StoreStringFalse',
     'default'     => 'www-data',
@@ -108,17 +113,17 @@ $parsers['events'] = new ConfigParser(array(
     'template'    => &$template['events'],
     'configuration' => &$config['events']
 ));
-$parsers['events']->addOption('connections', array(
+$parsers['events']->addSetting('connections', array(
     'path'        => 'connections',
     'action'      => 'StoreInt',
     'default'     => 4096
 ));
-$parsers['events']->addOption('use', array(
+$parsers['events']->addSetting('use', array(
     'path'        => 'use',
     'action'      => 'StoreStringFalse',
     'default'     => 'epoll'
 ));
-$parsers['events']->addOption('multi_accept', array(
+$parsers['events']->addSetting('multi_accept', array(
     'path'        => 'multi_accept',
     'action'      => 'StoreTrue',
     'default'     => true
@@ -146,7 +151,7 @@ $parsers['server'] = new ConfigParser(array(
     'configuration' => null
 ));
 
-$parsers['server']->addOption('domain', array(
+$parsers['server']->addSetting('domain', array(
     'path'        => 'domain',
     'action'      => 'StoreStringFalse',
     'default'     => '',
@@ -165,7 +170,7 @@ $parsers['listen'] = new ConfigParser(array(
     'configuration' => null
 ));
 
-$parsers['listen']->addOption('listen', array(
+$parsers['listen']->addSetting('listen', array(
     'path'        => array('ip'=>'ip','port'=>'port'),
     'default'     => array('ip'=>null,'port'=>'80'),
     'required_one'=> array('ip','port'),
@@ -173,7 +178,7 @@ $parsers['listen']->addOption('listen', array(
     'description' => 'IP and port'
 ));
 
-$parsers['listen']->addOption('listen_options', array(
+$parsers['listen']->addSetting('listen_options', array(
     'path'        => 'listen_options',
     'action'      => 'StoreStringFalse',
     'default'     => '',
@@ -222,51 +227,6 @@ function indentLinesToMatchOther($likeWhat, $likeWhere, $content, $skipLines = 0
 $parsed = array();
 $patterns = array();
 $results = array();
-/*
-foreach($template as $key=>$temp)
-{
-    $results[$key] = $temp;
-}
-*/
-
-/*
-$results['server'] = null;
-foreach($config['server'] as $id => &$server)
-{
-    $parsers['listen']->configuration = &$server['listen'];
-    $listen_parse = $parsers['listen']->parse();
-    //$listen_parse = 
-    $results['listen'] = trim($listen_parse->parsed);
-    //$results['listen'] = true;
-    
-    //$parsers['server']->configuration = array_merge($parsers['server']->configuration, $listen
-    
-    $parsers['server']->configuration = &$server;
-    $server_parse = $parsers['server']->parse();
-    //$server_parse = trim($server_parse->parsed);
-    $results["server$id"] = trim($server_parse->parsed);
-    
-    //$results['server'] .= preg_replace('/<<listen>>/', trim(indentLinesToMatchOther('<<listen>>', $server_parse, $listen_parse, 1)), $server_parse).PHP_EOL;
-    $results['server'] .= insertScope('listen', "server$id", $results["server$id"]);
-}
-*/
-
-
-
-
-//var_dump($results);
-//echo $results['server'];
-
-/*
-foreach($results['server'] as $result)
-{
-    echo $result.PHP_EOL;
-}
-*/
-
-//$results['root'] = $parsers['root']->parse();
-//$results['listen'] = $parsers['listen']->parse();
-
 function regexpify($string)
 {
     return '/'.$string.'/';
@@ -276,30 +236,7 @@ foreach(array_keys($template) as $name)
 {
     $patterns[$name] = '<<'.$name.'>>';
 }
-/*
-function insertOne($scope)
-{
-    global $results;
-    global $template;
-    global $parsers;
-    global $results;
-    
-    $parse = $parsers[$scope]->parse();
-    $results[$scope] = trim($parse->parsed);
-    
-    preg_match_all('/<<(?<name>\w+)>>/', $template[$scope], $matches);
-    preg_match_all('/<!<(?<name>\w+)>!>/', $template[$scope], $matchesIterative);
-    $all_matches = array_merge_recursive($matches, $matchesIterative);
-    if(!empty($all_matches['name']))
-    {
-        foreach($all_matches['name'] as $match)
-        {
-            LogCLI::MessageResult("Inserting: $match to ".LogCLI::BLUE.$scope.LogCLI::RESET, 5);
-            $results[$scope] = insertScope($match, $scope);
-        }
-    }
-}
-*/
+
 function parseTree($scope = 'root', $depth=0, $parentIterative = false, $parent = '')
 {
     global $template;
@@ -340,6 +277,7 @@ function parseTree($scope = 'root', $depth=0, $parentIterative = false, $parent 
             }
             elseif(!isset($results[$match]))
             {
+                LogCLI::MessageResult("Ordering parsing of: ".LogCLI::BLUE."${match}".LogCLI::RESET." at depth = $depth", 3);
                 $results[$match] = $parsers[$match]->parse();
                 $results[$match] = trim($results[$match]->parsed);
                 //var_dump($children);
@@ -372,6 +310,8 @@ function parseTree($scope = 'root', $depth=0, $parentIterative = false, $parent 
             foreach($config[$match] as $id => &$iterative)
             {
                 LogCLI::Message('('.$depth.') '.$parentDisplay.LogCLI::BLUE.$scope.LogCLI::RESET." => ".LogCLI::YELLOW.$match.LogCLI::RESET." => [".LogCLI::GREEN_LIGHT.$id.LogCLI::RESET."]", 2);
+                
+                LogCLI::MessageResult("Ordering parsing of: ".LogCLI::BLUE."${match}".LogCLI::RESET." at depth = $depth", 3);
                 $parsers[$match]->configuration = &$iterative;
                 $parse = $parsers[$match]->parse();
                 //$server_parse = trim($server_parse->parsed);
@@ -422,28 +362,6 @@ function parseTree($scope = 'root', $depth=0, $parentIterative = false, $parent 
     return array();
 }
 
-
-/*
-function insertTree()
-{
-    
-}
-foreach(array_reverse(&$parsers) as $name => $parser)
-{
-    if(!isset($results[$name]))
-    {
-        $results[$name] = $parser->parse();
-        $results[$name] = trim($results[$name]->parsed);
-    }
-}
-*/
-
-//echo 
-//$results['http'] = preg_replace(regexpify($patterns['server']), trim(indentLinesToMatchOther($patterns['server'], $template['http'], $results['server'], 0)), $template['http']).PHP_EOL;
-
-//$results['http'] = insertScope('server', 'http');
-//$results['root'] = insertScope('events', 'root');
-//$results['root'] = insertScope('http', 'root');
 parseTree();
 //insertOne('root');
 echo $results['root'];
@@ -484,19 +402,6 @@ function insertScope($child, $parent, $pattern = null, $overrideIndentationTempl
 //    else return preg_replace(regexpify($patterns[$child]), trim(indentLinesToMatchOther($patterns[$child], $template[$parent], $results[$child], 0)), $results[$parent]).PHP_EOL;
 }
 
-/*
-foreach ($patterns as $name => $pattern)
-{
-    if(isset($results[$name])) 
-        echo preg_replace($patterns, $results, $results[$name]).PHP_EOL;
-    else
-        echo preg_replace($patterns, $results, $template[$name]).PHP_EOL;
-}
-*/
-
-//echo $parsed['server'].PHP_EOL;
-
-
 
 foreach($parsers as $parsername => $parser)
 {
@@ -518,6 +423,98 @@ foreach($parsers as $parsername => $parser)
     }
 }
 
+
+
+/*
+foreach($template as $key=>$temp)
+{
+    $results[$key] = $temp;
+}
+*/
+
+/*
+$results['server'] = null;
+foreach($config['server'] as $id => &$server)
+{
+    $parsers['listen']->configuration = &$server['listen'];
+    $listen_parse = $parsers['listen']->parse();
+    //$listen_parse = 
+    $results['listen'] = trim($listen_parse->parsed);
+    //$results['listen'] = true;
+    
+    //$parsers['server']->configuration = array_merge($parsers['server']->configuration, $listen
+    
+    $parsers['server']->configuration = &$server;
+    $server_parse = $parsers['server']->parse();
+    //$server_parse = trim($server_parse->parsed);
+    $results["server$id"] = trim($server_parse->parsed);
+    
+    //$results['server'] .= preg_replace('/<<listen>>/', trim(indentLinesToMatchOther('<<listen>>', $server_parse, $listen_parse, 1)), $server_parse).PHP_EOL;
+    $results['server'] .= insertScope('listen', "server$id", $results["server$id"]);
+}
+*/
+
+
+
+
+//var_dump($results);
+//echo $results['server'];
+
+/*
+foreach($results['server'] as $result)
+{
+    echo $result.PHP_EOL;
+}
+*/
+
+//$results['root'] = $parsers['root']->parse();
+//$results['listen'] = $parsers['listen']->parse();
+
+/*
+function insertOne($scope)
+{
+    global $results;
+    global $template;
+    global $parsers;
+    global $results;
+    
+    $parse = $parsers[$scope]->parse();
+    $results[$scope] = trim($parse->parsed);
+    
+    preg_match_all('/<<(?<name>\w+)>>/', $template[$scope], $matches);
+    preg_match_all('/<!<(?<name>\w+)>!>/', $template[$scope], $matchesIterative);
+    $all_matches = array_merge_recursive($matches, $matchesIterative);
+    if(!empty($all_matches['name']))
+    {
+        foreach($all_matches['name'] as $match)
+        {
+            LogCLI::MessageResult("Inserting: $match to ".LogCLI::BLUE.$scope.LogCLI::RESET, 5);
+            $results[$scope] = insertScope($match, $scope);
+        }
+    }
+}
+*/
+/*
+function insertTree()
+{
+    
+}
+foreach(array_reverse(&$parsers) as $name => $parser)
+{
+    if(!isset($results[$name]))
+    {
+        $results[$name] = $parser->parse();
+        $results[$name] = trim($results[$name]->parsed);
+    }
+}
+*/
+
+//echo 
+//$results['http'] = preg_replace(regexpify($patterns['server']), trim(indentLinesToMatchOther($patterns['server'], $template['http'], $results['server'], 0)), $template['http']).PHP_EOL;
+
+//$results['http'] = insertScope('server', 'http');
+//$results['root'] = insertScope('events', 'root');
+//$results['root'] = insertScope('http', 'root');
 /*
 function parseTagsRecursive($input)
 {
