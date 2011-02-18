@@ -9,12 +9,66 @@ class System
     //  echo "Detecting number of CPU cores: ";
         return system("cat /proc/cpuinfo | grep \"core id\" | sort | uniq | wc -l");
     }
+    
+    /**
+     * Merges any number of arrays of any dimensions, the later overwriting
+     * previous keys, unless the key is numeric, in whitch case, duplicated
+     * values will not be added.
+     *
+     * The arrays to be merged are passed as arguments to the function.
+     *
+     * @access public
+     * @return array Resulting array, once all have been merged
+     */
+    public static function MergeArrays($arr1, $arr2) {
+        // Holds all the arrays passed
+        //$params = & func_get_args ();
+        if(!is_array($arr1))
+        {
+            if(!is_array($arr2)) 
+            {
+                $arr1 = array();
+                $arr2 = array();
+            }
+            else return $arr2;
+        }
+        
+        $params = array($arr1, $arr2);
+       
+        // First array is used as the base, everything else overwrites on it
+        $return = array_shift ( $params );
+       
+        // Merge all arrays on the first array
+        foreach ( $params as $array ) {
+            foreach ( $array as $key => $value ) {
+                // Numeric keyed values are added (unless already there)
+                if (is_numeric ( $key ) && (! in_array ( $value, $return ))) {
+                    if (is_array ( $value ) && isset($return[$key])) {
+                        $return [] = self::MergeArrays ( $return[$key], $value ); // double $$key ?
+                    } else {
+                        $return [] = $value;
+                    }
+                   
+                // String keyed values are replaced
+                } else {
+                    if (isset ( $return [$key] ) && is_array ( $value ) && is_array ( $return [$key] )) {
+                        $return [$key] = self::MergeArrays ( $return[$key], $value ); // double $$key ?
+                    } else {
+                        $return [$key] = $value;
+                    }
+                }
+            }
+        }
+       
+        return $return;
+    }
+    
     /*
     public static function MergeArrays($Arr1, $Arr2)
     {
-        var_dump($Arr1);
+        //var_dump($Arr1);
         //debug_print_backtrace();
-        $Arr1 = array_merge_recursive($Arr1, $Arr2);
+        //$Arr1 = array_merge_recursive($Arr1, $Arr2);
         
         foreach($Arr2 as $key => $Value)
         {
@@ -39,8 +93,9 @@ class System
      *
      * calling: result = array_merge_recursive_distinct(a1, a2, ... aN)
     **/
-    
+    /*
     public static function MergeArrays() {
+        //$numeric = 0;
       $arrays = func_get_args();
       $base = array_shift($arrays);
       if(!is_array($base)) $base = empty($base) ? array() : array($base);
@@ -54,6 +109,8 @@ class System
           if(is_array($value) or is_array($base[$key])) {
             $base[$key] = self::MergeArrays($base[$key], $append[$key]);
           } else if(is_numeric($key)) {
+              //$numeric++;
+              //var_dump($numeric);
             if(!in_array($value, $base)) $base[] = $value;
           } else {
             $base[$key] = $value;
@@ -61,7 +118,7 @@ class System
         }
       }
       return $base;
-    }
+    }*/
     
     public static function Dump($var, $message = null, $level=0)
     {

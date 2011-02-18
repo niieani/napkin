@@ -7,11 +7,11 @@ use \Tools\System;
 
 class BracketConfig
 {
-    public $params;
-    public $scheme;
-    public $scope = '_ROOT';
-    public $isRequired = false;
-    public $level = 0;
+    private $params;
+    private $scheme;
+    private $scope = '_ROOT';
+    private $isRequired = false;
+    private $level = 0;
     private $allSettings = array();
     private $isIterative = false;
 
@@ -58,7 +58,9 @@ class BracketConfig
 
     public function set(array $params)
     {
-        $this->allSettings = System::MergeArrays($this->allSettings, $params);
+        if(!empty($this->allSettings))
+            $this->allSettings = System::MergeArrays($this->allSettings, $params);
+        else $this->allSettings = $params;
         //var_dump($params);
         foreach($params as $setting => $value)
         {
@@ -119,7 +121,13 @@ class BracketConfig
         {
             //var_dump($setting);
             //this is dirty, fix me (so many copies of the yaml array!)
-            if(is_object($setting))
+            
+            if(is_array($setting) && isset($setting['_definition']) && is_object($setting['_definition']))
+            {
+                LogCLI::MessageResult('Setting according to _definition!', 6, LogCLI::INFO);
+                $setting['_definition']->set($data);
+            }
+            elseif(is_object($setting))
                 $setting->set($data);
         }
     }

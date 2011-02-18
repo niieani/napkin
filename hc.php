@@ -261,8 +261,10 @@ try {
                     //var_dump($setting);
                     $path = $nginxParse->TraverseDevinitionTree($setting);
                     
+                    $last = StringTools::ReturnLastBit($path);
+                    
                     if ($path)
-                        $nginxParse->SetConfig($path, $setting);
+                        $nginxParse->SetConfig($path, array($last => $result->command->args['values']));
                     else LogCLI::Fail('No setting by name: '.end(array_keys($setting)));
                     
                     $nginxParse->ReturnYAML();

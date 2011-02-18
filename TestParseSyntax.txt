@@ -1,0 +1,32 @@
+<<multiple files>>
+[[replace string]]
+
+global:
+
+[[user %(user)s[[ %(group)s]];]]
+<<events>>
+<<http>>
+
+
+events
+{
+    <<events>>
+}
+
+http
+{
+    <<server>>
+}
+
+events:
+
+worker_connections  4096;
+use epoll;
+multi_accept on;
+
+server:
+
+server
+{
+    blabla
+}

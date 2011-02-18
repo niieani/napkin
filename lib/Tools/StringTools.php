@@ -6,6 +6,29 @@ use \Tools\LogCLI;
 class StringTools
 {
     
+    public function ReturnLastBit($path)
+    {
+        $pathElements = explode('/', $path);
+        $last = count($pathElements)-1;
+        return $pathElements[$last];
+    }
+    
+    public function DropLastBit($path, $skipN)
+    {
+        if($skipN > 0)
+        {
+            $pathElements = explode('/', $path);
+            $pathElements = array_splice($pathElements, 0, count($pathElements)-$skipN);
+        }
+        return implode('/', $pathElements);
+    }
+    
+    public function AddBit($path, $string)
+    {
+        return $path.'/'.$string;
+    }
+    
+    
     public static function makeList($args, $delimiter = ' ')
     {
         foreach($args as $k => $list)
