@@ -2,18 +2,14 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-//namespace ConfigParser;
+namespace ConfigParser\Action;
 
-/**
- * Required by this class.
- */
-require_once 'Console/CommandLine/Action.php';
+use PEAR2\Console\CommandLine;
 
 /**
  * Class that represent the StoreStringFalse action.
  */
- 
-class Action_StoreStringFalse extends \Console_CommandLine_Action
+class StoreStringFalse extends CommandLine\Action
 {
     // execute() {{{
 

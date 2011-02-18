@@ -2,17 +2,14 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-//namespace ConfigParser;
+namespace ConfigParser\Action;
 
-/**
- * Required by this class.
- */
-require_once 'Console/CommandLine/Action.php';
+use PEAR2\Console\CommandLine;
 
 /**
  * Class that represent the IPPort action.
  */
-class Action_IPPort extends \Console_CommandLine_Action
+class IPPort extends CommandLine\Action
 {
     // execute() {{{
 

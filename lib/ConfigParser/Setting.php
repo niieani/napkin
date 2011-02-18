@@ -5,11 +5,14 @@
 //require_once 'Console/CommandLine.php';
 namespace ConfigParser;
 
-require_once 'Console/CommandLine/Element.php';
-require_once 'Console/CommandLine/Option.php';
+use PEAR2\Console;
+
+//require_once 'Console/CommandLine/Element.php';
+//require_once 'Console/CommandLine/Option.php';
+
 //require_once 'Console/CommandLine.php';
 
-class Setting extends \Console_CommandLine_Option
+class Setting extends Console\CommandLine\Option
 {
     public $path;
     public $required = false;
@@ -50,27 +53,21 @@ class Setting extends \Console_CommandLine_Option
      */
     public function dispatchAction($value, $result, $parser)
     {
+        /*
+        $actionInfo = Console\CommandLine::$actions[$this->action];
+        $clsname    = $actionInfo[0];
+        */
+        
         //set_include_path('./');
-        if(isset(\Console_CommandLine::$actions[$this->action]))
+        if(isset(Console\CommandLine::$actions[$this->action]))
         {
-            $actionInfo = \Console_CommandLine::$actions[$this->action];
-            if (true === $actionInfo[1]) {
-                // we have a "builtin" action
-                $tokens = explode('_', $actionInfo[0]);
-                include_once implode('/', $tokens) . '.php';
-                $clsname = $actionInfo[0];
-            }
+            $actionInfo = Console\CommandLine::$actions[$this->action];
+            $clsname = $actionInfo[0];
         }
         else
         {
             $actionInfoConfigParser = ConfigParser::$actions[$this->action];
-            //var_dump($actionInfoConfigParser);
-            if (true === $actionInfoConfigParser[1]) {
-                // we have a "builtin" ConfigParser action
-                $tokens = explode('_', $actionInfoConfigParser[0]);
-                include_once implode('/', $tokens) . '.php';
-                $clsname = $actionInfoConfigParser[0];
-            }
+            $clsname = $actionInfoConfigParser[0];
         }
         
         if(!isset($clsname)) $clsname = $actionInfo[0];
@@ -119,7 +116,7 @@ class Setting extends \Console_CommandLine_Option
                 E_USER_ERROR, array('{$name}' => $this->name));
         }
         // call the grandparent validate method
-        \Console_CommandLine_Element::validate();
+        Console\CommandLine\Element::validate();
         // a path must be provided
         if ($this->path == null) {
             ConfigParser::triggerError('option_long_and_short_name_missing',
@@ -131,7 +128,7 @@ class Setting extends \Console_CommandLine_Option
                 E_USER_ERROR, array('{$name}' => $this->name));
         }
         //var_dump(ConfigParser::$actions[$this->action]);
-        if ((!isset(\Console_CommandLine::$actions[$this->action])) && (!isset(ConfigParser::$actions[$this->action]))) {
+        if ((!isset(Console\CommandLine::$actions[$this->action])) && (!isset(ConfigParser::$actions[$this->action]))) {
             ConfigParser::triggerError('option_unregistered_action',
                 E_USER_ERROR, array(
                     '{$action}' => $this->action,

@@ -4,12 +4,13 @@ namespace ConfigParser;
 use \Tools\LogCLI;
 use \Tools\ParseTools;
 use \Tools\ArrayTools;
-use ConfigParser\Setting as ConfigParser_Setting;
+use \PEAR2\Console\CommandLine;
+//use ConfigParser\Setting as ConfigParser_Setting;
 
-require_once 'Console/CommandLine.php';
+//require_once 'Console/CommandLine.php';
 
 
-class ConfigParser extends \Console_CommandLine
+class ConfigParser extends CommandLine
 {
     public $template;
     public $configuration = array();
@@ -35,8 +36,8 @@ class ConfigParser extends \Console_CommandLine
      * @var array $actions List of valid actions
      */
     public static $actions = array(
-        'IPPort'            => array('Action_IPPort', true),
-        'StoreStringFalse'  => array('Action_StoreStringFalse', true)
+        'IPPort'            => array('ConfigParser\\Action\\IPPort', true),
+        'StoreStringFalse'  => array('ConfigParser\\Action\\StoreStringFalse', true)
     );
     
     public function __construct(array $params = array()) 
@@ -62,9 +63,9 @@ class ConfigParser extends \Console_CommandLine
         $this->add_version_option = false;
         
         // set default instances
-        $this->renderer         = new \Console_CommandLine_Renderer_Default($this);
-        $this->outputter        = new \Console_CommandLine_Outputter_Default();
-        $this->message_provider = new \Console_CommandLine_MessageProvider_Default();
+        $this->renderer         = new CommandLine\Renderer_Default($this);
+        $this->outputter        = new CommandLine\Outputter_Default();
+        $this->message_provider = new CommandLine\MessageProvider_Default();
     }
     
     // }}}
@@ -83,10 +84,10 @@ class ConfigParser extends \Console_CommandLine
     public function addSetting($name, $params = array())
     {
         //include_once 'Parser/ConfigParser/Option.php';
-        if ($name instanceof ConfigParser_Setting) {
+        if ($name instanceof Setting) {
             $opt = $name;
         } else {
-            $opt = new ConfigParser_Setting($name, $params);
+            $opt = new Setting($name, $params);
         }
         $opt->validate();
         if ($this->force_options_defaults) {
@@ -104,9 +105,7 @@ class ConfigParser extends \Console_CommandLine
     
     public function parse($userConfiguration = null)
     {
-        include_once 'Console/CommandLine/Result.php';
-        $result = new \Console_CommandLine_Result();
-        
+        $result = new CommandLine\Result();
         
         $output = null;
         if(isset($this->configuration[0]))
