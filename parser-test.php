@@ -79,8 +79,12 @@ listen [[%(listen)s]][[ %(listen_options)s]];
 EOT;
 
 
+/*
 
+    wrzucić całość do jednej klasy a potem zrobić autoloader na zasadzie CommandLine
+    i tak do każdej aplikacji
 
+*/
 $parsers = array();
 /*
  * NGINX ROOT SCOPE PARSER
@@ -90,18 +94,18 @@ $parsers['root'] = new ConfigParser(array(
     'description' => 'nginx root',
     'version'     => '0.9',
     'template'    => &$template['root'],
-    'configuration' => &$config['root']
+    'configuration' => &$config
 ));
 
 $parsers['root']->addSetting('user', array(
-    'path'        => 'user',
+    'path'        => 'root/user',
     'action'      => 'StoreStringOrFalse',
     'default'     => 'www-data',
     'description' => 'user that runs nginx'
 ));
 
 $parsers['root']->addSetting('group', array(
-    'path'        => 'group',
+    'path'        => 'root/group',
     'action'      => 'StoreStringOrFalse',
     'default'     => 'www-data',
     'description' => 'group that runs nginx'
@@ -116,7 +120,7 @@ $parsers['events'] = new ConfigParser(array(
     'description' => 'nginx events',
     'version'     => '0.9',
     'template'    => &$template['events'],
-    'configuration' => &$config['events']
+    'configuration' => null
 ));
 $parsers['events']->addSetting('connections', array(
     'path'        => 'connections',
@@ -142,7 +146,7 @@ $parsers['http'] = new ConfigParser(array(
     'description' => 'nginx http',
     'version'     => '0.9',
     'template'    => &$template['http'],
-    'configuration' => &$config['http']
+    'configuration' => &$config
 ));
 
 /*

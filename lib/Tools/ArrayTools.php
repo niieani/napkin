@@ -32,6 +32,7 @@ class ArrayTools
         return $path;
     }
     
+    // this should be actually renamed to mergeArrayElementByPath
     public static function createArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0) //$trimPath=0
     {
         // Check path
@@ -52,7 +53,7 @@ class ArrayTools
             // Update path
             $path =& $path[$e];
         }
-        $path = self::MergeArrays($path, $value);
+        $path = (is_array($value)) ? self::MergeArrays($path, $value) : $value;
         
         // Everything checked out, return value
         return $path;

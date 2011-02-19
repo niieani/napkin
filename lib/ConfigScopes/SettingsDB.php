@@ -53,6 +53,7 @@ class SettingsDB
     
     public function SetSettingByPath($path, $setting)
     {
+        // verify this works?
         ArrayTools::createArrayElementByPath($this->settingsDB, $path, $setting, 0); //skip any or not?
         var_dump($this->settingsDB);
     }
@@ -90,13 +91,13 @@ class SettingsDB
         try
         {
             $config = YAML::load($file);
-            LogCLI::Result(LogCLI::OK);
             
             $this->MergeDefaultsDB($config, $addDefaults);
             
             $this->settingsDB = ArrayTools::MergeArrays($this->settingsDB, $config);
             
             LogCLI::MessageResult('Settings DB updated!', 5, LogCLI::INFO);
+            LogCLI::Result(LogCLI::OK);
         }
         catch (Exception $e)
         {
@@ -107,13 +108,8 @@ class SettingsDB
     
     public function MergeFromYAMLs(array $files, $addDefaults = false)
     {
-        //$last = false;
-        //$total = count($files) - 1;
-        //$sites_defaults = array();
         foreach($files as $i => $file)
         {
-            //if ($total == $i) $last = true;
-            
             LogCLI::Message('Loading file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
             if (file_exists($file))
             {

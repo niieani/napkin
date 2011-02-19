@@ -23,7 +23,7 @@ class System
         return $cpuCoreNum;
     }
     
-    public static function Dump($var, $message = null, $level=0)
+    public static function Dump($var, $verbosityLevel = 0, $message = null, $level = 0)
     {
         $output = '';
         if($level==0)
@@ -40,11 +40,11 @@ class System
         {
             if(is_array($value) or is_object($value))
             {
-                $output .= self::Dump($value, $message, ($level +1));
+                $output .= self::Dump($value, $verbosityLevel, $message, ($level +1));
             }
             else
             {
-                if($display === true) LogCLI::MessageResult($message.LogCLI::GREEN.$i.LogCLI::RESET.' = '.LogCLI::YELLOW.$value.LogCLI::RESET, 5, LogCLI::INFO);
+                if($display === true) LogCLI::MessageResult($message.LogCLI::GREEN.$i.LogCLI::RESET.' = '.LogCLI::YELLOW.$value.LogCLI::RESET, $verbosityLevel, LogCLI::INFO);
                 else 
                 {
                     $output .= "[$i = $value]";

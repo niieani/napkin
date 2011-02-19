@@ -11,6 +11,7 @@ $loader->registerNamespaces(array(
     'ConfigParser'                   => __DIR__.'/lib',
     'ConfigScopes'                   => __DIR__.'/lib',
     'Applications'                   => __DIR__.'/lib',
+    'HypoConf'                       => __DIR__.'/lib/HypoConf/lib',
     'Symfony'                        => __DIR__.'/vendor/symfony/lib',
     'PEAR2'                          => __DIR__.'/vendor/pear2/lib',
     'PwFisher'                       => __DIR__.'/vendor/pwfisher/lib',

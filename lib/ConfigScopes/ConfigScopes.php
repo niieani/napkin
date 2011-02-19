@@ -90,14 +90,6 @@ class ConfigScopes
     
     public function parseTree($scope = 'root', $depth = 0, $parentIterative = false, $parent = '')
     {
-        /*
-        global $template;
-        global $config;
-        global $parsers;
-        global $results;
-        global $patterns;
-        */
-        
         $depth++;
         preg_match_all('/<<(?<name>\w+)>>/', $this->templates[$scope], $matches);
         preg_match_all('/<!<(?<name>\w+)>!>/', $this->templates[$scope], $matchesIterative);
@@ -128,7 +120,10 @@ class ConfigScopes
                 }
                 elseif(!isset($this->results[$match]))
                 {
+                    if(empty($this->parsers[$match]->configuration)) $this->parsers[$match]->configuration = &$this->config[$match];
+                    
                     LogCLI::MessageResult("Ordering parsing of: ".LogCLI::BLUE."${match}".LogCLI::RESET." at depth = $depth", 3);
+                    
                     $this->results[$match] = $this->parsers[$match]->parse();
                     $this->results[$match] = trim($this->results[$match]->parsed);
                     foreach($children as $child)
@@ -176,6 +171,8 @@ class ConfigScopes
         
         if($depth == 1)
         {
+            if(empty($this->parsers[$scope]->configuration)) $this->parsers[$scope]->configuration = &$this->config[$scope];
+            
             $parse = $this->parsers[$scope]->parse();
             $this->results[$scope] = trim($parse->parsed);
             $all_matches = array_merge_recursive($matches, $matchesIterative);

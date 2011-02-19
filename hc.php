@@ -18,6 +18,8 @@ use Tools\System;
 use ConfigParser\ConfigParser;
 use ConfigScopes\ConfigScopes;
 use ConfigScopes\SettingsDB;
+use ConfigScopes\ApplicationsDB;
+//use ConfigScopes\TemplatesDB;
 use PEAR2\Console\CommandLine;
 
 //use Applications\Nginx;
@@ -306,6 +308,34 @@ try {
                 break;
             
             case 'generate':
+                
+                $files = array();
+                
+                if($result->command->args)
+                {
+                    ApplicationsDB::RegisterApplication('nginx');
+                    
+                    /*
+                    foreach($result->command->args['file'] as $file)
+                    {
+                        $files[] = $file;
+                    }
+                    $templatesDB->AddFromFiles($files);
+                    */
+                    
+                    /*
+                    $templatesDB = new TemplatesDB();
+                    foreach($result->command->args['file'] as $file)
+                    {
+                        $files[] = $file;
+                    }
+                    $templatesDB->AddFromFiles($files);
+                    */
+                }
+                
+                //$templatesDB->AddFromFiles($files);
+                
+                /*
                 //$confScope = new NginxScope;
                 $nginxParse = new Nginx;
                 
@@ -323,6 +353,7 @@ try {
                 }
                 
                 $nginxParse->PrintFile();
+                */
                 
                 break;
             
