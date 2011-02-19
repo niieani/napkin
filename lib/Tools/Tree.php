@@ -16,7 +16,7 @@ class Tree
     	return $tree;
     }
     
-    public static function addToTreeSet($arrayin, $values)
+    public static function addToTreeSet($arrayin, $values, $skip = false)
     {
         $arrayin = array_reverse($arrayin);
         $tree = array();

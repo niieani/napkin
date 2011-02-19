@@ -5,6 +5,8 @@ require_once __DIR__.'/autoload.php';
 
 use Tools\LogCLI;
 use ConfigParser\ConfigParser;
+use ConfigScopes\ConfigScopes;
+use Tools\FileOperation;
 //require_once 'Parser/ConfigParser/Action/IPPort.php';
 
 //require_once 'Console/CommandLine.php';
@@ -14,15 +16,18 @@ use ConfigParser\ConfigParser;
 LogCLI::SetVerboseLevel(5);
 
 $config['root'] = array('user' => 'testowy', 'group' => 'group');
-$config['events'] = array('connections' => 1024, 'group' => 'group');
+$config['events'] = array('connections' => 1024, 'multi_accept' => false);
 //$config['http'] = array('user' => 'testowy', 'group' => 'group');
-$config['server'][0][] = array('domain'=>'koma.net');
-$config['server'][1][] = array('domain'=>'moma.com');
-$config['server'][2][] = array('domain'=>'jajco.com');
-$config['server'][0]['listen'][] = array('ip'=>'10.0.0.1', 'port'=>'80');
-$config['server'][0]['listen'][] = array('ip'=>'10.0.0.1', 'port'=>'81');
-$config['server'][1]['listen'][] = array('ip'=>'192.168.0.1', 'port'=>'80');
-$config['server'][1]['listen'][] = array('ip'=>'192.168.0.2', 'port'=>'81');
+//$config['server'][0][] = array('domain'=>'koma.net');
+$config['server'][0] = array('domain'=>'komalol.net');
+$config['server'][0]['listen'][0] = array('ip'=>'10.0.0.1', 'port'=>'80');
+$config['server'][0]['listen'][1] = array('ip'=>'10.0.0.1', 'port'=>'81');
+$config['server'][0]['listen'][2] = array('ip'=>'10.0.0.1', 'port'=>'81');
+$config['server'][1] = array('domain'=>'moma.com');
+$config['server'][1]['listen'][0] = array('ip'=>'192.168.0.1', 'port'=>'80');
+$config['server'][1]['listen'][1] = array('ip'=>'192.168.0.2', 'port'=>'81');
+$config['server'][2] = array('domain'=>'jajco.com');
+FileOperation::ToYAMLFile($config, true);
 
 /*$template = '
 user [[%(user)s]][[ %(group)s]];
@@ -35,6 +40,7 @@ listen [[%(listen)s]][[ %(listen_options)s]];';
 */
 
 //recursive
+
 
 $template = array();
 
@@ -63,15 +69,14 @@ EOT;
 $template['server'] = <<< EOT
 server
 {
-    [[server_name %(domain)s;]]
     <<listen>>
+    [[server_name %(domain)s;]]
 }
 EOT;
 
 $template['listen'] = <<< EOT
 listen [[%(listen)s]][[ %(listen_options)s]];
 EOT;
-
 
 
 
@@ -90,14 +95,14 @@ $parsers['root'] = new ConfigParser(array(
 
 $parsers['root']->addSetting('user', array(
     'path'        => 'user',
-    'action'      => 'StoreStringFalse',
+    'action'      => 'StoreStringOrFalse',
     'default'     => 'www-data',
     'description' => 'user that runs nginx'
 ));
 
 $parsers['root']->addSetting('group', array(
     'path'        => 'group',
-    'action'      => 'StoreStringFalse',
+    'action'      => 'StoreStringOrFalse',
     'default'     => 'www-data',
     'description' => 'group that runs nginx'
 ));
@@ -120,12 +125,12 @@ $parsers['events']->addSetting('connections', array(
 ));
 $parsers['events']->addSetting('use', array(
     'path'        => 'use',
-    'action'      => 'StoreStringFalse',
+    'action'      => 'StoreStringOrFalse',
     'default'     => 'epoll'
 ));
 $parsers['events']->addSetting('multi_accept', array(
     'path'        => 'multi_accept',
-    'action'      => 'StoreTrue',
+    'action'      => 'StoreOnOff',
     'default'     => true
 ));
 
@@ -153,8 +158,8 @@ $parsers['server'] = new ConfigParser(array(
 
 $parsers['server']->addSetting('domain', array(
     'path'        => 'domain',
-    'action'      => 'StoreStringFalse',
-    'default'     => '',
+    'action'      => 'StoreStringOrFalse',
+    'default'     => null,
     'description' => 'listen options'
 ));
 
@@ -180,11 +185,16 @@ $parsers['listen']->addSetting('listen', array(
 
 $parsers['listen']->addSetting('listen_options', array(
     'path'        => 'listen_options',
-    'action'      => 'StoreStringFalse',
+    'action'      => 'StoreStringOrFalse',
     'default'     => '',
     'description' => 'listen options'
 ));
 
+$configScopes = new ConfigScopes(&$parsers, &$template, &$config);
+$parsedFile = $configScopes->parseTemplateRecursively('root');
+echo $parsedFile;
+
+/*
 function indentLinesToMatchOther($likeWhat, $likeWhere, $content, $skipLines = 0, $whereToStop = null)
 {
     foreach(preg_split("/(\r?\n)/", $likeWhere) as $line)
@@ -288,11 +298,11 @@ function parseTree($scope = 'root', $depth=0, $parentIterative = false, $parent 
                 }
             }
         }
-        /*if (strlen($parent)>0)
-        {
-            LogCLI::MessageResult("Inserting: $scope to ".LogCLI::BLUE.$parent.LogCLI::RESET." at depth = $depth", 5);
-            $results[$scope] = insertScope($scope, $parent);
-        }*/
+        //if (strlen($parent)>0)
+        //{
+        //    LogCLI::MessageResult("Inserting: $scope to ".LogCLI::BLUE.$parent.LogCLI::RESET." at depth = $depth", 5);
+        //    $results[$scope] = insertScope($scope, $parent);
+        //}
         $return = $matches['name'];
     }
     
@@ -329,11 +339,11 @@ function parseTree($scope = 'root', $depth=0, $parentIterative = false, $parent 
                 LogCLI::Result(LogCLI::INFO);
             }
         }
-        /*if (strlen($parent)>0)
-        {
-            LogCLI::MessageResult("Inserting: $scope to ".LogCLI::BLUE.$parent.LogCLI::RESET." at depth = $depth", 5);
-            $results[$scope] = insertScope($scope, $parent);
-        }*/
+        //if (strlen($parent)>0)
+        //{
+        //    LogCLI::MessageResult("Inserting: $scope to ".LogCLI::BLUE.$parent.LogCLI::RESET." at depth = $depth", 5);
+        //    $results[$scope] = insertScope($scope, $parent);
+        //}
         $return = $matchesIterative['name'];
     }
     
@@ -423,7 +433,7 @@ foreach($parsers as $parsername => $parser)
     }
 }
 
-
+*/
 
 /*
 foreach($template as $key=>$temp)

@@ -94,6 +94,7 @@ class Setting extends Console\CommandLine\Option
         */
         //$this->action_params['path'] = &$this->path;
         //$this->action_params['default'] = &$this->default;
+        //var_dump($value);
         $this->_action_instance->execute($value, $this->action_params);
     }
     
@@ -141,4 +142,48 @@ class Setting extends Console\CommandLine\Option
                 E_USER_ERROR, array('{$name}' => $this->name));
         }
     }
+    
+    // }}}
+    // setDefaults() {{{
+    
+    /**
+     * Set the default value according to the configured action.
+     *
+     * Note that for backward compatibility issues this method is only called 
+     * when the 'force_options_defaults' is set to true, it will become the
+     * default behaviour in the next major release of PEAR2\Console\CommandLine.
+     *
+     * @return void
+     */
+    public function setDefaults()
+    {
+        if ($this->default !== null) {
+            // already set
+            return;
+        }
+        switch ($this->action) {
+        case 'Counter':
+        case 'StoreInt':
+            $this->default = 0;
+            break;
+        case 'StoreFloat':
+            $this->default = 0.0;
+            break;
+        case 'StoreArray':
+            $this->default = array();
+            break;
+        case 'StoreTrue':
+            $this->default = false;
+            break;
+        case 'StoreFalse':
+            $this->default = true;
+            break;
+        case 'StoreOnOff':
+            $this->default = -1;
+            break;
+        default:
+            return;
+        }
+    }
+    
 }

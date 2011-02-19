@@ -36,8 +36,9 @@ class ConfigParser extends CommandLine
      * @var array $actions List of valid actions
      */
     public static $actions = array(
-        'IPPort'            => array('ConfigParser\\Action\\IPPort', true),
-        'StoreStringFalse'  => array('ConfigParser\\Action\\StoreStringFalse', true)
+        'IPPort'              => array('ConfigParser\\Action\\IPPort', true),
+        'StoreOnOff'          => array('ConfigParser\\Action\\StoreOnOff', true),
+        'StoreStringOrFalse'  => array('ConfigParser\\Action\\StoreStringOrFalse', true)
     );
     
     public function __construct(array $params = array()) 
@@ -100,7 +101,7 @@ class ConfigParser extends CommandLine
     public function parseResult($userConfiguration = null)
     {
         $result = $this->parse($userConfiguration);
-        return $result->parsed;
+        return trim($result->parsed);
     }
     
     public function parse($userConfiguration = null)
@@ -142,14 +143,19 @@ class ConfigParser extends CommandLine
             {
                 foreach($option->path as $config => $path)
                 {
-                    ($setting = ArrayTools::accessArrayElementByPath($configuration, $path)) ?: $setting = $option->default[$config];
+                    //($setting = ArrayTools::accessArrayElementByPath($configuration, $path)) !== null ?: $setting = $option->default[$config];
+                    $setting = ArrayTools::accessArrayElementByPath($configuration, $path);
+                    if ($setting === null) $setting = $option->default[$config];
                     $values[$config] = $setting;
                 }
                 $this->_dispatchAction($option, $values, $result);
             }
             else
             {
-                ($setting = ArrayTools::accessArrayElementByPath($configuration, $option->path)) ?: $setting = $option->default;
+                //($setting = ArrayTools::accessArrayElementByPath($configuration, $option->path)) !== null ?: $setting = $option->default;
+                $setting = ArrayTools::accessArrayElementByPath($configuration, $option->path);
+                //var_dump($setting);
+                if ($setting === null) $setting = $option->default;
                 $value = &$setting;
                 $this->_dispatchAction($option, $value, $result);
             }
@@ -175,6 +181,7 @@ class ConfigParser extends CommandLine
      */
     private function _dispatchAction($option, $token, $result)
     {
+        //var_dump($token);
         $option->dispatchAction($token, $result, $this);
     }
     // }}}

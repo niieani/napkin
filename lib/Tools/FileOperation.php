@@ -26,7 +26,7 @@ class FileOperation
     {
             $dumper = new Dumper();
             $yaml = $dumper->dump($array, 6);
-            if ($stdout === false) file_put_contents(__DIR__.'/'.$file, $yaml);
+            if ($stdout === false) file_put_contents($file, $yaml);
             else echo PHP_EOL.$yaml;
     }
     

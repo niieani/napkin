@@ -5,16 +5,64 @@ use \Tools\LogCLI;
 
 class StringTools
 {
+    public static function regexpify($string)
+    {
+        return '/'.$string.'/';
+    }
     
-    public function ReturnLastBit($path)
+    public static function indentLinesToMatchOther($likeWhat, $likeWhere, $content, $skipLines = 0, $whereToStop = null)
+    {
+        foreach(preg_split("/(\r?\n)/", $likeWhere) as $line)
+        {
+            if(!isset($indentationCharsNum) || $indentationCharsNum === false)
+            {
+                //var_dump($line);
+                if(($indentationCharsNum = strpos($line, $likeWhat)) !== false)
+                {
+                    //var_dump($line);
+                    //var_dump($indentationCharsNum);
+                    $indentationString = substr($line, 0, $indentationCharsNum);
+                    break;
+                }
+            }
+        }
+        $output = null;
+        foreach(preg_split("/(\r?\n)/", $content) as $line)
+        {
+            if($whereToStop = null || strpos($line, $whereToStop) === false)
+            {
+                if(!isset($indentationCharsNum) || $indentationCharsNum === false || $skipLines > 0)
+                {
+                    $output .= $line.PHP_EOL;
+                    $skipLines--;
+                }
+                else
+                {
+                    $output .= $indentationString.$line.PHP_EOL;
+                }
+            }
+            else
+            {
+                $output .= $line.PHP_EOL;
+            }
+        }
+        return $output;
+    }
+    
+    public static function ReturnLastBit($path)
     {
         $pathElements = explode('/', $path);
         $last = count($pathElements)-1;
         return $pathElements[$last];
     }
     
-    public function DropLastBit($path, $skipN)
+    public static function DropLastBit($path, $skipN = 1)
     {
+        if($skipN < 0)
+        {
+            $pathElements = explode('/', $path);
+            $pathElements = array_splice($pathElements, -$skipN);
+        }
         if($skipN > 0)
         {
             $pathElements = explode('/', $path);
@@ -23,7 +71,7 @@ class StringTools
         return implode('/', $pathElements);
     }
     
-    public function AddBit($path, $string)
+    public static function AddBit($path, $string)
     {
         return $path.'/'.$string;
     }

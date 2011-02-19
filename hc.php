@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 // Include the Console_CommandLine package.
-require_once 'Console/CommandLine.php';
-require_once 'Console/CommandLine/Action.php';
+//require_once 'Console/CommandLine.php';
+//require_once 'Console/CommandLine/Action.php';
 require_once __DIR__.'/autoload.php';
 
 //use Symfony\Component\Yaml\Yaml;
@@ -11,9 +11,18 @@ use Tools\LogCLI;
 use Tools\StringTools;
 use Tools\Tree;
 use Tools\FileOperation;
-use Applications\Nginx;
-use ConfigStyles\BracketConfig\NginxConfig;
-use ConfigStyles\BracketConfig\NginxScope;
+
+//only for cores
+use Tools\System;
+
+use ConfigParser\ConfigParser;
+use ConfigScopes\ConfigScopes;
+use ConfigScopes\SettingsDB;
+use PEAR2\Console\CommandLine;
+
+//use Applications\Nginx;
+//use ConfigStyles\BracketConfig\NginxConfig;
+//use ConfigStyles\BracketConfig\NginxScope;
 
 define('HC_DIR', __DIR__);
 
@@ -39,7 +48,7 @@ Console_CommandLine::registerAction('List', 'ActionList');
 */
 
 // create the parser
-$parser = new Console_CommandLine(array(
+$parser = new CommandLine(array(
     'name'        => 'hc',
     'description' => 'A configuration manager for nginx, PHP with PHP-FPM and MySQL with a command line interface',
     'version'     => '0.0.5',
@@ -65,7 +74,7 @@ $parser->addOption('stdout', array(
 ));
 
 $parser->addOption('debug', array(
-    'short_name'  => '-!',
+    'short_name'  => '-d',
     'long_name'   => '--debug',
     'action'      => 'StoreTrue',
     'default'     => false,
@@ -242,32 +251,57 @@ try {
             case 'set':
                 if($result->command->args)
                 {
-                    $nginxParse = new Nginx;
-                    
-                    $files = array();
+                    //$files = array();
                     //var_dump(StringTools::typeList($result->command->args['name']));
                     
                     //$files[] = 'defaults.yml';
                     
                     foreach(StringTools::typeList($result->command->args['name']) as $range)
                     {
-                        if ($range['exclamation']) echo '!';
-                        else $files[] = $range['text'].'.yml';
+                        if ($range['exclamation']) 
+                            {
+                                echo '!';
+                            }
+                        else 
+                        {
+                            $file = $range['text'].'.yml';
+                    
+                            /*
+                            $nginxParse = new Nginx;
+                            $nginxParse->ParseFromYAMLs($files);
+                            */
+                            
+                            $value = (count($result->command->args['values']) === 1) ? $result->command->args['values'][0] : $result->command->args['values'];
+                            
+                            $setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'), $value, 1));
+                            //var_dump($setting);
+                            
+                            /*
+                                VALIDATION GOES HERE, TRAVERSING THE TREE ALSO
+                            */
+                            
+                            /*
+                            $last = StringTools::ReturnLastBit($path);
+                            
+                            
+                            if ($path)
+                                $nginxParse->SetConfig($path, array($last => $result->command->args['values']));
+                            else LogCLI::Fail('No setting by name: '.end(array_keys($setting)));
+                            
+                            $nginxParse->ReturnYAML();
+                            */
+                            
+                            $nginx = new SettingsDB();
+                            $nginx->MergeFromYAML($file, false); //true for compilation
+                            $nginx->MergeFromArray($setting, false);
+                            $nginx->ReturnYAML($file);
+                            System::getCPUs();
+                            System::getCPUcores();
+                            /*
+                               add notification if modified the file or added a new option (important)
+                            */
+                        }
                     }
-                    
-                    $nginxParse->ParseFromYAMLs($files);
-                    
-                    $setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'),$result->command->args['values']));
-                    //var_dump($setting);
-                    $path = $nginxParse->TraverseDevinitionTree($setting);
-                    
-                    $last = StringTools::ReturnLastBit($path);
-                    
-                    if ($path)
-                        $nginxParse->SetConfig($path, array($last => $result->command->args['values']));
-                    else LogCLI::Fail('No setting by name: '.end(array_keys($setting)));
-                    
-                    $nginxParse->ReturnYAML();
                 }
                 break;
             
