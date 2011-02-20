@@ -6,12 +6,12 @@ use Symfony\Component\HttpFoundation\UniversalClassLoader;
 
 $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
-    'Tools'                          => __DIR__.'/lib',
-    'ConfigStyles'                   => __DIR__.'/lib',
-    'ConfigParser'                   => __DIR__.'/lib',
-    'ConfigScopes'                   => __DIR__.'/lib',
-    'Applications'                   => __DIR__.'/lib',
-    'HypoConf'                       => __DIR__.'/lib/HypoConf/lib',
+    'Tools'                          => __DIR__.'/lib/hypoconf/lib/HypoConf',
+    'ConfigStyles'                   => __DIR__.'/lib/hypoconf/lib/HypoConf',
+    'ConfigParser'                   => __DIR__.'/lib/hypoconf/lib/HypoConf',
+    'ConfigScopes'                   => __DIR__.'/lib/hypoconf/lib/HypoConf',
+    'Applications'                   => __DIR__.'/lib/hypoconf/lib/HypoConf',
+    'HypoConf'                       => __DIR__.'/lib/hypoconf/lib',
     'Symfony'                        => __DIR__.'/vendor/symfony/lib',
     'PEAR2'                          => __DIR__.'/vendor/pear2/lib',
     'PwFisher'                       => __DIR__.'/vendor/pwfisher/lib',

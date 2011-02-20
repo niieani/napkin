@@ -15,10 +15,12 @@ use Tools\FileOperation;
 //only for cores
 use Tools\System;
 
-use ConfigParser\ConfigParser;
-use ConfigScopes\ConfigScopes;
-use ConfigScopes\SettingsDB;
-use ConfigScopes\ApplicationsDB;
+//use ConfigParser\ConfigParser;
+//use ConfigScopes\ConfigScopes;
+//use ConfigScopes\SettingsDB;
+use HypoConf\ConfigParser;
+use HypoConf\ConfigScopes;
+//use HypoConf\ConfigScopes\ApplicationsDB;
 //use ConfigScopes\TemplatesDB;
 use PEAR2\Console\CommandLine;
 
@@ -313,7 +315,32 @@ try {
                 
                 if($result->command->args)
                 {
-                    ApplicationsDB::RegisterApplication('nginx');
+                    $ApplicationsDB = new ConfigScopes\ApplicationsDB();
+                    $ApplicationsDB->RegisterApplication('nginx');
+                    
+                    $config['root'] = array('user' => 'testowy', 'group' => 'group');
+                    $config['events'] = array('connections' => 1024, 'multi_accept' => false);
+                    //$config['http'] = array('user' => 'testowy', 'group' => 'group');
+                    //$config['server'][0][] = array('domain'=>'koma.net');
+                    $config['server'][0] = array('domain'=>'komalol.net', 
+                    'custom'=>
+'my custom code
+with new lines
+does
+indent
+properly :-)'
+                    );
+                    $config['server'][0]['listen'][0] = array('ip'=>'10.0.0.1', 'port'=>'80');
+                    $config['server'][0]['listen'][1] = array('ip'=>'10.0.0.1', 'port'=>'81');
+                    $config['server'][0]['listen'][2] = array('ip'=>'10.0.0.1', 'port'=>'85');
+                    $config['server'][1] = array('domain'=>'moma.com');
+                    $config['server'][1]['listen'][0] = array('ip'=>'192.168.0.1', 'port'=>'80');
+                    $config['server'][1]['listen'][1] = array('ip'=>'192.168.0.2', 'port'=>'81');
+                    $config['server'][2] = array('domain'=>'jajco.com');
+                    
+                    $configScopes = new ConfigScopes($ApplicationsDB->GetParsers('nginx'), $ApplicationsDB->GetTemplates('nginx'), &$config);
+                    $parsedFile = $configScopes->parseTemplateRecursively('root');
+                    echo $parsedFile;
                     
                     /*
                     foreach($result->command->args['file'] as $file)
