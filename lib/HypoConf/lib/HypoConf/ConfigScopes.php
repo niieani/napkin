@@ -18,6 +18,7 @@ class ConfigScopes
     protected $currentScope;
     
     protected $settingsList = array();
+    protected $templateTree = array();
     
     public function __construct(array $parsers, array $templates, array $config = null)
     {
@@ -68,6 +69,7 @@ class ConfigScopes
                 }
             }
         }
+        $this->makeTree();
         LogCLI::Result(LogCLI::INFO);
     }
     
@@ -99,6 +101,43 @@ class ConfigScopes
         else return preg_replace(StringTools::regexpify($pattern), trim(StringTools::indentLinesToMatchOther($pattern, $this->templates[$parent], $this->results[$child], 0)), $this->results[$parent]).PHP_EOL;
     }
     
+    // writes down the tree of templates including each other and saves a note about the ones that are iterative
+    public function makeTree($scope = 'root', $depth = 0, $parentIterative = false, $parent = '')
+    {
+        $depth++;
+        preg_match_all('/<<(?<name>\w+)>>/', $this->templates[$scope], $matches);
+        preg_match_all('/<!<(?<name>\w+)>!>/', $this->templates[$scope], $matchesIterative);
+        
+        $parentDisplay = (strlen($parent)>0) ? LogCLI::GREEN.$parent.LogCLI::RESET.' => ' : null;
+        
+        if(!empty($matches['name']))
+        {
+            foreach($matches['name'] as $match)
+            {
+                LogCLI::Message('('.$depth.') '.$parentDisplay.LogCLI::BLUE.$scope.LogCLI::RESET." => ".LogCLI::YELLOW.$match.LogCLI::RESET, 2);
+                $children = $this->makeTree($match, $depth, $parentIterative, $scope);
+                LogCLI::Result(LogCLI::INFO);
+            }
+            $return = $matches['name'];
+        }
+        
+        if(!empty($matchesIterative['name']))
+        {
+            foreach($matchesIterative['name'] as $match)
+            {
+                LogCLI::Message('('.$depth.') '.$parentDisplay.LogCLI::BLUE.$scope.LogCLI::RESET." => ".LogCLI::YELLOW.$match.LogCLI::RESET." => ".LogCLI::RED.'[iterative]'.LogCLI::RESET, 2);
+                $children = $this->makeTree($match, $depth, true, $scope);
+                LogCLI::Result(LogCLI::INFO);
+                
+                $this->settingsList[$match]['iterative'] = true;
+            }
+            $return = $matchesIterative['name'];
+        }
+        if(isset($return)) return $return;
+        return array();
+    }
+    
+    // similar to above, but also parses the tree and puts the actual elements in place
     public function parseTree($scope = 'root', $depth = 0, $parentIterative = false, $parent = '')
     {
         $depth++;
@@ -123,25 +162,29 @@ class ConfigScopes
                     {
                         $this->parsers[$match]->configuration = &$iterative[$match];
     
-                        LogCLI::MessageResult("Ordering parsing of: ".LogCLI::BLUE."${scope}_${id}_${match}".LogCLI::RESET." at depth = $depth", 3);
+                        LogCLI::Message("Ordering parsing of: ".LogCLI::BLUE."${scope}_${id}_${match}".LogCLI::RESET." at depth = $depth", 3);
                         
                         $parse = $this->parsers[$match]->parse();
                         $this->results["${scope}_${id}_${match}"] = trim($parse->parsed);
+                        
+                        LogCLI::Result(LogCLI::INFO);
                     }
                 }
                 elseif(!isset($this->results[$match]))
                 {
                     if(empty($this->parsers[$match]->configuration)) $this->parsers[$match]->configuration = &$this->config[$match];
                     
-                    LogCLI::MessageResult("Ordering parsing of: ".LogCLI::BLUE."${match}".LogCLI::RESET." at depth = $depth", 3);
+                    LogCLI::Message("Ordering parsing of: ".LogCLI::BLUE."${match}".LogCLI::RESET." at depth = $depth", 3);
                     
                     $this->results[$match] = $this->parsers[$match]->parse();
                     $this->results[$match] = trim($this->results[$match]->parsed);
                     foreach($children as $child)
                     {
-                        //LogCLI::MessageResult("Inserting: $child to ".LogCLI::BLUE.$match.LogCLI::RESET." at depth = $depth", 5);
+                        LogCLI::MessageResult("Inserting: $child to ".LogCLI::BLUE.$match.LogCLI::RESET." at depth = $depth", 5);
                         $this->results[$match] = $this->insertScope($child, $match, $this->patterns[$child]);
                     }
+                    
+                    LogCLI::Result(LogCLI::INFO);
                 }
             }
             $return = $matches['name'];
@@ -163,6 +206,7 @@ class ConfigScopes
                 foreach($this->config[$match] as $id => &$iterative)
                 {
                     LogCLI::Message('('.$depth.') '.$parentDisplay.LogCLI::BLUE.$scope.LogCLI::RESET." => ".LogCLI::YELLOW.$match.LogCLI::RESET." => [".LogCLI::GREEN_LIGHT.$id.LogCLI::RESET."]", 2);
+                    
                     LogCLI::MessageResult("Ordering parsing of: ".LogCLI::BLUE."${match}".LogCLI::RESET." at depth = $depth", 3);
                     
                     $this->parsers[$match]->configuration = &$iterative;
@@ -191,7 +235,7 @@ class ConfigScopes
             {
                 foreach($all_matches['name'] as $match)
                 {
-                    //LogCLI::MessageResult("Inserting: $match to ".LogCLI::BLUE.$scope.LogCLI::RESET, 5);
+                    LogCLI::MessageResult("Inserting: $match to ".LogCLI::BLUE.$scope.LogCLI::RESET, 5);
                     $this->results[$scope] = $this->insertScope($match, $scope);
                 }
             }

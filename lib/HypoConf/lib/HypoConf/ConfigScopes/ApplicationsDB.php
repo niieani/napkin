@@ -13,7 +13,6 @@ use \Tools\LogCLI;
 class ApplicationsDB
 {
     //protected static $DB = array();
-    //protected static $AppsDir = 'stems/';
     protected $DB = array();
     protected static $AppsDir = 'stems/';
     

@@ -234,6 +234,11 @@ $cmd['remove']->addArgument('name', array(
     'description' => 'the text to output'
 ));
 
+//remove
+$cmd['debug'] = $parser->addCommand('debug', array(
+    'description' => 'output the given string with a bar prefix'
+));
+
 
 // run the parser
 try {
@@ -244,10 +249,24 @@ try {
         LogCLI::SetVerboseLevel($result->options['verbose']);
         //else LogCLI::SetVerboseLevel(1);
     }
+    LogCLI::Message(LogCLI::GREEN.'Running the HypoConf engine...'.LogCLI::RESET, 2);
     if ($result->command_name) 
     {
         switch($result->command_name)
         {
+            case 'debug':
+                LogCLI::Message(LogCLI::GREEN.'WTF'.LogCLI::RESET, 2);
+                LogCLI::Message(LogCLI::GREEN.'WTF'.LogCLI::RESET, 2);
+                LogCLI::Message(LogCLI::GREEN.'WTF'.LogCLI::RESET, 2);
+                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
+                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
+                LogCLI::Result(LogCLI::OK);
+                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
+                LogCLI::Result(LogCLI::OK);
+                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
+                LogCLI::Result(LogCLI::OK);
+                
+                break;
             case 'help':
                 displayHelp($result->command->args['setting']);
                 break;
@@ -340,7 +359,7 @@ properly :-)'
                     
                     $configScopes = new ConfigScopes($ApplicationsDB->GetParsers('nginx'), $ApplicationsDB->GetTemplates('nginx'), &$config);
                     $parsedFile = $configScopes->parseTemplateRecursively('root');
-                    echo $parsedFile;
+                    //echo $parsedFile;
                     
                     /*
                     foreach($result->command->args['file'] as $file)
@@ -389,7 +408,9 @@ properly :-)'
         }
     }
     else displayHelp();
-
+    
+    LogCLI::Result(LogCLI::INFO);
+    
 } catch (Exception $exc) {
     $parser->displayError($exc->getMessage());
 }

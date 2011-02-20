@@ -28,7 +28,7 @@ class TemplatesDB
             $this->DB = ArrayTools::MergeArrays($this->DB, array($scopeName => $data));
             
             LogCLI::MessageResult('Templates DB updated with '.LogCLI::BLUE.$scopeName.LogCLI::RESET.' definition', 5, LogCLI::INFO);
-            LogCLI::Result(LogCLI::OK);
+            LogCLI::Result(LogCLI::OK, 4);
         }
         catch (Exception $e)
         {
