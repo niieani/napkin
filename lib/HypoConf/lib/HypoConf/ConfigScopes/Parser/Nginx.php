@@ -3,9 +3,23 @@ namespace HypoConf\ConfigScopes\Parser;
 
 use HypoConf\ConfigScopes;
 use HypoConf\ConfigParser;
+use Tools\StringTools;
 
 class Nginx extends ConfigScopes\Parser
 {
+    public function FixPath($path, $iterativeSetting = false)
+    {
+        if($iterativeSetting !== false)
+        {
+            if(($pos = strpos($path, 'nginx/server')) !== false && $pos === 0)
+                $path = substr_replace($path, 'server/'.$iterativeSetting, 0, strlen('nginx/server'));
+        }
+        elseif(($pos = strpos($path, 'server/')) !== false && $pos === 0)
+            $path = StringTools::DropLastBit($path, -1);
+        //    $path = substr_replace($path, 'server/'.$iterativeSetting.'/', 0, strlen('nginx/server'));
+            
+        return $path;
+    }
     public function __construct(array &$templates)
     {
         /*
@@ -17,21 +31,21 @@ class Nginx extends ConfigScopes\Parser
         /*
          * NGINX ROOT SCOPE PARSER
          */
-        $this->parsers['root'] = new ConfigParser(array(
+        $this->parsers['nginx'] = new ConfigParser(array(
             'name'        => 'nginx_root',
             'description' => 'nginx root',
             'version'     => '0.9',
-            'template'    => &$templates['root']
+            'template'    => &$templates['nginx']
         ));
         
-        $this->parsers['root']->addSetting('user', array(
+        $this->parsers['nginx']->addSetting('user', array(
             'path'        => 'user',
             'action'      => 'StoreStringOrFalse',
             'default'     => 'www-data',
             'description' => 'user that runs nginx'
         ));
         
-        $this->parsers['root']->addSetting('group', array(
+        $this->parsers['nginx']->addSetting('group', array(
             'path'        => 'group',
             'action'      => 'StoreStringOrFalse',
             'default'     => 'www-data',
@@ -42,39 +56,52 @@ class Nginx extends ConfigScopes\Parser
         /*
          * NGINX EVENTS SCOPE PARSER
          */
+        /*
         $this->parsers['events'] = new ConfigParser(array(
             'name'        => 'nginx_events',
             'description' => 'nginx events',
             'version'     => '0.9',
             'template'    => &$templates['events']
         ));
-        $this->parsers['events']->addSetting('connections', array(
+        */
+        $this->parsers['nginx']->addSetting('connections', array(
             'path'        => 'connections',
             'action'      => 'StoreInt',
             'default'     => 4096
         ));
-        $this->parsers['events']->addSetting('use', array(
+        $this->parsers['nginx']->addSetting('use', array(
             'path'        => 'use',
             'action'      => 'StoreStringOrFalse',
             'default'     => 'epoll'
         ));
-        $this->parsers['events']->addSetting('multi_accept', array(
+        $this->parsers['nginx']->addSetting('multi_accept', array(
             'path'        => 'multi_accept',
             'action'      => 'StoreOnOff'
+        ));
+        $this->parsers['nginx']->addSetting('errorlog', array(
+            'path'        => 'errorlog/file',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['nginx']->addSetting('errorlogstyle', array(
+            'path'        => 'errorlog/style',
+            'action'      => 'StoreStringOrFalse'
         ));
         
         /*
          * NGINX HTTP SCOPE PARSER
          */
+         /*
         $this->parsers['http'] = new ConfigParser(array(
             'name'        => 'nginx_http',
             'description' => 'nginx http',
             'version'     => '0.9',
             'template'    => &$templates['http']
         ));
+        */
         
         /*
-         * NGINX SERVER SCOPE PARSER
+         *   NGINX SERVER SCOPE PARSER [ITERATIVE]
+         * ITERATIVE SCOPES HAVE RELATIVE YML PATHS!
          */
         $this->parsers['server'] = new ConfigParser(array(
             'name'        => 'nginx_server',
@@ -92,7 +119,8 @@ class Nginx extends ConfigScopes\Parser
         
         
         /*
-         * NGINX SERVER/LISTEN SCOPE PARSER
+         *          NGINX SERVER/LISTEN SCOPE PARSER
+         * SCOPES WITH ITERATIVE PARENTS HAVE RELATIVE YML PATHS!
          */
         $this->parsers['listen'] = new ConfigParser(array(
             'name'        => 'nginx_listen',

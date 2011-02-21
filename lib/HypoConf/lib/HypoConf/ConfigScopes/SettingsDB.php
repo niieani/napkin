@@ -12,34 +12,52 @@ use \Symfony\Component\Yaml\Yaml;
 
 class SettingsDB
 {
-    protected $settingsDB = array();
+    public $DB = array();
     protected $defaultsDefinitions;
     
     public function __construct(array $preliminary = null)
     {
         if($preliminary !== null)
         {
-            $this->settingsDB = $preliminary;
+            $this->DB = $preliminary;
         }
     }
     
     public function ReturnYAML($path = false)
     {
         if($path === false)
-            FileOperation::ToYAMLFile($this->settingsDB, true);
+            FileOperation::ToYAMLFile($this->DB, true);
         else
-            FileOperation::ToYAMLFile($this->settingsDB, false, $path);
+        {
+            LogCLI::Message('Saving file: '.LogCLI::BLUE.$path.LogCLI::RESET, 0);
+            FileOperation::ToYAMLFile($this->DB, false, $path);
+            LogCLI::Result(LogCLI::OK);
+        }
     }
     
     // useful for pre-compilation of config file
-    public static function ApplyDefaultsToAllElements(array &$setting, $path, $nameOfObjectToApplyToAll = 'defaults')
+    public function ApplyDefaultsToAllElements(array &$setting, $path, $nameOfObjectToApplyToAll = 'defaults', $parentGiven = false)
     {
-        $parent = StringTools::DropLastBit($path);
-        $objectName = StringTools::DropLastBit($parent, -1);
+        if($parentGiven === false)
+        {
+            $parent = StringTools::DropLastBit($path);
+            $objectName = StringTools::DropLastBit($parent, -1);
+            
+            $parentConfig = ArrayTools::accessArrayElementByPath(&$setting, $parent);
+            //var_dump($parentConfig);
+        }
+        else
+        {
+            $parent = $path;
+            $objectName = $path;
+            // not actually the parent, need to change the naming scheme
+            $parentConfig = ArrayTools::accessArrayElementByPath(&$setting, $path);
+        }
         
-        $parentConfig = ArrayTools::accessArrayElementByPath($setting, $parent);
-        //var_dump($parentConfig);
-        $defaults = $parentConfig[$nameOfObjectToApplyToAll];
+        $thisDefault = ArrayTools::accessArrayElementByPath(&$this->defaultsDefinitions, $parent);
+        //$defaults = $parentConfig[$nameOfObjectToApplyToAll];
+        $defaults = $thisDefault[$nameOfObjectToApplyToAll];
+        
         foreach($parentConfig as $key => &$config)
         {
             if(is_numeric($key))
@@ -50,20 +68,35 @@ class SettingsDB
                 $config = ArrayTools::MergeArrays($defaults, $config);
             }
         }
-        //var_dump($parentConfig);
+        ArrayTools::replaceArrayElementByPath($this->DB, $parent, $parentConfig); 
     }
     
-    public function SetSettingByPath($path, $setting)
+    public function MergeOneByPath($path, $setting)
     {
         // verify this works?
-        ArrayTools::createArrayElementByPath($this->settingsDB, $path, $setting, 0); //skip any or not?
-        var_dump($this->settingsDB);
+        ArrayTools::createArrayElementByPath($this->DB, $path, $setting, 0); //skip any or not?
+        //var_dump($this->DB);
+    }
+    
+    public function RemoveByPath($path)
+    {
+        //var_dump($this->DB);
+        ArrayTools::unsetArrayElementByPath($this->DB, $path); //skip any or not?
+        //var_dump($this->DB);
+        //var_dump($this->DB);
+    }
+    
+    public function MergeOneIterativeByPath($path, $setting)
+    {
+        // verify this works?
+        ArrayTools::createArrayElementByPath($this->DB, $path, array($setting), 0, true); //do not override, iterative element!
+        //var_dump($this->DB);
     }
     
     public function MergeFromArray(array $settingsArray, $addDefaults = false)
     {
         $this->MergeDefaultsDB($settingsArray, $addDefaults);
-        $this->settingsDB = ArrayTools::MergeArrays($this->settingsDB, $settingsArray);
+        $this->DB = ArrayTools::MergeArrays($this->DB, $settingsArray);
     }
     
     public function MergeDefaultsDB(array $settingsArray, $addDefaults = false)
@@ -78,25 +111,41 @@ class SettingsDB
                 // let's copy all the definitions and merge them, overriding any previously set settings in this instance
                 ArrayTools::createArrayElementByPath($this->defaultsDefinitions, $defaultsPath, ArrayTools::accessArrayElementByPath($settingsArray, $defaultsPath), 0);
                 
+                // remove the defaults, not needed anymore, have them in a separated array
+                self::RemoveByPath($defaultsPath);
+                
                 // optionally apply them
                 if($addDefaults === true)
                 {
-                    self::ApplyDefaultsToAllElements(&$settingsArray, $defaultsPath);
+                    self::ApplyDefaultsToAllElements(&$this->DB, $defaultsPath);
                 }
             }
         }
     }
     
-    public function MergeFromYAML($file, $addDefaults = false)
+    //public function ApplyAllDefaultsToAllElements()
+    
+    public function MergeFromYAML($file, $path = false, $addDefaults = false, $mergeDefaults = true)
     {
         LogCLI::Message('Parsing YAML file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
         try
         {
             $config = YAML::load($file);
             
-            $this->MergeDefaultsDB($config, $addDefaults);
+            // if the file is empty create an empty array:
+            if(empty($config)) $config = array();
             
-            $this->settingsDB = ArrayTools::MergeArrays($this->settingsDB, $config);
+            if($path === false)
+            {
+                $this->DB = ArrayTools::MergeArrays($this->DB, $config);
+                if($mergeDefaults === true) $this->MergeDefaultsDB($config, $addDefaults);
+            }
+            else
+            {
+                self::MergeOneIterativeByPath($path, &$config);
+                if($addDefaults === true) self::ApplyDefaultsToAllElements(&$this->DB, $path, 'defaults', true); //defaultsDefinitions
+                //var_dump($this->defaultsDefinitions);
+            }
             
             LogCLI::MessageResult('Settings DB updated!', 5, LogCLI::INFO);
             LogCLI::Result(LogCLI::OK);
@@ -108,7 +157,7 @@ class SettingsDB
         }
     }
     
-    public function MergeFromYAMLs(array $files, $addDefaults = false)
+    public function MergeFromYAMLs(array $files, $path = false, $addDefaults = false, $mergeDefaults = true)
     {
         foreach($files as $i => $file)
         {
@@ -116,7 +165,7 @@ class SettingsDB
             if (file_exists($file))
             {
                 LogCLI::Result(LogCLI::OK);
-                $this->MergeFromYAML($file, $addDefaults);
+                $this->MergeFromYAML($file, $path, $addDefaults, $mergeDefaults);
             }
             else 
             {

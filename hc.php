@@ -9,6 +9,7 @@ require_once __DIR__.'/autoload.php';
 //use Symfony\Component\Yaml\Dumper;
 use Tools\LogCLI;
 use Tools\StringTools;
+use Tools\ArrayTools;
 use Tools\Tree;
 use Tools\FileOperation;
 
@@ -18,8 +19,10 @@ use Tools\System;
 //use ConfigParser\ConfigParser;
 //use ConfigScopes\ConfigScopes;
 //use ConfigScopes\SettingsDB;
+
 use HypoConf\ConfigParser;
 use HypoConf\ConfigScopes;
+//use HypoConf;
 //use HypoConf\ConfigScopes\ApplicationsDB;
 //use ConfigScopes\TemplatesDB;
 use PEAR2\Console\CommandLine;
@@ -281,22 +284,91 @@ try {
                     
                     foreach(StringTools::typeList($result->command->args['name']) as $range)
                     {
+                        $ApplicationsDB = new ConfigScopes\ApplicationsDB();
+                        $configScopesNginx = $ApplicationsDB->LoadApplication('nginx');
+                        //var_dump ($settingsNginx);
+                        
                         if ($range['exclamation']) 
                             {
                                 echo '!';
                             }
                         else 
                         {
-                            $file = $range['text'].'.yml';
-                    
-                            /*
-                            $nginxParse = new Nginx;
-                            $nginxParse->ParseFromYAMLs($files);
-                            */
+                            if($range['text'] == 'config')
+                            {
+                                $settingsNginx = $ApplicationsDB->GetAllSettings('nginx');
+                                LogCLI::MessageResult('Listing available settings.', 6, LogCLI::INFO);
+                                /*
+                                foreach(reset($settingsNginx) as $setting);
+                                {
+                                    LogCLI::MessageResult(LogCLI::YELLOW.'Setting: '.LogCLI::BLUE.$setting.LogCLI::RESET, 6, LogCLI::INFO);
+                                }
+                                */
+                                $file = $range['text'].'.yml';
+                                
+                                $value = (count($result->command->args['values']) === 1) ? $result->command->args['values'][0] : $result->command->args['values'];
+                                
+                                //$setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'), $value, 1));
+                                
+                                $settingPath = implode('/', StringTools::delimit($result->command->args['chain'],'.'));
+                                //var_dump(ArrayTools::GetMultiDimentionalElements($setting));
+                                
+                                $searchResults = ArrayTools::TraverseTreeWithPath(&$settingsNginx, $settingPath);
+                                if(empty($searchResults)) LogCLI::MessageResult(LogCLI::YELLOW.'Sorry, no settings found for: '.LogCLI::BLUE.$settingPath.LogCLI::RESET, 0, LogCLI::INFO);
+                                elseif(count($searchResults)>1) LogCLI::MessageResult(LogCLI::YELLOW.'Sorry, multiple settings found for: '.LogCLI::BLUE.$settingPath.LogCLI::RESET.'. Try to be more specific.', 0, LogCLI::INFO);
+                                else
+                                {
+                                    $path = $ApplicationsDB->FixPath('nginx', reset($searchResults), 'defaults');
+                                    LogCLI::MessageResult('Fixed path: '.LogCLI::YELLOW.reset($searchResults).' => '.LogCLI::BLUE.$path.LogCLI::RESET, 6, LogCLI::INFO);
+                                    $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
+                                    
+                                    $nginx = new ConfigScopes\SettingsDB();
+                                    // load the original file first
+                                    $nginx->MergeFromYAML($file, false, false, false); //true for compilation
+                                    
+                                    // change the setting
+                                    $nginx->MergeFromArray($setting, false);
+                                    
+                                    // save the file with the new setting
+                                    $nginx->ReturnYAML($file);
+                                }
+                            }
+                            else // opening a site or default site
+                            {
+                                $settingsNginx = $ApplicationsDB->GetSettingsList('nginx', 'server');
+                                LogCLI::MessageResult('Listing available settings.', 6, LogCLI::INFO);
+                                
+                                
+                                $file = $range['text'].'.yml';
                             
-                            $value = (count($result->command->args['values']) === 1) ? $result->command->args['values'][0] : $result->command->args['values'];
+                                $value = (count($result->command->args['values']) === 1) ? $result->command->args['values'][0] : $result->command->args['values'];
+                                
+                                //$setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'), $value, 1));
+                                
+                                $settingPath = implode('/', StringTools::delimit($result->command->args['chain'],'.'));
+                                //var_dump(ArrayTools::GetMultiDimentionalElements($setting));
+                                
+                                $searchResults = ArrayTools::TraverseTreeWithPath(&$settingsNginx, $settingPath);
+                                if(empty($searchResults)) LogCLI::MessageResult(LogCLI::YELLOW.'Sorry, no settings found for: '.LogCLI::BLUE.$settingPath.LogCLI::RESET, 0, LogCLI::INFO);
+                                elseif(count($searchResults)>1) LogCLI::MessageResult(LogCLI::YELLOW.'Sorry, multiple settings found for: '.LogCLI::BLUE.$settingPath.LogCLI::RESET.'. Try to be more specific.', 0, LogCLI::INFO);
+                                else
+                                {
+                                    $path = $ApplicationsDB->FixPath('nginx', reset($searchResults));
+                                    LogCLI::MessageResult('Fixed path: '.LogCLI::YELLOW.reset($searchResults).' => '.LogCLI::BLUE.$path.LogCLI::RESET, 6, LogCLI::INFO);
+                                    $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
+                                    
+                                    $nginx = new ConfigScopes\SettingsDB();
+                                    // load the original file first
+                                    $nginx->MergeFromYAML($file, false, false, false); //true for compilation
+                                    
+                                    // change the setting
+                                    $nginx->MergeFromArray($setting, false);
+                                    
+                                    // save the file with the new setting
+                                    $nginx->ReturnYAML($file);
+                                }
+                            }
                             
-                            $setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'), $value, 1));
                             //var_dump($setting);
                             
                             /*
@@ -314,12 +386,8 @@ try {
                             $nginxParse->ReturnYAML();
                             */
                             
-                            $nginx = new SettingsDB();
-                            $nginx->MergeFromYAML($file, false); //true for compilation
-                            $nginx->MergeFromArray($setting, false);
-                            $nginx->ReturnYAML($file);
-                            System::getCPUs();
-                            System::getCPUcores();
+                            //System::getCPUs();
+                            //System::getCPUcores();
                             /*
                                add notification if modified the file or added a new option (important)
                             */
@@ -335,8 +403,8 @@ try {
                 if($result->command->args)
                 {
                     $ApplicationsDB = new ConfigScopes\ApplicationsDB();
-                    $ApplicationsDB->RegisterApplication('nginx');
-                    
+                    $configScopesNginx = $ApplicationsDB->LoadApplication('nginx');
+                    /*
                     $config['root'] = array('user' => 'testowy', 'group' => 'group');
                     $config['events'] = array('connections' => 1024, 'multi_accept' => false);
                     //$config['http'] = array('user' => 'testowy', 'group' => 'group');
@@ -356,18 +424,27 @@ properly :-)'
                     $config['server'][1]['listen'][0] = array('ip'=>'192.168.0.1', 'port'=>'80');
                     $config['server'][1]['listen'][1] = array('ip'=>'192.168.0.2', 'port'=>'81');
                     $config['server'][2] = array('domain'=>'jajco.com');
+                    */
                     
-                    $configScopes = new ConfigScopes($ApplicationsDB->GetParsers('nginx'), $ApplicationsDB->GetTemplates('nginx'), &$config);
-                    $parsedFile = $configScopes->parseTemplateRecursively('root');
-                    //echo $parsedFile;
+                    //$configScopes = new ConfigScopes($ApplicationsDB->GetParsers('nginx'), $ApplicationsDB->GetTemplates('nginx'), &$config);
                     
-                    /*
                     foreach($result->command->args['file'] as $file)
                     {
-                        $files[] = $file;
+                        $files[] = $file; //.'.yml';
                     }
-                    $templatesDB->AddFromFiles($files);
-                    */
+                    
+                    $nginx = new ConfigScopes\SettingsDB();
+                    $nginx->MergeFromYAML('config.yml', false, true, true); //true for compilation
+                    $nginx->MergeFromYAMLs($files, 'server', true, true); //true for compilation
+                    //$nginx->MergeFromYAMLs($files, 'server', true, true); //true for compilation
+                    
+                    
+                    $ApplicationsDB->LoadConfig(&$nginx->DB);
+                    
+                    $parsedFile = $configScopesNginx->parseTemplateRecursively('nginx');
+                    echo $parsedFile;
+                    
+                    //$templatesDB->AddFromFiles($files);
                     
                     /*
                     $templatesDB = new TemplatesDB();

@@ -33,7 +33,7 @@ class ArrayTools
     }
     
     // this should be actually renamed to mergeArrayElementByPath
-    public static function createArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0) //$trimPath=0
+    public static function createArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0, $noOverride = false) //$trimPath=0
     {
         // Check path
         if (!$path) user_error("Missing array path for array", E_USER_WARNING);
@@ -53,8 +53,65 @@ class ArrayTools
             // Update path
             $path =& $path[$e];
         }
-        $path = (is_array($value)) ? self::MergeArrays($path, $value) : $value;
+        $path = (is_array($value))
+                ? (($noOverride === false) ? self::MergeArrays($path, $value) : array_merge_recursive($path, $value)) 
+                : $value;
         
+        // Everything checked out, return value
+        return $path;
+    }
+    
+    public static function replaceArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0)
+    {
+        // Check path
+        if (!$path) user_error("Missing array path for array", E_USER_WARNING);
+        
+        // Vars
+        $pathElements = explode('/', $path);
+        $path =& $arr;
+        
+        if($skipN > 0) $pathElements = array_splice($pathElements, 0, count($pathElements)-$skipN);
+        
+        // Go through path elements
+        foreach ($pathElements as $e)
+        {
+            // Check set
+            if (!isset($path[$e])) $path[$e] = array();
+            
+            // Update path
+            $path =& $path[$e];
+        }
+        $path = $value;
+        
+        // Everything checked out, return value
+        return $path;
+    }
+    
+    public static function unsetArrayElementByPath(&$arr, $path = null, $skipN = 0)
+    {
+        // Check path
+        if (!$path) user_error("Missing array path for array", E_USER_WARNING);
+        
+        // Vars
+        $pathElementsAll = explode('/', $path);
+        $path =& $arr;
+                
+        $pathElements = array_splice($pathElementsAll, 0, count($pathElementsAll)-1-$skipN);
+        //var_dump($pathElements);
+        // Go through path elements
+        foreach ($pathElements as $e)
+        {
+            // Check set
+            if (!isset($path[$e])) return $path; //$path[$e] = array();
+            //var_dump($path);
+            // Update path
+            $path =& $path[$e];
+        }
+        
+        //var_dump($path);
+        //var_dump(end($pathElementsAll));
+        unset($path[end($pathElementsAll)]);
+        //var_dump($path);
         // Everything checked out, return value
         return $path;
     }
@@ -80,6 +137,32 @@ class ArrayTools
         //}
     }
     
+    public static function GetMultiDimentionalElementsWithChildren(&$ArrayInput)
+    {
+        //if(is_array($ArrayInput) && !is_object($ArrayInput))
+        //{
+        $recursive = new \ParentIterator(new \RecursiveArrayIterator($ArrayInput));
+        $iterator  = new \RecursiveIteratorIterator($recursive, \RecursiveIteratorIterator::SELF_FIRST);
+        $elements = array();
+        foreach ($iterator as $item)
+        {
+            // Build path from "parent" array keys
+            for ($path = "", $i = 0; $i <= $iterator->getDepth(); $i++) {
+                
+                $path .= "/" . $iterator->getSubIterator($i)->key();
+            }
+            foreach($iterator->current() as $key => $value)
+            {
+                if(!is_array($value))
+                {
+                    $subpath = $path . "/" . $value;
+                    $elements[] = ltrim($subpath, "/");
+                }
+            }
+        }
+        return $elements;
+        //}
+    }
     
     /**
      * Merges any number of arrays of any dimensions, the later overwriting
@@ -135,12 +218,35 @@ class ArrayTools
     }
     
     
-    public static function TraverseTree(array &$settings, $lookFor = 'defaults')
+    public static function TraverseTreeWithPath(array &$paths, $lookForPath = 'somepath/something')
+    {
+        LogCLI::Message('Traversing definition tree in search for the partial path: '.LogCLI::YELLOW.$lookForPath.LogCLI::RESET, 6);
+        
+        $matches = array();
+        foreach(self::GetMultiDimentionalElementsWithChildren($paths) as $path)
+        {
+            //echo $path.PHP_EOL;
+            if (strpos($path, $lookForPath) !== false)
+            {
+                LogCLI::MessageResult('Match found at: '.LogCLI::BLUE.$path.LogCLI::RESET, 2, LogCLI::INFO);
+                $matches[] = $path;
+            }
+        }
+        
+        if(empty($matches)) LogCLI::MessageResult(LogCLI::YELLOW.'No matches found for partial path: '.LogCLI::BLUE.$lookForPath.LogCLI::RESET, 2, LogCLI::INFO);
+        
+        LogCLI::Result(LogCLI::INFO);
+        
+        if(!empty($matches)) return $matches;
+        else return false;
+    }
+    
+    public static function TraverseTree(array &$paths, $lookFor = 'defaults')
     {
         LogCLI::Message('Traversing definition tree in search for: '.LogCLI::YELLOW.$lookFor.LogCLI::RESET, 6);
         
         $matches = array();
-        foreach(self::GetMultiDimentionalElements($settings) as $path)
+        foreach(self::GetMultiDimentionalElements($paths) as $path)
         {
             $pathElements = explode('/', $path);
             //$lastElement = end($pathElements);
@@ -162,7 +268,7 @@ class ArrayTools
             }
         }
         
-        LogCLI::Result(LogCLI::OK);
+        LogCLI::Result(LogCLI::INFO);
         
         if(!empty($matches)) return $matches;
         else return false;

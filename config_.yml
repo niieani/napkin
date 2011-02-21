@@ -1,0 +1,34 @@
+nginx:
+    _root:
+      user:         www-data
+      group:        www-data
+      pid:          /var/masakra/nginx.pid
+      options:      default
+      connections:
+        limit:  4098
+        multi:  on
+      log:
+          error:
+             file:      /var/log.log
+             style:     moj_styl_sznyl
+    sites:
+       domain.com:
+          listen:
+            1:
+              port: 80
+              omaga: test
+            2: 
+              port: 90
+            3: 
+              port:    130
+              options: mama
+          catchall:  true
+          ssl:       true
+          options:   false
+          domain:
+            1: domain.com
+            2: .other.com
+       domain2.com:
+          options:   false
+          catchall:  false
+          domain:    domain2.com
