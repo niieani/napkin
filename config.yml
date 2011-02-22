@@ -1,5 +1,5 @@
 nginx:
-  user: lolMAX
+  user: onpa
   group: tez-www-srejta
   connections: '87'
   multi_accept: '0'
@@ -9,4 +9,4 @@ nginx:
 server:
   defaults:
     listen:
-      ip: 123.123.123.123
+      ip: 85.12.12.12

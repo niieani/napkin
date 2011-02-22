@@ -93,6 +93,8 @@ class SettingsDB
         //var_dump($this->DB);
     }
     
+    //public function ReplaceFromArray(array $settingsArray, $addDefaults = false)
+    
     public function MergeFromArray(array $settingsArray, $addDefaults = false)
     {
         $this->MergeDefaultsDB($settingsArray, $addDefaults);

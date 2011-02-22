@@ -174,7 +174,9 @@ class ArrayTools
      * @access public
      * @return array Resulting array, once all have been merged
      */
-    public static function MergeArrays($arr1, $arr2) {
+    
+    public static function MergeArrays($arr1, $arr2) 
+    {
         // Holds all the arrays passed
         //$params = & func_get_args ();
         if(!is_array($arr1))
@@ -196,47 +198,65 @@ class ArrayTools
         foreach ( $params as $array ) {
             foreach ( $array as $key => $value ) {
                 // Numeric keyed values are added (unless already there)
-                if (is_numeric ( $key ) && (! in_array ( $value, $return ))) {
+                //if (is_numeric ( $key ) && (! in_array ( $value, $return ))) {
+                /*
                     if (is_array ( $value ) && isset($return[$key])) {
                         $return [] = self::MergeArrays ( $return[$key], $value ); // double $$key ?
                     } else {
                         $return [] = $value;
                     }
-                   
+                */ 
                 // String keyed values are replaced
-                } else {
+                //} else {
                     if (isset ( $return [$key] ) && is_array ( $value ) && is_array ( $return [$key] )) {
                         $return [$key] = self::MergeArrays ( $return[$key], $value ); // double $$key ?
                     } else {
                         $return [$key] = $value;
                     }
-                }
+                //}
             }
         }
        
         return $return;
     }
     
+    public static function max_key($array) {
+        foreach ($array as $key => $val)
+        {
+            if ($val == max($array)) return $key;
+        }
+    }
     
     public static function TraverseTreeWithPath(array &$paths, $lookForPath = 'somepath/something')
     {
         LogCLI::Message('Traversing definition tree in search for the partial path: '.LogCLI::YELLOW.$lookForPath.LogCLI::RESET, 6);
         
         $matches = array();
-        foreach(self::GetMultiDimentionalElementsWithChildren($paths) as $path)
+        $matchAccuracy = array();
+        $lookForPathParts = array_reverse(explode('/', $lookForPath));
+        
+        foreach(self::GetMultiDimentionalElementsWithChildren($paths) as $num => $path)
         {
-            //echo $path.PHP_EOL;
             if (strpos($path, $lookForPath) !== false)
             {
                 LogCLI::MessageResult('Match found at: '.LogCLI::BLUE.$path.LogCLI::RESET, 2, LogCLI::INFO);
-                $matches[] = $path;
+                $thisPathParts = array_reverse(explode('/', $path));
+                foreach($lookForPathParts as $i => &$pathPart)
+                {
+                    if($thisPathParts[$i] == $pathPart)
+                    $matchAccuracy[$num] = $i+1;
+                }
+                $matches[$num] = $path;
             }
         }
         
         if(empty($matches)) LogCLI::MessageResult(LogCLI::YELLOW.'No matches found for partial path: '.LogCLI::BLUE.$lookForPath.LogCLI::RESET, 2, LogCLI::INFO);
+        else
+        {
+            LogCLI::MessageResult('Best match found at: '.LogCLI::BLUE.$matches[self::max_key($matchAccuracy)].LogCLI::RESET, 2, LogCLI::INFO);
+        }
         
         LogCLI::Result(LogCLI::INFO);
-        
         if(!empty($matches)) return $matches;
         else return false;
     }
@@ -294,6 +314,7 @@ class ArrayTools
         return $Arr1;
     }
     */
+    
     /**
      * Merges any number of arrays / parameters recursively, replacing
      * entries with string keys with values from latter arrays.
@@ -329,6 +350,6 @@ class ArrayTools
         }
       }
       return $base;
-    }*/
-    
+    }
+    */
 }

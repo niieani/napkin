@@ -52,8 +52,9 @@ class StringTools
     public static function ReturnLastBit($path)
     {
         $pathElements = explode('/', $path);
-        $last = count($pathElements)-1;
-        return $pathElements[$last];
+        //$last = count($pathElements)-1;
+        //return $pathElements[$last];
+        return end($pathElements);
     }
     
     public static function DropLastBit($path, $skipN = 1)
@@ -115,25 +116,47 @@ class StringTools
     
     public static function typeList($value=false, $sign = '@', $delimit = ',')
     {
-        $list = self::delimit($value, $delimit);
+        if (!$delimit) $list = array($value);
+        else $list = self::delimit($value, $delimit);
         $info = array();
         foreach ($list as $k => $v)
         {
-        //	if(strstr($v, $sign))
-        //	{
-        	$pos = strpos($v, $sign);
-        	if ($pos === 0)
-        	{
-        		$info[$k]['exclamation'] = true;
-        		$info[$k]['text'] = substr($v, 1);
-        		//$info[$k]['text'] = strstr_after($v, '!');
-        	}
-        //	}
-        	else
-        	{
-        		$info[$k]['exclamation'] = false;
-        		$info[$k]['text'] = $v;
-        	}
+        //if(strstr($v, $sign))
+        //{
+            if(is_array($sign)) 
+            {
+                $signs = $sign;
+                foreach ($signs as &$sign)
+                {
+                	$pos = strpos($v, $sign);
+                	if ($pos === 0)
+                	{
+                		$info[$k]['exclamation'] = $sign;
+                		$info[$k]['text'] = substr($v, 1);
+                    	break;
+                	}
+                	else
+                	{
+                		$info[$k]['exclamation'] = false;
+                		$info[$k]['text'] = $v;
+                	}
+                }
+            }
+            else
+            {
+                $pos = strpos($v, $sign);
+                if ($pos === 0)
+                {
+                	$info[$k]['exclamation'] = $sign;
+                	$info[$k]['text'] = substr($v, 1);
+                }
+                else
+                {
+                	$info[$k]['exclamation'] = false;
+                	$info[$k]['text'] = $v;
+                }
+            }
+        //}
         }
         return ($info);
     }

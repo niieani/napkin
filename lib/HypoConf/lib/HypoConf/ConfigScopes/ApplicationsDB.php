@@ -63,7 +63,7 @@ class ApplicationsDB
         return $this->DB[$application]['scopesInstance'];
     }
     
-    public function FixPath($application, $path, $iterativeSetting = false)
+    public function FixPath($application, $path, $iterativeSetting = 0)
     {
         return $this->DB[$application]['parserInstance']->FixPath($path, $iterativeSetting);
     }

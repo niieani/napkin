@@ -288,7 +288,7 @@ try {
                         $configScopesNginx = $ApplicationsDB->LoadApplication('nginx');
                         //var_dump ($settingsNginx);
                         
-                        if ($range['exclamation']) 
+                        if ($range['exclamation'] !== false) 
                             {
                                 echo '!';
                             }
@@ -309,8 +309,19 @@ try {
                                 $value = (count($result->command->args['values']) === 1) ? $result->command->args['values'][0] : $result->command->args['values'];
                                 
                                 //$setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'), $value, 1));
+                                $chain = StringTools::delimit($result->command->args['chain'], '.');
                                 
-                                $settingPath = implode('/', StringTools::delimit($result->command->args['chain'],'.'));
+                                $settingPath = implode('/', $chain);
+                                
+                                // are we adding a setting or replacing/merging ? [TODO - add check if the setting is iterative at all]
+                                $testtype = end(StringTools::typeList(reset($chain), '+', false));
+                                
+                                if($testtype['exclamation'] !== false)
+                                {
+                                    $settingPath = substr($settingPath, 1); //remove the + in the beginning
+                                    $doNotReplace = true;
+                                }
+                                
                                 //var_dump(ArrayTools::GetMultiDimentionalElements($setting));
                                 
                                 $searchResults = ArrayTools::TraverseTreeWithPath(&$settingsNginx, $settingPath);
@@ -343,27 +354,53 @@ try {
                             
                                 $value = (count($result->command->args['values']) === 1) ? $result->command->args['values'][0] : $result->command->args['values'];
                                 
-                                //$setting = (Tree::addToTreeSet(StringTools::delimit($result->command->args['chain'],'.'), $value, 1));
+                                $chain = StringTools::delimit($result->command->args['chain'], '.');
                                 
-                                $settingPath = implode('/', StringTools::delimit($result->command->args['chain'],'.'));
-                                //var_dump(ArrayTools::GetMultiDimentionalElements($setting));
+                                $settingPath = implode('/', $chain);
+                                
+                                // are we adding a setting or replacing/merging ? [TODO - add check if the setting is iterative at all]
+                                $testtype = end(StringTools::typeList(reset($chain), '+', false));
+                                
+                                if($testtype['exclamation'] !== false)
+                                {
+                                    $settingPath = substr($settingPath, 1); //remove the + in the beginning
+                                    $doNotReplace = true;
+                                }
+                                else $doNotReplace = false;
                                 
                                 $searchResults = ArrayTools::TraverseTreeWithPath(&$settingsNginx, $settingPath);
                                 if(empty($searchResults)) LogCLI::MessageResult(LogCLI::YELLOW.'Sorry, no settings found for: '.LogCLI::BLUE.$settingPath.LogCLI::RESET, 0, LogCLI::INFO);
                                 elseif(count($searchResults)>1) LogCLI::MessageResult(LogCLI::YELLOW.'Sorry, multiple settings found for: '.LogCLI::BLUE.$settingPath.LogCLI::RESET.'. Try to be more specific.', 0, LogCLI::INFO);
                                 else
                                 {
-                                    $path = $ApplicationsDB->FixPath('nginx', reset($searchResults));
+                                    $path = $ApplicationsDB->FixPath('nginx', reset($searchResults), 0);
                                     LogCLI::MessageResult('Fixed path: '.LogCLI::YELLOW.reset($searchResults).' => '.LogCLI::BLUE.$path.LogCLI::RESET, 6, LogCLI::INFO);
-                                    $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
                                     
                                     $nginx = new ConfigScopes\SettingsDB();
+                                    
                                     // load the original file first
                                     $nginx->MergeFromYAML($file, false, false, false); //true for compilation
                                     
-                                    // change the setting
-                                    $nginx->MergeFromArray($setting, false);
-                                    
+                                    if($doNotReplace === true)
+                                    { //adding without removing
+                                        // 1. cut the last part and store it $lastbit
+                                        $lastbit = StringTools::ReturnLastBit($path);
+                                        $path = StringTools::DropLastBit($path, 2); //droping the fixed 0 and the last key
+                                        
+                                        // 2. arraize $value
+                                        $setting = array($lastbit => $value);
+                                        
+                                        // 3. add value
+                                        $nginx->MergeOneIterativeByPath($path, $setting);
+                                    }
+                                    else
+                                    {
+                                        // make the tree
+                                        $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
+                                        
+                                        // add/replace the setting
+                                        $nginx->MergeFromArray($setting, false);
+                                    }
                                     // save the file with the new setting
                                     $nginx->ReturnYAML($file);
                                 }
