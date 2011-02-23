@@ -6,8 +6,10 @@ nginx:
   errorlog:
     file: pliczek.log
     style: styl-szmyl
-  use: epoll
+  use: drugi
 server:
   defaults:
     listen:
       port: '100'
+    php:
+      index: babka.php

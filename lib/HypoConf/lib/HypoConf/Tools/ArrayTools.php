@@ -54,7 +54,7 @@ class ArrayTools
             $path =& $path[$e];
         }
         $path = (is_array($value))
-                ? (($noOverride === false) ? self::MergeArrays($path, $value) : array_merge_recursive($path, $value)) 
+                ? (($noOverride === false) ? self::MergeArrays($path, $value) : array_merge_recursive((array)$path, (array)$value)) 
                 : $value;
         
         // Everything checked out, return value

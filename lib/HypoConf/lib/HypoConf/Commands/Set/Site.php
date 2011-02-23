@@ -42,10 +42,19 @@ class Site
             { //adding without removing
                 // 1. cut the last part and store it $lastbit
                 $lastbit = StringTools::ReturnLastBit($path);
-                $path = StringTools::DropLastBit($path, 2); //droping the fixed 0 and the last key
-                
-                // 2. arraize $value
-                $setting = array($lastbit => $value);
+                $secondlast = StringTools::ReturnLastBit($path, 2);
+                //var_dump($secondlast);
+                if($secondlast !== false && is_numeric($secondlast))
+                {
+                    $path = StringTools::DropLastBit($path, 2); //droping the fixed 0 and the last key
+                    
+                    // 2. arraize $value
+                    $setting = array($lastbit => $value);
+                }
+                else
+                {
+                    $setting = $value;
+                }
                 
                 // 3. add value
                 $nginx->MergeOneIterativeByPath($path, $setting);

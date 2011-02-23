@@ -72,9 +72,19 @@ class ParseTools
             }
             
             $format = preg_replace('#\[\[.*?\]\]#', '', $format);
+            $return = vsprintf($format, array_values($args));
+            if($return == $format)
+            {
+                //LogCLI::MessageResult('No dynamic content.', 6, LogCLI::INFO);
+                LogCLI::Result(LogCLI::OK);
+            }
+            else
+            {
+                LogCLI::MessageResult('Parsed content: '.LogCLI::BLUE.$return.LogCLI::RESET, 6, LogCLI::INFO);
+                LogCLI::Result(LogCLI::OK);
+            }
+            return $return;
             
-            LogCLI::Result(LogCLI::INFO);
-            return vsprintf($format, array_values($args));
         }
         else
         {

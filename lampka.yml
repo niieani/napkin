@@ -1,13 +1,20 @@
 listen:
   -
-    port: '198'
+    port: '150'
   -
     port: '101'
   -
     port: '102'
   -
     port: '100'
-domain: opal.com
-php:
-  index: tra.php
-custom: 'listen me here\nnewline'
+  -
+    port: '150'
+  -
+    port: '800'
+domain:
+  - opal.com
+  - druga-domena.com
+custom:
+  - 'listen me here\nnewline'
+  - drugi
+php: '0'

@@ -49,12 +49,15 @@ class StringTools
         return rtrim($output);
     }
     
-    public static function ReturnLastBit($path)
+    public static function ReturnLastBit($path, $n = 1)
     {
         $pathElements = explode('/', $path);
-        //$last = count($pathElements)-1;
-        //return $pathElements[$last];
-        return end($pathElements);
+        $last = count($pathElements)-$n;
+        if($last >= 0)
+            return $pathElements[$last];
+        else return false;
+        
+        //return end($pathElements);
     }
     
     public static function DropLastBit($path, $skipN = 1)
@@ -77,8 +80,14 @@ class StringTools
         return $path.'/'.$string;
     }
     
+    public static function MakeList($args, $delimiter = ' ')
+    {
+        if(is_array($args)) return implode($delimiter, $args);
+        else return $args;
+    }
     
-    public static function makeList($args, $delimiter = ' ')
+    /*
+    public static function MakeList($args, $delimiter = ' ')
     {
         foreach($args as $k => $list)
         {
@@ -91,7 +100,7 @@ class StringTools
         }
         return $args;
     }
-    
+    */
     // recursive implode
     public static function rimplode( $glue, $pieces )
     {

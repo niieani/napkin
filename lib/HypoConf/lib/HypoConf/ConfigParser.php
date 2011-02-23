@@ -116,21 +116,30 @@ class ConfigParser extends CommandLine
         $result = new CommandLine\Result();
         
         $output = null;
-        if(isset($this->configuration[0]))
+        if(is_array($this->configuration))
         {
-            foreach($this->configuration as $key => &$configuration)
+            if(isset($this->configuration[0]) && is_array($this->configuration[0]))
             {
-                if(is_numeric($key))
+                //var_dump($this->configuration);
+                foreach($this->configuration as $key => &$configuration)
                 {
-                    $output .= $this->parseWithConfig($configuration, $result);
+                    if(is_numeric($key))
+                    {
+                        $output .= $this->parseWithConfig($configuration, $result);
+                    }
+                    //else break; //after first non-numeric it will break the loop
                 }
-                //else break; //after first non-numeric it will break the loop
+            }
+            else
+            {
+                $output .= $this->parseWithConfig($this->configuration, $result);
             }
         }
         else
         {
-            $output .= $this->parseWithConfig($this->configuration, $result);
+            $output .= $this->parseWithConfig((array)$this->configuration, $result);
         }
+        
         $result->parsed = $output;
         
         // dispatch deferred options
@@ -163,7 +172,8 @@ class ConfigParser extends CommandLine
                 $setting = ArrayTools::accessArrayElementByPath($configuration, $option->path);
                 //var_dump($setting);
                 if ($setting === null) $setting = $option->default;
-                $value = &$setting;
+                //var_dump($setting);
+                $value = StringTools::MakeList(&$setting);
                 $this->_dispatchAction($option, $value, $result);
             }
         }
@@ -171,7 +181,6 @@ class ConfigParser extends CommandLine
         foreach(preg_split("/(\r?\n)/", $this->template) as $line)
         {
             $parsedline = ParseTools::sprintfn($line, $result->options);
-            
             // if all we got is whitespace, don't add it
             if(strlen(rtrim($parsedline)) < 1) continue;
             

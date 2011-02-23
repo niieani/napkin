@@ -47,8 +47,8 @@ class LogCLI
     const INFO   = 2;
     const WARN   = 3;
     const FAIL   = 4;
-    const FAILED = 5;
-    const FATAL  = 6;
+    const FAILED = 4;
+    const FATAL  = 5;
     
     const COLOR_RESET="\x1b[39;49;00m";
     const RESET="\x1b[39;49;00m";
@@ -271,26 +271,34 @@ class LogCLI
     
     public static function Error($message)
     {
+        /*
         if (self::$messageSet === true) { 
-            throw new \Exception('Previous result not set - defaulting to unknown.'); 
-            self::DisplayResult(); 
+            //throw new \Exception('Previous result not set - defaulting to unknown.'); 
+            //self::DisplayResult(); 
+            self::Result($type, true, 1);
         }
-        
+        */
         if(self::$verboseLevel != -1) //if not quiet
         {
-            self::DisplayMessage($message, self::FATAL);
+            //self::DisplayMessage($message, self::FATAL);
+            self::MessageResult($message, 0, self::FAIL); //, 1
         }
-        self::$messageSet = false;
+        //self::$messageSet = false;
     }
     
     public static function Fail($message)
     {
-        self::Error('[ERROR] '.$message);
+        self::Error(self::RED.'[ERROR] '.self::RESET.self::YELLOW.$message.self::RESET);
+    }
+    
+    public static function Warning($message)
+    {
+        self::Error(self::RED.'[WARN] '.self::RESET.self::YELLOW.$message.self::RESET);
     }
     
     public static function Fatal($message)
     {
-        self::Error('[UNRECOVERABLE ERROR] '.$message);
+        self::Error(self::RED.'[UNRECOVERABLE ERROR] '.self::RESET.self::YELLOW.$message.self::RESET);
     }
     
     private static function getDateTime()
