@@ -107,7 +107,12 @@ class StringTools
         }
       }
       return implode( $glue, $retVal );
-    } 
+    }
+    
+    public static function RemoveExclamation($path)
+    {
+        return substr($path, 1);
+    }
     
     public static function delimit($value, $delimited = ',')
     {

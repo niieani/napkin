@@ -9,15 +9,12 @@ class Nginx extends ConfigScopes\Parser
 {
     public function FixPath($path, $iterativeSetting = 0)
     {
-        /*
-        if($iterativeSetting !== false)
+        if(is_string($iterativeSetting))
         {
             if(($pos = strpos($path, 'nginx/server')) !== false && $pos === 0)
                 $path = substr_replace($path, 'server/'.$iterativeSetting, 0, strlen('nginx/server'));
         }
-        else
-        */
-        if(($pos = strpos($path, 'server/')) !== false && $pos === 0)
+        elseif(($pos = strpos($path, 'server/')) !== false && $pos === 0)
         {
             $path = StringTools::DropLastBit($path, -1);
         

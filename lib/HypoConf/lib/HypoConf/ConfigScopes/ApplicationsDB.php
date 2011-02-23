@@ -13,15 +13,15 @@ use \Tools\LogCLI;
 class ApplicationsDB
 {
     //protected static $DB = array();
-    protected $DB = array();
+    protected static $DB = array();
     protected static $AppsDir = 'stems/';
-    protected $SettingsDB;
+    protected static $SettingsDB;
     
     public static $applications = array(
         'nginx'              => array('HypoConf\\ConfigScopes\\Parser\\Nginx', true)
     );
     
-    public function LoadAll()
+    public static function LoadAll()
     {
         foreach(self::$applications as $application)
         {
@@ -29,18 +29,18 @@ class ApplicationsDB
         }
     }
     
-    public function RegisterApplication($application, $classname)
+    public static function RegisterApplication($application, $classname)
     {
         self::$applications[$application] = array($classname, false);
     }
     
-    public function LoadApplication($application)
+    public static function LoadApplication($application)
     {
         // load templates:
         $templateFiles = FileOperation::getAllFilesByExtension(self::$AppsDir.$application, 'tpl');
         //var_dump($templateFiles);
-        $this->DB[$application]['templatesInstance'] = new TemplatesDB($templateFiles);
-        $this->DB[$application]['templates'] = $this->DB[$application]['templatesInstance']->DB;
+        self::$DB[$application]['templatesInstance'] = new TemplatesDB($templateFiles);
+        self::$DB[$application]['templates'] = self::$DB[$application]['templatesInstance']->DB;
         
         // register possible settings:
         
@@ -54,23 +54,23 @@ class ApplicationsDB
             // throw error
         }
         
-        $this->DB[$application]['parserInstance'] = new $className($this->DB[$application]['templates']);
-        $this->DB[$application]['parsers'] = $this->DB[$application]['parserInstance']->GetSubParsers();
+        self::$DB[$application]['parserInstance'] = new $className(self::$DB[$application]['templates']);
+        self::$DB[$application]['parsers'] = self::$DB[$application]['parserInstance']->GetSubParsers();
         
-        $this->DB[$application]['scopesInstance'] = new HypoConf\ConfigScopes(&$this->DB[$application]['parsers'], &$this->DB[$application]['templates']);
-        $this->DB[$application]['scopesInstance']->rootscope = $application;
+        self::$DB[$application]['scopesInstance'] = new HypoConf\ConfigScopes(&self::$DB[$application]['parsers'], &self::$DB[$application]['templates']);
+        self::$DB[$application]['scopesInstance']->rootscope = $application;
         
-        return $this->DB[$application]['scopesInstance'];
+        return self::$DB[$application]['scopesInstance'];
     }
     
-    public function FixPath($application, $path, $iterativeSetting = 0)
+    public static function FixPath($application, $path, $iterativeSetting = 0)
     {
-        return $this->DB[$application]['parserInstance']->FixPath($path, $iterativeSetting);
+        return self::$DB[$application]['parserInstance']->FixPath($path, $iterativeSetting);
     }
     
-    public function LoadConfig(&$config)
+    public static function LoadConfig(&$config)
     {
-        foreach($this->DB as $application)
+        foreach(self::$DB as $application)
         {
             $application['scopesInstance']->config = &$config;
         }
@@ -78,28 +78,28 @@ class ApplicationsDB
     /*
     public function LoadConfigFromFiles(&$files, $compilation = false)
     {
-        $this->SettingsDB = new ConfigScopes\SettingsDB();
-        $this->SettingsDB->MergeFromYAML($file, $compilation); //true for compilation
+        self::$SettingsDB = new ConfigScopes\SettingsDB();
+        self::$SettingsDB->MergeFromYAML($file, $compilation); //true for compilation
     }
     */
-    public function GetTemplates($application)
+    public static function GetTemplates($application)
     {
-        return $this->DB[$application]['templates'];
+        return self::$DB[$application]['templates'];
     }
     
-    public function GetParsers($application)
+    public static function GetParsers($application)
     {
-        return $this->DB[$application]['parsers'];
+        return self::$DB[$application]['parsers'];
     }
     
-    public function GetAllSettings($application)
+    public static function GetAllSettings($application)
     {
-        return $this->DB[$application]['scopesInstance']->returnSettingsList();
-        //$this->DB[$application]['settingsList'] =
+        return self::$DB[$application]['scopesInstance']->returnSettingsList();
+        //self::$DB[$application]['settingsList'] =
     }
     
-    public function GetSettingsList($application, $scope)
+    public static function GetSettingsList($application, $scope)
     {
-        return $this->DB[$application]['scopesInstance']->returnSettingsList($scope);
+        return self::$DB[$application]['scopesInstance']->returnSettingsList($scope);
     }
 }

@@ -6,7 +6,8 @@ nginx:
   errorlog:
     file: pliczek.log
     style: styl-szmyl
+  use: '1'
 server:
   defaults:
     listen:
-      ip: 85.12.12.12
+      port: '100'

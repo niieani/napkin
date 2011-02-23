@@ -1,0 +1,10 @@
+listen:
+  -
+    port: '198'
+  -
+    port: '101'
+  -
+    port: '102'
+  -
+    port: '100'
+domain: nginx.com

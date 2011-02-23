@@ -181,9 +181,9 @@ class ArrayTools
         //$params = & func_get_args ();
         if(!is_array($arr1))
         {
+            $arr1 = (array)$arr1;
             if(!is_array($arr2)) 
             {
-                $arr1 = array();
                 $arr2 = array();
             }
             else return $arr2;
@@ -250,14 +250,16 @@ class ArrayTools
             }
         }
         
+        /*
         if(empty($matches)) LogCLI::MessageResult(LogCLI::YELLOW.'No matches found for partial path: '.LogCLI::BLUE.$lookForPath.LogCLI::RESET, 2, LogCLI::INFO);
         else
         {
             LogCLI::MessageResult('Best match found at: '.LogCLI::BLUE.$matches[self::max_key($matchAccuracy)].LogCLI::RESET, 2, LogCLI::INFO);
         }
+        */
         
         LogCLI::Result(LogCLI::INFO);
-        if(!empty($matches)) return $matches;
+        if(!empty($matches)) return array('all' => $matches, 'best' => $matches[self::max_key($matchAccuracy)]);
         else return false;
     }
     

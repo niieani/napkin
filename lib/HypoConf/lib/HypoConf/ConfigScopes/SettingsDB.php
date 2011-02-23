@@ -95,9 +95,9 @@ class SettingsDB
     
     //public function ReplaceFromArray(array $settingsArray, $addDefaults = false)
     
-    public function MergeFromArray(array $settingsArray, $addDefaults = false)
+    public function MergeFromArray(array $settingsArray, $addDefaults = false, $mergeDefaults = true)
     {
-        $this->MergeDefaultsDB($settingsArray, $addDefaults);
+        if($mergeDefaults === true) $this->MergeDefaultsDB($settingsArray, $addDefaults);
         $this->DB = ArrayTools::MergeArrays($this->DB, $settingsArray);
     }
     
@@ -127,53 +127,68 @@ class SettingsDB
     
     //public function ApplyAllDefaultsToAllElements()
     
-    public function MergeFromYAML($file, $path = false, $addDefaults = false, $mergeDefaults = true)
+    public function MergeFromYAML($file, $path = false, $addDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = true)
     {
-        LogCLI::Message('Parsing YAML file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
-        try
+        LogCLI::Message('Loading file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
+        if (file_exists($file))
         {
-            $config = YAML::load($file);
-            
-            // if the file is empty create an empty array:
-            if(empty($config)) $config = array();
-            
-            if($path === false)
-            {
-                $this->DB = ArrayTools::MergeArrays($this->DB, $config);
-                if($mergeDefaults === true) $this->MergeDefaultsDB($config, $addDefaults);
-            }
-            else
-            {
-                self::MergeOneIterativeByPath($path, &$config);
-                if($addDefaults === true) self::ApplyDefaultsToAllElements(&$this->DB, $path, 'defaults', true); //defaultsDefinitions
-                //var_dump($this->defaultsDefinitions);
-            }
-            
-            LogCLI::MessageResult('Settings DB updated!', 5, LogCLI::INFO);
             LogCLI::Result(LogCLI::OK);
+            LogCLI::Message('Parsing YAML file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
+            try
+            {
+                $config = YAML::load($file);
+                
+                // if the file is empty create an empty array:
+                if(empty($config)) $config = array();
+                
+                if($path === false)
+                {
+                    $this->DB = ArrayTools::MergeArrays($this->DB, $config);
+                    if($mergeDefaults === true) $this->MergeDefaultsDB($config, $addDefaults);
+                }
+                else
+                {
+                    self::MergeOneIterativeByPath($path, &$config);
+                    if($addDefaults === true) self::ApplyDefaultsToAllElements(&$this->DB, $path, 'defaults', true); //defaultsDefinitions
+                    //var_dump($this->defaultsDefinitions);
+                }
+                
+                LogCLI::MessageResult('Settings DB updated!', 5, LogCLI::INFO);
+                LogCLI::Result(LogCLI::OK);
+            }
+            catch (\Exception $e)
+            {
+                LogCLI::Result(LogCLI::FAIL);
+                LogCLI::Fail($e->getMessage());
+            }
         }
-        catch (Exception $e)
+        else 
         {
             LogCLI::Result(LogCLI::FAIL);
-            LogCLI::Fail($e->getMessage());
+            LogCLI::Fatal("No such file: $file");
+            if($createNewIfNonexistant === true)
+            {
+                LogCLI::Message('Creating a new empty file.', 0);
+                try
+                {
+                    fclose(fopen($file, 'x'));
+                    self::MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, false);
+                    LogCLI::Result(LogCLI::OK);
+                }
+                catch (\Exception $e)
+                {
+                    LogCLI::Result(LogCLI::FAIL);
+                    LogCLI::Fail($e->getMessage());
+                }
+            }
         }
     }
     
-    public function MergeFromYAMLs(array $files, $path = false, $addDefaults = false, $mergeDefaults = true)
+    public function MergeFromYAMLs(array $files, $path = false, $addDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = true)
     {
         foreach($files as $i => $file)
         {
-            LogCLI::Message('Loading file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
-            if (file_exists($file))
-            {
-                LogCLI::Result(LogCLI::OK);
-                $this->MergeFromYAML($file, $path, $addDefaults, $mergeDefaults);
-            }
-            else 
-            {
-                LogCLI::Result(LogCLI::FAIL);
-                LogCLI::Fatal("No such file: $file");
-            }
+            $this->MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, $createNewIfNonexistant);
         }
     }
 }
