@@ -14,4 +14,5 @@ abstract class Parser
         return $this->parsers;
     }
     abstract public function __construct(array &$templates);
+    abstract public function FixPath($path, $iterativeSetting = 0);
 }

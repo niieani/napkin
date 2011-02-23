@@ -133,6 +133,9 @@ class ConfigScopes
     {
         $depth++;
         preg_match_all('/<<(?<name>\w+)>>/', $this->templates[$scope], $matches);
+        preg_match_all('/@@(?<name>\w+)@@/', $this->templates[$scope], $matchesDynamic);
+        $matches = array_merge($matches, $matchesDynamic);
+        
         preg_match_all('/<!<(?<name>\w+)>!>/', $this->templates[$scope], $matchesIterative);
         
         $parentDisplay = (strlen($parent)>0) ? LogCLI::GREEN.$parent.LogCLI::RESET.' => ' : null;
@@ -174,11 +177,19 @@ class ConfigScopes
     
     
     // similar to makeTree, but also parses the tree and puts the actual elements in place
-    public function parseTree($scope, $depth = 0, $parentIterative = false, $parent = '') // = 'root'
+    public function parseTree($scope, $parseResult = false, $depth = 0, $parentIterative = false, $parent = '') // = 'root'
     {
         $depth++;
-        preg_match_all('/<<(?<name>\w+)>>/', $this->templates[$scope], $matches);
-        preg_match_all('/<!<(?<name>\w+)>!>/', $this->templates[$scope], $matchesIterative);
+        if($parseResult === false)
+        {
+            preg_match_all('/<<(?<name>\w+)>>/', $this->templates[$scope], $matches);
+            preg_match_all('/<!<(?<name>\w+)>!>/', $this->templates[$scope], $matchesIterative);
+        }
+        elseif(isset($this->results[$scope]))
+        {
+            preg_match_all('/<<(?<name>\w+)>>/', $this->results[$scope], $matches);
+            preg_match_all('/<!<(?<name>\w+)>!>/', $this->results[$scope], $matchesIterative);
+        }
         
         $parentDisplay = (strlen($parent)>0) ? LogCLI::GREEN.$parent.LogCLI::RESET.' => ' : null;
         
@@ -189,7 +200,7 @@ class ConfigScopes
                 $this->patterns[$match] = '<<'.$match.'>>';
                 
                 LogCLI::Message('('.$depth.') '.$parentDisplay.LogCLI::BLUE.$scope.LogCLI::RESET." => ".LogCLI::YELLOW.$match.LogCLI::RESET, 2);
-                $children = $this->parseTree($match, $depth, $parentIterative, $scope);
+                $children = $this->parseTree($match, false, $depth, $parentIterative, $scope);
                 LogCLI::Result(LogCLI::INFO);
                 
                 if($parentIterative === true)
@@ -234,7 +245,7 @@ class ConfigScopes
                 
                 LogCLI::Message('('.$depth.') '.$parentDisplay.LogCLI::BLUE.$scope.LogCLI::RESET." => ".LogCLI::YELLOW.$match.LogCLI::RESET." => ".LogCLI::RED.'[iterative]'.LogCLI::RESET, 2);
                 
-                $children = $this->parseTree($match, $depth, true, $scope);
+                $children = $this->parseTree($match, false, $depth, true, $scope);
                 
                 LogCLI::Result(LogCLI::INFO);
                 
@@ -249,9 +260,17 @@ class ConfigScopes
                     $parse = $this->parsers[$match]->parse();
                     $this->results["${match}_${id}"] = trim($parse->parsed);
                     
+                    
                     foreach($children as $child)
                     {
                         $this->results[$match] .= $this->insertScope("${match}_${id}_${child}", "${match}_${id}", $this->patterns[$child], $this->results["${match}_${id}"]);
+                    }
+                    
+                    // post-parse parse, include dynamically added stems:
+                    $childrenPost = $this->parseTree($match, true, $depth, true, $parent);
+                    foreach($childrenPost as $child)
+                    {
+                        $this->results[$match] = $this->insertScope("${match}_${id}_${child}", $match, $this->patterns[$child], $this->results[$match]);
                     }
                     
                     LogCLI::Result(LogCLI::INFO);
@@ -275,9 +294,18 @@ class ConfigScopes
                     $this->results[$scope] = $this->insertScope($match, $scope);
                 }
             }
-            
         }
-        
+        /*
+        if($parseResult === false)
+        {
+            // post-parse parse, include dynamically added stems:
+            $children = $this->parseTree($scope, true, $depth, $parentIterative, $parent);
+            foreach($children as $child)
+            {
+                $this->results[$scope] = $this->insertScope($child, $scope, $this->patterns[$child], $this->results[$scope]);
+            }
+        }
+        */
         if(isset($return)) return $return;
         return array();
     }

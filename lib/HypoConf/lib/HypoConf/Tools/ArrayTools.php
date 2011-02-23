@@ -259,7 +259,9 @@ class ArrayTools
         */
         
         LogCLI::Result(LogCLI::INFO);
-        if(!empty($matches)) return array('all' => $matches, 'best' => $matches[self::max_key($matchAccuracy)]);
+        //if(!empty($matches)) 
+        if(!empty($matchAccuracy))
+        return array('all' => $matches, 'best' => $matches[self::max_key($matchAccuracy)]);
         else return false;
     }
     

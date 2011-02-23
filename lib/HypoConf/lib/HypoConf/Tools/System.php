@@ -7,16 +7,16 @@ class System
     public static function getCPUs()
     {
     //  echo "Detecting number of CPU cores: ";
-        LogCLI::Message('Detecting number of CPUs (not cores)', 2, LogCLI::INFO);
+        LogCLI::Message('Detecting number of CPU cores (not counting HyperThreading)', 2, LogCLI::INFO);
         $cpuCoreNum = (int)trim(shell_exec("cat /proc/cpuinfo | grep \"core id\" | sort | uniq | wc -l"));
         LogCLI::MessageResult(LogCLI::BLUE.'CPUs'.LogCLI::RESET.' = '.LogCLI::YELLOW.$cpuCoreNum.LogCLI::RESET, 2, LogCLI::INFO);
         LogCLI::Result(LogCLI::INFO);
         return $cpuCoreNum;
     }
-    public static function getCPUcores()
+    public static function getCPUsWithHT()
     {
     //  echo "Detecting number of CPU cores: ";
-        LogCLI::Message('Detecting number of CPU cores', 2, LogCLI::INFO);
+        LogCLI::Message('Detecting number of CPU cores (counting HyperThreading)', 2, LogCLI::INFO);
         $cpuCoreNum = (int)trim(shell_exec("cat /proc/cpuinfo | grep \"core id\" | sort | wc -l"));
         LogCLI::MessageResult(LogCLI::BLUE.'CPU cores'.LogCLI::RESET.' = '.LogCLI::YELLOW.$cpuCoreNum.LogCLI::RESET, 2, LogCLI::INFO);
         LogCLI::Result(LogCLI::INFO);

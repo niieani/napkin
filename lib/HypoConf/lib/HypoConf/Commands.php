@@ -25,6 +25,11 @@ class Commands
         //self::$ApplicationsDB = new ConfigScopes\ApplicationsDB();
         $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
         
+        /*
+         * There needs to be a check wheter the 'set' operation is a reference
+         * to a custom action, or just a normal setting.
+         */
+        
         foreach(StringTools::typeList($arguments['name']) as $argument)
         {
             if ($argument['exclamation'] !== false) 

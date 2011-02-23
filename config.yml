@@ -1,12 +1,12 @@
 nginx:
-  user: onpa
-  group: tez-www-srejta
-  connections: '87'
-  multi_accept: '0'
+  user: www-data
+  group: www-data
+  connections: '8000'
+  multi_accept: '1'
   errorlog:
     file: pliczek.log
     style: styl-szmyl
-  use: '1'
+  use: epoll
 server:
   defaults:
     listen:

@@ -13,8 +13,7 @@ $loader->registerNamespaces(array(
     'Applications'                   => __DIR__.'/lib/hypoconf/lib/HypoConf',
     'HypoConf'                       => __DIR__.'/lib/hypoconf/lib',
     'Symfony'                        => __DIR__.'/vendor/symfony/lib',
-    'PEAR2'                          => __DIR__.'/vendor/pear2/lib',
-    'PwFisher'                       => __DIR__.'/vendor/pwfisher/lib',
+    'PEAR2'                          => __DIR__.'/vendor/pear2/lib'
 ));
 //'Stems'                          => __DIR__.'/stems',
 

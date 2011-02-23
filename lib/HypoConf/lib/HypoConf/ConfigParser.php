@@ -42,6 +42,7 @@ class ConfigParser extends CommandLine
     public static $actions = array(
         'IPPort'              => array('HypoConf\\ConfigParser\\Action\\IPPort', true),
         'StoreOnOff'          => array('HypoConf\\ConfigParser\\Action\\StoreOnOff', true),
+        'StoreStemOrFalse'    => array('HypoConf\\ConfigParser\\Action\\StoreStemOrFalse', true),
         'StoreStringOrFalse'  => array('HypoConf\\ConfigParser\\Action\\StoreStringOrFalse', true)
     );
     
@@ -57,7 +58,9 @@ class ConfigParser extends CommandLine
             $this->version = $params['version'];
         }
         if (isset($params['template'])) {
-            $this->template = $params['template'];
+            // cutting out the @@ from the dynamically loaded elements
+            $this->template = preg_replace('/@@(\w+)@@/', '${1}', $params['template']);
+            //$this->template = $params['template'];
         }
         if (isset($params['configuration'])) {
             $this->configuration = $params['configuration'];

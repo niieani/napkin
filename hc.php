@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 // Include the Console_CommandLine package.
 //require_once 'Console/CommandLine.php';
@@ -56,10 +55,10 @@ Console_CommandLine::registerAction('List', 'ActionList');
 
 // create the parser
 $parser = new CommandLine(array(
-    'name'        => 'hc',
+    'name'        => 'HypoConf',
     'description' => 'A configuration manager for nginx, PHP with PHP-FPM and MySQL with a command line interface',
-    'version'     => '0.0.5',
-    'add_help_option' => TRUE,
+    'version'     => '0.4 alpha',
+    'add_help_option' => FALSE,
     'add_version_option' => TRUE
 ));
 
@@ -252,7 +251,7 @@ try {
         LogCLI::SetVerboseLevel($result->options['verbose']);
         //else LogCLI::SetVerboseLevel(1);
     }
-    LogCLI::Message(LogCLI::GREEN.'Running the HypoConf engine...'.LogCLI::RESET, 2);
+    LogCLI::Message(LogCLI::GREEN.'Running the HypoConf engine...'.LogCLI::RESET, 1);
     if ($result->command_name) 
     {
         switch($result->command_name)

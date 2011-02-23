@@ -126,6 +126,26 @@ class Nginx extends ConfigScopes\Parser
             'description' => 'listen options'
         ));
         
+        $this->parsers['server']->addSetting('php', array(
+            'path'        => 'php',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'php'),
+            'default'     => null,
+            'description' => 'listen options'
+        ));
+        
+        $this->parsers['php'] = new ConfigParser(array(
+            'name'        => 'nginx_php',
+            'description' => 'nginx php',
+            'version'     => '0.9',
+            'template'    => &$templates['php']
+        ));
+        $this->parsers['php']->addSetting('index', array(
+            'path'        => 'index',
+            'action'      => 'StoreStringOrFalse',
+            'default'     => null,
+            'description' => 'listen options'
+        ));
         
         /*
          *          NGINX SERVER/LISTEN SCOPE PARSER

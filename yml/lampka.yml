@@ -8,6 +8,3 @@ listen:
   -
     port: '100'
 domain: opal.com
-php:
-  index: tra.php
-custom: 'listen me here\nnewline'
