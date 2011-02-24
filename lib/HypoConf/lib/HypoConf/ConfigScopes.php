@@ -255,7 +255,7 @@ class ConfigScopes
                     
                     // post-parse parse, include dynamically added stems: (NEEDS TESTING)
                     $childrenPost = $this->parseTree($match, true, $depth, $parentIterative, $parent);
-                    var_dump($childrenPost);
+                    //var_dump($childrenPost);
                     foreach($childrenPost as $child)
                     {
                         $this->results[$match] = $this->insertScope($child, $match, $this->patterns[$child], $this->results[$match]);
@@ -296,7 +296,7 @@ class ConfigScopes
                         $this->results[$match] .= $this->insertScope("${match}_${id}_${child}", "${match}_${id}", $this->patterns[$child], $this->results["${match}_${id}"]);
                     }
                     
-                    var_dump($this->results[$match]);
+                    //var_dump($this->results[$match]);
                     
                     // post-parse parse, include dynamically added stems:
                     $childrenPost = $this->parseTree($match, true, $depth, true, $parent);

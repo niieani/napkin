@@ -21,16 +21,21 @@ use Tools\System;
 use HypoConf\Commands;
 use HypoConf\ConfigParser;
 use HypoConf\ConfigScopes;
+use HypoConf\Paths;
 //use HypoConf;
 //use HypoConf\ConfigScopes\ApplicationsDB;
 //use ConfigScopes\TemplatesDB;
 use PEAR2\Console\CommandLine;
 
+Paths::$root = __DIR__;
+Paths::$db = __DIR__.'/database';
+
 //use Applications\Nginx;
 //use ConfigStyles\BracketConfig\NginxConfig;
 //use ConfigStyles\BracketConfig\NginxScope;
 
-define('HC_DIR', __DIR__);
+//define('HC_DIR', __DIR__);
+
 
 /*
 class ActionList extends Console_CommandLine_Action
@@ -172,6 +177,10 @@ $cmd['add'] = $parser->addCommand('add', array(
 $cmd['add']->addArgument('name', array(
     'description' => 'the text to output'
 ));
+$cmd['add']->addArgument('name2', array(
+    'description' => 'the text to output',
+    'optional' => TRUE
+));
 $cmd['add']->addArgument('template', array(
     'description' => 'the text to output',
     'optional' => TRUE
@@ -257,18 +266,9 @@ try {
         switch($result->command_name)
         {
             case 'debug':
-                LogCLI::Message(LogCLI::GREEN.'WTF'.LogCLI::RESET, 2);
-                LogCLI::Message(LogCLI::GREEN.'WTF'.LogCLI::RESET, 2);
-                LogCLI::Message(LogCLI::GREEN.'WTF'.LogCLI::RESET, 2);
-                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
-                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
-                LogCLI::Result(LogCLI::OK);
-                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
-                LogCLI::Result(LogCLI::OK);
-                LogCLI::MessageResult(LogCLI::GREEN.'WTF LOLZ'.LogCLI::RESET, 2, LogCLI::OK);
-                LogCLI::Result(LogCLI::OK);
                 
                 break;
+                
             case 'help':
                 displayHelp($result->command->args['setting']);
                 break;
@@ -281,36 +281,18 @@ try {
                 break;
             
             case 'generate':
-                
-                $files = array();
-                
                 if($result->command->args)
                 {
                     Commands::GenerateParsed($result->command->args);
                 }
                 
-                //$templatesDB->AddFromFiles($files);
-                
-                /*
-                //$confScope = new NginxScope;
-                $nginxParse = new Nginx;
-                
-                //$nginxParse->ParseFromYAML('defaults.yml');
-                $files[] = 'defaults.yml';
-                
+                break;
+            
+            case 'add':
                 if($result->command->args)
                 {
-                    
-                    foreach($result->command->args['file'] as $file)
-                    {
-                        $files[] = $file;
-                    }
-                    $nginxParse->ParseFromYAMLs($files);
+                    Commands::Add($result->command->args);
                 }
-                
-                $nginxParse->PrintFile();
-                */
-                
                 break;
             
             default:

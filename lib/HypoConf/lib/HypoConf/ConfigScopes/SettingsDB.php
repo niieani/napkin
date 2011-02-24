@@ -80,10 +80,7 @@ class SettingsDB
     
     public function RemoveByPath($path)
     {
-        //var_dump($this->DB);
         ArrayTools::unsetArrayElementByPath($this->DB, $path); //skip any or not?
-        //var_dump($this->DB);
-        //var_dump($this->DB);
     }
     
     public function MergeOneIterativeByPath($path, $setting)
@@ -171,7 +168,8 @@ class SettingsDB
                 LogCLI::Message('Creating a new empty file.', 0);
                 try
                 {
-                    fclose(fopen($file, 'x'));
+                    //fclose(fopen($file, 'x'));
+                    FileOperation::CreateEmptyFile($file);
                     self::MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, false);
                     LogCLI::Result(LogCLI::OK);
                 }

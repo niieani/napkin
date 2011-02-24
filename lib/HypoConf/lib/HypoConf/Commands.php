@@ -12,6 +12,7 @@ use Tools\FileOperation;
 //only for cores
 use Tools\System;
 
+use HypoConf\Paths;
 use HypoConf\ConfigParser;
 use HypoConf\ConfigScopes;
 use HypoConf\ConfigScopes\ApplicationsDB;
@@ -40,13 +41,22 @@ class Commands
             {
                 if($argument['text'] == 'config')
                 {
-                    $file = 'config.yml';
+                    $file = Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml';
                     Commands\Set\NginxConfig::LoadAndSave($arguments, $file);
                 }
                 else // opening a site or default site
                 {
-                    $file = $argument['text'].'.yml';
-                    Commands\Set\Site::LoadAndSave($arguments, $file);
+                    //$siteYML = array_search(strtolower($argument['text']),array_map('strtolower',$files));
+                    //var_dump($files);
+                    
+                    $siteYML = self::GetFullPath($argument['text']);
+                    
+                    if($siteYML !== false)
+                        Commands\Set\Site::LoadAndSave($arguments, $siteYML);
+                    else
+                    {
+                        LogCLI::Fail('Sorry, no site by name: '.$argument['text']);
+                    }
                 }
                 
                 //var_dump($setting);
@@ -54,18 +64,6 @@ class Commands
                 /*
                     VALIDATION GOES HERE, TRAVERSING THE TREE ALSO
                 */
-                
-                /*
-                $last = StringTools::ReturnLastBit($path);
-                
-                
-                if ($path)
-                    $nginxParse->SetConfig($path, array($last => $result->command->args['values']));
-                else LogCLI::Fail('No setting by name: '.end(array_keys($setting)));
-                
-                $nginxParse->ReturnYAML();
-                */
-                
                 //System::getCPUs();
                 //System::getCPUcores();
                 /*
@@ -75,19 +73,23 @@ class Commands
         }
     }
     
-    function GenerateParsed($arguments)
+    public static function GenerateParsed($arguments)
     {
-        //$ApplicationsDB = new ConfigScopes\ApplicationsDB();
         $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
-        //$configScopes = new ConfigScopes($ApplicationsDB->GetParsers('nginx'), $ApplicationsDB->GetTemplates('nginx'), &$config);
         
-        foreach($arguments['file'] as $file)
+        foreach($arguments['file'] as $dir)
         {
-            $files[] = $file; //.'.yml';
+            $fileslist = FileOperation::getAllFilesByExtension(Paths::$db.Paths::$separator.Paths::$defaultGroup.Paths::$separator.$dir, 'yml');
+            //$pathinfo = array();
+            //$siteYML = false;
+            foreach($fileslist as $file)
+            {
+                $files[] = $file;
+            }
         }
-        
+        //var_dump($files);
         $nginx = new ConfigScopes\SettingsDB();
-        $nginx->MergeFromYAML('config.yml', false, true, true); //true for compilation
+        $nginx->MergeFromYAML(Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml', false, true, true); //true for compilation
         $nginx->MergeFromYAMLs($files, 'server', true, true); //true for compilation
         //$nginx->MergeFromYAMLs($files, 'server', true, true); //true for compilation
         
@@ -96,5 +98,80 @@ class Commands
         
         $parsedFile = $configScopesNginx->parseTemplateRecursively('nginx');
         echo PHP_EOL.$parsedFile;
+    }
+    
+    public static function Add($arguments)
+    {
+        foreach(StringTools::typeList($arguments['name'], '@') as $argument)
+        {
+            $name = $argument['text'];
+            
+            if ($argument['exclamation'] !== false) 
+            {
+                LogCLI::MessageResult('Exclamation: '.$argument['exclamation'], 2, LogCLI::INFO);
+                
+                $username = $name;
+                LogCLI::Message('Adding user: '.$username, 0);
+                $group = (isset($arguments['name2'])) ? $arguments['name2'] : Paths::$defaultGroup;
+                $structure = Paths::$db.Paths::$separator.$group.Paths::$separator.$username;
+                
+                LogCLI::MessageResult('Creating directory: '.$structure, 2, LogCLI::INFO);
+                
+                if(@mkdir($structure, 0755, true))
+                {
+                    LogCLI::Result(LogCLI::OK);
+                }
+                else
+                {
+                    LogCLI::Result(LogCLI::FAIL);
+                    LogCLI::Fail('User '.$username.' already exists!');
+                    //LogCLI::Fail($e->getMessage());
+                }
+            }
+            else
+            {
+                // adding website
+                $website = $name;
+                LogCLI::Message('Adding website: '.$website, 0);
+                $username = (isset($arguments['name2'])) ? $arguments['name2'] : Paths::$defaultUser;
+                $group = Paths::$defaultGroup;
+                LogCLI::MessageResult('Username and group: '.$username.'/'.$group, 2, LogCLI::INFO);
+                $path = Paths::$db.Paths::$separator.$group.Paths::$separator.$username.Paths::$separator;
+                if(file_exists($path))
+                {
+                    if(!file_exists($path.$website.'.yml') && self::GetFullPath($website) === false)
+                    {
+                        FileOperation::CreateEmptyFile($path.$website.'.yml');
+                        LogCLI::Result(LogCLI::OK);
+                    }
+                    else
+                    {
+                        LogCLI::Result(LogCLI::FAIL);
+                        LogCLI::Fail('Website '.$website.', under '.$group.'/'.$username.' already exists!');
+                    }
+                }
+                else
+                {
+                    LogCLI::Result(LogCLI::FAIL);
+                    LogCLI::Fail('Group and/or user '.$group.'/'.$username.' does not exist!');
+                }
+            }
+        }
+    }
+    
+    public static function GetFullPath($site)
+    {
+        $files = FileOperation::getAllFilesByExtension(Paths::$db, 'yml');
+        $pathinfo = array();
+        //$siteYML = false;
+        foreach($files as $id => $file)
+        {
+            $pathinfo[$id] = FileOperation::pathinfo_utf($file);
+            if($pathinfo[$id]['filename'] == $site)
+            {
+                return $files[$id];
+            }
+        }
+        return false;
     }
 }

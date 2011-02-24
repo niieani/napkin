@@ -17,4 +17,7 @@ domain:
 custom:
   - 'listen me here\nnewline'
   - drugi
-php: '0'
+support:
+  php: '1'
+php:
+  index: trala

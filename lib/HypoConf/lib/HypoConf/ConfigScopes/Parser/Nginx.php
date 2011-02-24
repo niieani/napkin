@@ -126,8 +126,14 @@ class Nginx extends ConfigScopes\Parser
             'description' => 'listen options'
         ));
         
+        $this->parsers['server']->addSetting('name_comment', array(
+            'path'        => 'name_comment',
+            'action'      => 'StoreStringOrFalse',
+            'default'     => null
+        ));
+        
         $this->parsers['server']->addSetting('php', array(
-            'path'        => 'php',
+            'path'        => 'support/php',
             'action'      => 'StoreStemOrFalse',
             'action_params' => array('template' => 'php'),
             'default'     => null,
@@ -143,7 +149,7 @@ class Nginx extends ConfigScopes\Parser
         $this->parsers['php']->addSetting('index', array(
             'path'        => 'index',
             'action'      => 'StoreStringOrFalse',
-            'default'     => null,
+            'default'     => false,
             'description' => 'listen options'
         ));
         

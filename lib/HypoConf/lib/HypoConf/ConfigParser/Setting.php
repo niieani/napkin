@@ -183,6 +183,9 @@ class Setting extends Console\CommandLine\Option
         case 'StoreOnOff':
             $this->default = -1;
             break;
+        case 'StoreStemOrFalse':
+            $this->default = false;
+            break;
         default:
             return;
         }

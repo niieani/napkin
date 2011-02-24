@@ -58,4 +58,10 @@ class FileOperation
             'filename' => $filename 
         );
     }
+    
+    public static function CreateEmptyFile($path)
+    {
+        // this needs proper error handling!
+        fclose(fopen($path, 'x'));
+    }
 }

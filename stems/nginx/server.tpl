@@ -1,4 +1,4 @@
-server
+server[[ #%(name_comment)s]]
 {
     <<listen>>
     [[server_name %(domain)s;]]
