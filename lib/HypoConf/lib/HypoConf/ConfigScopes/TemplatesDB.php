@@ -39,7 +39,7 @@ class TemplatesDB
     
     public function AddFromFiles(array $files)
     {
-        foreach($files as $i => $file)
+        foreach($files as $file)
         {
             LogCLI::Message('Loading template file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
             if (file_exists($file))

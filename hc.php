@@ -224,7 +224,6 @@ $cmd['debug'] = $parser->addCommand('debug', array(
     'description' => 'output the given string with a bar prefix'
 ));
 
-
 // run the parser
 try {
     $result = $parser->parse();
@@ -325,7 +324,7 @@ EOT;
             break;
             
         default:
-            echo <<< 'EOT'
+            echo <<<'EOT'
 
 A configuration manager for nginx, PHP with PHP-FPM and MySQL 
 with a Command Line Interface

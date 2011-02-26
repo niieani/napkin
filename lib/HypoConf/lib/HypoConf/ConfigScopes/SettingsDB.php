@@ -111,12 +111,12 @@ class SettingsDB
                 ArrayTools::createArrayElementByPath($this->defaultsDefinitions, $defaultsPath, ArrayTools::accessArrayElementByPath($settingsArray, $defaultsPath), 0);
                 
                 // remove the defaults, not needed anymore, have them in a separated array
-                self::RemoveByPath($defaultsPath);
+                $this->RemoveByPath($defaultsPath);
                 
                 // optionally apply them
                 if($addDefaults === true)
                 {
-                    self::ApplyDefaultsToAllElements(&$this->DB, $defaultsPath);
+                    $this>ApplyDefaultsToAllElements(&$this->DB, $defaultsPath);
                 }
             }
         }
@@ -145,8 +145,8 @@ class SettingsDB
                 }
                 else
                 {
-                    self::MergeOneIterativeByPath($path, &$config);
-                    if($addDefaults === true) self::ApplyDefaultsToAllElements(&$this->DB, $path, 'defaults', true); //defaultsDefinitions
+                    $this->MergeOneIterativeByPath($path, &$config);
+                    if($addDefaults === true) $this->ApplyDefaultsToAllElements(&$this->DB, $path, 'defaults', true); //defaultsDefinitions
                     //var_dump($this->defaultsDefinitions);
                 }
                 
@@ -170,7 +170,7 @@ class SettingsDB
                 {
                     //fclose(fopen($file, 'x'));
                     FileOperation::CreateEmptyFile($file);
-                    self::MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, false);
+                    $this->MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, false);
                     LogCLI::Result(LogCLI::OK);
                 }
                 catch (\Exception $e)
@@ -184,7 +184,7 @@ class SettingsDB
     
     public function MergeFromYAMLs(array $files, $path = false, $addDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = true)
     {
-        foreach($files as $i => $file)
+        foreach($files as $file)
         {
             $this->MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, $createNewIfNonexistant);
         }

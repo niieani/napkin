@@ -19,8 +19,6 @@ use HypoConf\ConfigScopes\ApplicationsDB;
 
 class Commands
 {
-//    public static $ApplicationsDB;
-    
     public static function LoadAndSave($arguments)
     {
         //self::$ApplicationsDB = new ConfigScopes\ApplicationsDB();

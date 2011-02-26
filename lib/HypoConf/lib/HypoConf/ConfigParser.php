@@ -153,7 +153,7 @@ class ConfigParser extends CommandLine
     private function parseWithConfig($configuration, $result)
     {
         $output = null;
-        foreach ($this->options as $name=>$option) 
+        foreach ($this->options as $option)
         {
             if(is_array($option->path))
             {

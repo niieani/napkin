@@ -25,7 +25,7 @@ class ApplicationsDB
     {
         foreach(self::$applications as $application)
         {
-            $this->LoadApplication($application);
+            self::LoadApplication($application);
         }
     }
     

@@ -38,7 +38,7 @@ class Helpers
         }
     }
     
-    public static function DoWeReplaceHelper(array $chain, $path)
+    public static function DoWeReplaceHelper(array $chain) //, $path
     {
         $testtype = end(StringTools::typeList(reset($chain), '+', false));
         

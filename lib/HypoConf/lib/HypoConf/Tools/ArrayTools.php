@@ -151,7 +151,7 @@ class ArrayTools
                 
                 $path .= "/" . $iterator->getSubIterator($i)->key();
             }
-            foreach($iterator->current() as $key => $value)
+            foreach($iterator->current() as $value)
             {
                 if(!is_array($value))
                 {
