@@ -1,9 +1,5 @@
 <?php
-// Include the Console_CommandLine package.
-//require_once 'Console/CommandLine.php';
-//require_once 'Console/CommandLine/Action.php';
 require_once __DIR__.'/autoload.php';
-
 
 use Tools\LogCLI;
 use Tools\StringTools;
@@ -35,28 +31,6 @@ Paths::$db = __DIR__.'/database';
 //use ConfigStyles\BracketConfig\NginxScope;
 
 //define('HC_DIR', __DIR__);
-
-
-/*
-class ActionList extends Console_CommandLine_Action
-{
-    public function execute($value=false, $params=array())
-    {
-        $list = explode(',', str_replace(' ', '', $value));
-        //if (count($range) != 2) {
-        //    throw new Exception(sprintf(
-        //        'Option "%s" must be 2 integers separated by a comma',
-        //        $this->option->name
-        //     ));
-        //}
-        $this->setResult($list);
-    }
-}
-
-// then we can register our action
-Console_CommandLine::registerAction('List', 'ActionList');
-//Console_CommandLine::registerAction('TypeList', 'ActionTypeList');
-*/
 
 // create the parser
 $parser = new CommandLine(array(
@@ -261,7 +235,7 @@ try {
         //else LogCLI::SetVerboseLevel(1);
     }
     LogCLI::Message(LogCLI::GREEN.'Running the HypoConf engine...'.LogCLI::RESET, 1);
-    if ($result->command_name) 
+    if ($result->command_name)
     {
         switch($result->command_name)
         {
@@ -388,22 +362,5 @@ Commands:
 EOT;
     }
 }
-
-/*        $st = $result->command->options['reverse'] 
-            ? strrev($result->command->args['text'])
-            : $result->command->args['text'];
-        if ($result->command_name == 'enable') { 
-            echo "Foo says: $st\n";
-        } else if ($result->command_name == 'disable') {
-            echo "Bar says: $st\n";
-        }*/
-//	$t = $result->command->args['text2'];
-//	var_dump($result->command->args['value']);
-/*	foreach (delimit($result->command->args['chain'],'.') as $chain)
-	{
-		var_dump($chain);
-	}*/
-//	var_dump(delimit($result->command->args['chain']),'.');
-
 
 ?>
