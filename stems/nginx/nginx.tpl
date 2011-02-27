@@ -13,7 +13,7 @@ http
     [[sendfile %(sendfile)s;]]
     [[tcp_nopush %(nopush)s;]]
     [[tcp_nodelay %(nodelay)s;]]
-    [[keepalive_timeout %(keepalive)s;]]
+    [[keepalive_timeout %(keepalivetimeout)s;]]
     [[client_max_body_size %(max_body)s;]]
 
     ## Gzip Compression

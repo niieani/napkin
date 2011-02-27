@@ -93,16 +93,27 @@ class Nginx extends ConfigScopes\Parser
             'path'        => 'sendfile'
         ));
         $this->parsers['nginx']->addSetting('nopush', array(
-            'path'        => 'tcp/nopush'
+            'path'        => 'tcp/nopush',
+            'action'      => 'StoreOnOff'
         ));
         $this->parsers['nginx']->addSetting('nodelay', array(
-            'path'        => 'tcp/nodelay'
+            'path'        => 'tcp/nodelay',
+            'action'      => 'StoreOnOff'
         ));
-        $this->parsers['nginx']->addSetting('keepalive', array(
-            'path'        => 'keepalive'
+        $this->parsers['nginx']->addSetting('keepalivetimeout', array(
+            'path'        => 'keepalive/timeout',
+            'action'      => 'StoreInt'
         ));
         $this->parsers['nginx']->addSetting('max_body', array(
             'path'        => 'max_body'
+        ));
+        $this->parsers['nginx']->addSetting('ignore_invalid_headers', array(
+            'path'        => 'http/ignore_invalid_headers',
+            'action'      => 'StoreOnOff'
+        ));
+        $this->parsers['nginx']->addSetting('tokens', array(
+            'path'        => 'http/tokens',
+            'action'      => 'StoreOnOff'
         ));
 
 
@@ -117,13 +128,15 @@ class Nginx extends ConfigScopes\Parser
             'path'        => 'gzip/min'
         ));
         $this->parsers['nginx']->addSetting('gzip_comp_level', array(
-            'path'        => 'gzip/level'
+            'path'        => 'gzip/level',
+            'action'      => 'StoreInt'
         ));
         $this->parsers['nginx']->addSetting('gzip_proxied', array(
             'path'        => 'gzip/proxied'
         ));
         $this->parsers['nginx']->addSetting('gzip_buffers_num', array(
-            'path'        => 'gzip/buffers'
+            'path'        => 'gzip/buffers',
+            'action'      => 'StoreInt'
         ));
         $this->parsers['nginx']->addSetting('gzip_buffers_size', array(
             'path'        => 'gzip/buffer_size'
@@ -132,19 +145,6 @@ class Nginx extends ConfigScopes\Parser
             'path'        => 'gzip/types'
         ));
 
-
-        /*
-         * NGINX HTTP SCOPE PARSER
-         */
-         /*
-        $this->parsers['http'] = new ConfigParser(array(
-            'name'        => 'nginx_http',
-            'description' => 'nginx http',
-            'version'     => '0.9',
-            'template'    => &$templates['http']
-        ));
-        */
-        
         /*
          *   NGINX SERVER SCOPE PARSER [ITERATIVE]
          * ITERATIVE SCOPES HAVE RELATIVE YML PATHS!
@@ -159,22 +159,28 @@ class Nginx extends ConfigScopes\Parser
         $this->parsers['server']->addSetting('domain', array(
             'path'        => 'domain',
             'action'      => 'StoreStringOrFalse',
-            'default'     => null,
             'description' => 'listen options'
         ));
         
         $this->parsers['server']->addSetting('name_comment', array(
             'path'        => 'name_comment',
-            'action'      => 'StoreStringOrFalse',
-            'default'     => null
+            'action'      => 'StoreStringOrFalse'
         ));
-        
+
+        $this->parsers['server']->addSetting('ssl', array(
+            'path'        => 'support/ssl',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'ssl')
+        ));
+        $this->parsers['server']->addSetting('faviconfix', array(
+            'path'        => 'support/faviconfix',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'faviconfix')
+        ));
         $this->parsers['server']->addSetting('php', array(
             'path'        => 'support/php',
             'action'      => 'StoreStemOrFalse',
-            'action_params' => array('template' => 'php'),
-            'default'     => null,
-            'description' => 'listen options'
+            'action_params' => array('template' => 'php')
         ));
         
         $this->parsers['php'] = new ConfigParser(array(
@@ -189,7 +195,41 @@ class Nginx extends ConfigScopes\Parser
             'default'     => false,
             'description' => 'listen options'
         ));
-        
+
+        $this->parsers['ssl'] = new ConfigParser(array(
+            'name'        => 'nginx_ssl',
+            'description' => 'nginx ssl',
+            'version'     => '0.9',
+            'template'    => &$templates['ssl']
+        ));
+        $this->parsers['ssl']->addSetting('timeout', array(
+            'path'        => 'timeout'
+        ));
+        $this->parsers['ssl']->addSetting('cert', array(
+            'path'        => 'cert'
+        ));
+        $this->parsers['ssl']->addSetting('key', array(
+            'path'        => 'key'
+        ));
+
+        /*
+         *          NGINX LOGFORMAT SCOPE PARSER
+         * SCOPES WITH ITERATIVE PARENTS HAVE RELATIVE YML PATHS!
+         */
+        $this->parsers['logformat'] = new ConfigParser(array(
+            'name'        => 'nginx_logformat',
+            'description' => 'nginx log format',
+            'version'     => '0.9',
+            'template'    => &$templates['logformat']
+        ));
+        $this->parsers['logformat']->addSetting('name', array(
+            'path'        => 'name'
+        ));
+        $this->parsers['logformat']->addSetting('format', array(
+            'path'        => 'format'
+        ));
+
+
         /*
          *          NGINX SERVER/LISTEN SCOPE PARSER
          * SCOPES WITH ITERATIVE PARENTS HAVE RELATIVE YML PATHS!
@@ -208,14 +248,12 @@ class Nginx extends ConfigScopes\Parser
             'action'      => 'IPPort',
             'description' => 'IP and port'
         ));
-        
         $this->parsers['listen']->addSetting('listen_options', array(
             'path'        => 'listen_options',
             'action'      => 'StoreStringOrFalse',
-            'default'     => '',
             'description' => 'listen options'
         ));
-        
+
         
         /*
          * COMMON 'CUSTOM' SETTING FOR INSERTING CUSTOM CODE
