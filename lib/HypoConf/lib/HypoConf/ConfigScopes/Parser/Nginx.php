@@ -212,6 +212,12 @@ class Nginx extends ConfigScopes\Parser
             'path'        => 'key'
         ));
 
+        $this->parsers['faviconfix'] = new ConfigParser(array(
+            'name'        => 'nginx_faviconfix',
+            'description' => 'nginx no favicon fix',
+            'version'     => '0.9',
+            'template'    => &$templates['faviconfix']
+        ));
         /*
          *          NGINX LOGFORMAT SCOPE PARSER
          * SCOPES WITH ITERATIVE PARENTS HAVE RELATIVE YML PATHS!
