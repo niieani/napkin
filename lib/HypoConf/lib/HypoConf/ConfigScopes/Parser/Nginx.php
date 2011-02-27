@@ -102,7 +102,8 @@ class Nginx extends ConfigScopes\Parser
         ));
         $this->parsers['nginx']->addSetting('keepalivetimeout', array(
             'path'        => 'keepalive/timeout',
-            'action'      => 'StoreInt'
+            'action'      => 'StoreInt',
+            'default'     => '60'
         ));
         $this->parsers['nginx']->addSetting('max_body', array(
             'path'        => 'max_body'
