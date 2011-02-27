@@ -20,7 +20,7 @@ class Setting extends Console\CommandLine\Option
     public $required = false;
     public $required_one = false;
     public $action = 'StoreStringOrFalse';
-    public $default = false;
+    //public $default = false;
     
     // }}}
     // __construct() {{{

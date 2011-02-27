@@ -163,8 +163,7 @@ class ConfigParser extends CommandLine
                     $setting = ArrayTools::accessArrayElementByPath($configuration, $path);
                     if ($setting === null)
                     {
-                        $option->setDefaults();
-                        LogCLI::MessageResult($config.'] Setting not set, defaulting to: '.$option->default[$config], 7, LogCLI::OK);
+                        LogCLI::MessageResult('Setting '.$config.' not set, defaulting to: '.$option->default[$config], 7, LogCLI::OK);
                         $setting = $option->default[$config];
                     }
                     $values[$config] = $setting;
@@ -176,7 +175,12 @@ class ConfigParser extends CommandLine
                 //($setting = ArrayTools::accessArrayElementByPath($configuration, $option->path)) !== null ?: $setting = $option->default;
                 $setting = ArrayTools::accessArrayElementByPath($configuration, $option->path);
                 //var_dump($setting);
-                if ($setting === null) $setting = $option->default;
+                if ($setting === null)
+                {
+                    $option->setDefaults();
+                    LogCLI::MessageResult('Setting '.$option->name.' not set, defaulting to: '.$option->default, 7, LogCLI::OK);
+                    $setting = $option->default;
+                }
                 //var_dump($setting);
                 $value = StringTools::MakeList(&$setting);
                 $this->_dispatchAction($option, $value, $result);
