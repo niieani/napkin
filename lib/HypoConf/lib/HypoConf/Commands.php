@@ -22,6 +22,7 @@ class Commands
     public static function ListSettings($arguments)
     {
         LogCLI::Message('Listing available settings: ', 0);
+        $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
         //$settings = ApplicationsDB::GetSettingsList('nginx', 'server');
         $settingsNginx = ApplicationsDB::GetAllSettings('nginx');
         foreach($settingsNginx as $setting)
