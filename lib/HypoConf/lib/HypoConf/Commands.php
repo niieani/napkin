@@ -19,6 +19,18 @@ use HypoConf\ConfigScopes\ApplicationsDB;
 
 class Commands
 {
+    public static function ListSettings($arguments)
+    {
+        LogCLI::Message('Listing available settings: ', 0);
+        //$settings = ApplicationsDB::GetSettingsList('nginx', 'server');
+        $settingsNginx = ApplicationsDB::GetAllSettings('nginx');
+        foreach($settingsNginx as $setting)
+        {
+            LogCLI::MessageResult(LogCLI::BLUE.$setting, 0, LogCLI::INFO);
+        }
+        LogCLI::Result(LogCLI::OK);
+    }
+
     public static function LoadAndSave($arguments)
     {
         //self::$ApplicationsDB = new ConfigScopes\ApplicationsDB();

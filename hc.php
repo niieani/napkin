@@ -117,6 +117,15 @@ $cmd['set']->addArgument('values', array(
     'multiple'    => true
 ));
 
+// add the setlist subcommand
+$cmd['setlist'] = $parser->addCommand('setlist', array(
+    'description' => 'Shows the list of available settings.',
+    'aliases'     => array('sl', 'settings')
+));
+$cmd['setlist']->addArgument('name', array(
+    'description' => '',
+));
+
 $cmd['help'] = $parser->addCommand('help', array(
     'description' => 'shows general help or if help [argument] specified displays more about a certain function',
     'aliases'     => array('h')
@@ -252,7 +261,14 @@ try {
                     Commands::LoadAndSave($result->command->args);
                 }
                 break;
-            
+
+            case 'setlist':
+                if($result->command->args)
+                {
+                    Commands::ListSettings($result->command->args);
+                }
+                break;
+
             case 'generate':
                 if($result->command->args)
                 {
