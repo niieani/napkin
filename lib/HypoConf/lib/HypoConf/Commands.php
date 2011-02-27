@@ -27,6 +27,7 @@ class Commands
         $settingsNginx = ApplicationsDB::GetAllSettings('nginx');
         foreach($settingsNginx as $setting)
         {
+            var_dump($setting);
             LogCLI::MessageResult(LogCLI::BLUE.$setting, 0, LogCLI::INFO);
         }
         LogCLI::Result(LogCLI::OK);
