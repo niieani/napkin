@@ -130,14 +130,16 @@ class Nginx extends ConfigScopes\Parser
         ));
         $this->parsers['nginx']->addSetting('gzip_comp_level', array(
             'path'        => 'gzip/level',
-            'action'      => 'StoreInt'
+            'action'      => 'StoreInt',
+            'default'     => '6'
         ));
         $this->parsers['nginx']->addSetting('gzip_proxied', array(
             'path'        => 'gzip/proxied'
         ));
         $this->parsers['nginx']->addSetting('gzip_buffers_num', array(
             'path'        => 'gzip/buffers',
-            'action'      => 'StoreInt'
+            'action'      => 'StoreInt',
+            'default'     => '16'
         ));
         $this->parsers['nginx']->addSetting('gzip_buffers_size', array(
             'path'        => 'gzip/buffer_size'
@@ -192,9 +194,7 @@ class Nginx extends ConfigScopes\Parser
         ));
         $this->parsers['php']->addSetting('index', array(
             'path'        => 'index',
-            'action'      => 'StoreStringOrFalse',
-            'default'     => false,
-            'description' => 'listen options'
+            'description' => 'php index file'
         ));
 
         $this->parsers['ssl'] = new ConfigParser(array(
