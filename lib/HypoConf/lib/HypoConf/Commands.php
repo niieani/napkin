@@ -25,9 +25,10 @@ class Commands
         $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
         //$settings = ApplicationsDB::GetSettingsList('nginx', 'server');
         $settingsNginx = ApplicationsDB::GetAllSettings('nginx');
-        foreach($settingsNginx as $setting)
+        $settings = ArrayTools::GetMultiDimentionalElementsWithChildren(&$settingsNginx);
+        foreach($settings as $setting)
         {
-            var_dump($setting);
+            //var_dump($setting);
             LogCLI::MessageResult(LogCLI::BLUE.$setting, 0, LogCLI::INFO);
         }
         LogCLI::Result(LogCLI::OK);
