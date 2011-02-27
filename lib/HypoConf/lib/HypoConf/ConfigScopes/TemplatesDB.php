@@ -41,7 +41,7 @@ class TemplatesDB
     {
         foreach($files as $file)
         {
-            LogCLI::Message('Loading template file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
+            LogCLI::Message('Loading template file: '.LogCLI::BLUE.$file.LogCLI::RESET, 2);
             if (file_exists($file))
             {
                 $this->AddFromFile($file);
