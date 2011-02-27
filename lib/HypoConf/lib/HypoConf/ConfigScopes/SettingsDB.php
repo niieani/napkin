@@ -116,7 +116,7 @@ class SettingsDB
                 // optionally apply them
                 if($addDefaults === true)
                 {
-                    $this>ApplyDefaultsToAllElements(&$this->DB, $defaultsPath);
+                    $this->ApplyDefaultsToAllElements(&$this->DB, $defaultsPath);
                 }
             }
         }
