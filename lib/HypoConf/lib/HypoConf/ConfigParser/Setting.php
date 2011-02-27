@@ -19,7 +19,7 @@ class Setting extends Console\CommandLine\Option
     public $path;
     public $required = false;
     public $required_one = false;
-    public $action = 'StoreStringTrue';
+    public $action = 'StoreStringOrFalse';
     
     // }}}
     // __construct() {{{
