@@ -110,19 +110,11 @@ class ParseTools
 
                 // programmer did not supply a value for the named argument found in the format string
                 if (! array_key_exists($arg_key, $arg_nums) || $args[$arg_key] === false) {
-                    //var_dump($arg_nums);
-                    //$arg_nums[$arg_key] = false;
-                    ////array_push($arg_nums, $arg_key);
-                    //var_dump($arg_nums);
                     LogCLI::MessageResult('Not set: '.LogCLI::YELLOW.$arg_key.LogCLI::RESET.', skipping', 4, LogCLI::INFO);
-                    //user_error("sprintfn(): Missing argument '${arg_key}'", E_USER_NOTICE);
-                    //return false;
-
                     $format = substr_replace($format, $replace = '', $arg_pos-1, $arg_len+2);
                 }
                 else
                 {
-                    //$posLeft = strlen($format)-strpos(strrev($format), '[[', strlen($format)-$arg_pos);
                     $posLeft = strlen($format)-strpos(strrev($format), '[[', strlen($format)-$arg_pos);
                     $posRight = strpos($format, ']]', $arg_pos);
                     LogCLI::MessageResult('Original left position: '.LogCLI::BLUE.$arg_pos.LogCLI::RESET, 6, LogCLI::INFO);
