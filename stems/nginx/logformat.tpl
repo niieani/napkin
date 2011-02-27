@@ -1,1 +1,1 @@
-log_format [[%(name)s]][[ %(format)s]];
+[[log_format %(name)s]][[ %(format)s;]]
