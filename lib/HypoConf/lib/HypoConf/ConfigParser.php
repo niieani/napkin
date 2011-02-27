@@ -162,6 +162,7 @@ class ConfigParser extends CommandLine
                     //($setting = ArrayTools::accessArrayElementByPath($configuration, $path)) !== null ?: $setting = $option->default[$config];
                     $setting = ArrayTools::accessArrayElementByPath($configuration, $path);
                     if ($setting === null) $setting = $option->default[$config];
+                        var_dump($option->default[$config]);
                     $values[$config] = $setting;
                 }
                 $this->_dispatchAction($option, $values, $result);
