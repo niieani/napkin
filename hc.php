@@ -124,6 +124,7 @@ $cmd['setlist'] = $parser->addCommand('setlist', array(
 ));
 $cmd['setlist']->addArgument('name', array(
     'description' => '',
+    'optional'    => true
 ));
 
 $cmd['help'] = $parser->addCommand('help', array(
