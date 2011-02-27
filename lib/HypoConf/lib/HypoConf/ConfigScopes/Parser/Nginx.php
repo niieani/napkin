@@ -60,19 +60,10 @@ class Nginx extends ConfigScopes\Parser
             'default'     => 'www-data',
             'description' => 'group that runs nginx'
         ));
-        
-        
+
         /*
          * NGINX EVENTS SCOPE PARSER
          */
-        /*
-        $this->parsers['events'] = new ConfigParser(array(
-            'name'        => 'nginx_events',
-            'description' => 'nginx events',
-            'version'     => '0.9',
-            'template'    => &$templates['events']
-        ));
-        */
         $this->parsers['nginx']->addSetting('connections', array(
             'path'        => 'connections',
             'action'      => 'StoreInt',
@@ -87,15 +78,61 @@ class Nginx extends ConfigScopes\Parser
             'path'        => 'multi_accept',
             'action'      => 'StoreOnOff'
         ));
+
+
         $this->parsers['nginx']->addSetting('errorlog', array(
-            'path'        => 'errorlog/file',
-            'action'      => 'StoreStringOrFalse'
+            'path'        => 'errorlog/file'
         ));
         $this->parsers['nginx']->addSetting('errorlogstyle', array(
-            'path'        => 'errorlog/style',
-            'action'      => 'StoreStringOrFalse'
+            'path'        => 'errorlog/style'
         ));
-        
+        $this->parsers['nginx']->addSetting('mimepath', array(
+            'path'        => 'mimepath'
+        ));
+        $this->parsers['nginx']->addSetting('sendfile', array(
+            'path'        => 'sendfile'
+        ));
+        $this->parsers['nginx']->addSetting('nopush', array(
+            'path'        => 'tcp/nopush'
+        ));
+        $this->parsers['nginx']->addSetting('nodelay', array(
+            'path'        => 'tcp/nodelay'
+        ));
+        $this->parsers['nginx']->addSetting('keepalive', array(
+            'path'        => 'keepalive'
+        ));
+        $this->parsers['nginx']->addSetting('max_body', array(
+            'path'        => 'max_body'
+        ));
+
+
+        $this->parsers['nginx']->addSetting('gzip', array(
+            'path'        => 'gzip/gzip',
+            'action'      => 'StoreOnOff'
+        ));
+        $this->parsers['nginx']->addSetting('gzip_disable', array(
+            'path'        => 'gzip/disable'
+        ));
+        $this->parsers['nginx']->addSetting('gzip_min', array(
+            'path'        => 'gzip/min'
+        ));
+        $this->parsers['nginx']->addSetting('gzip_comp_level', array(
+            'path'        => 'gzip/level'
+        ));
+        $this->parsers['nginx']->addSetting('gzip_proxied', array(
+            'path'        => 'gzip/proxied'
+        ));
+        $this->parsers['nginx']->addSetting('gzip_buffers_num', array(
+            'path'        => 'gzip/buffers'
+        ));
+        $this->parsers['nginx']->addSetting('gzip_buffers_size', array(
+            'path'        => 'gzip/buffer_size'
+        ));
+        $this->parsers['nginx']->addSetting('gzip_types', array(
+            'path'        => 'gzip/types'
+        ));
+
+
         /*
          * NGINX HTTP SCOPE PARSER
          */

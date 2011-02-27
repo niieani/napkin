@@ -20,7 +20,9 @@ http
     [[gzip %(gzip)s;]]
     [[gzip_disable %(gzip_disable)s;]]
     [[gzip_min_length %(gzip_min)s;]]
+    [[gzip_comp_level %(gzip_comp_level)s;]]
     [[gzip_proxied %(gzip_proxied)s;]]
+    [[gzip_buffers %(gzip_buffers_num)s %(gzip_buffers_size)sk;]]
     [[gzip_types %(gzip_types)s;]]
 
     ## Log Format
