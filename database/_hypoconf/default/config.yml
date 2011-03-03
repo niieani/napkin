@@ -1,12 +1,19 @@
 nginx:
   user: www-data
-  group: www-data
+  group: grupas
   connections: '8000'
   multi_accept: '1'
   errorlog:
     file: pliczek.log
     style: styl-szmyl
   use: drugi
+  sendfile: on
+  gzip:
+    gzip: '0'
+  max_body: '80'
+  http:
+    ignore_invalid_headers: on
+    tokens: prod
 server:
   defaults:
     listen:

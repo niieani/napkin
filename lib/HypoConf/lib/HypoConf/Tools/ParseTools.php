@@ -1,6 +1,7 @@
 <?php
 namespace Tools;
 use Tools\LogCLI;
+use Tools\MakePath;
 
 class ParseTools
 {
@@ -92,6 +93,150 @@ class ParseTools
         }
     }
 
+    
+    public static function RemoveBracket($format, $depth = 0)
+    {
+        $reversed = strrev($format);
+        $posRight = 0;
+        $i = 0;
+        $depthRight = 0;
+        while ($depthRight <= $depth && ($posRight = strpos($reversed, ']]', $posRight+$i)) !== false)
+        {
+            $i = 2;
+            $depthRight++;
+            var_dump($posRight);
+            $thisPosRight = $posRight;
+        }
+        var_dump($rightCut = strrev(substr_replace($reversed, '', $thisPosRight, 2)));
+
+        $posLeft = 0;
+        $i = 0;
+        $depthLeft = 0;
+        while ($depthLeft <= $depth && ($posLeft = strpos($rightCut, '[[', $posLeft+$i)) !== false)
+        {
+            $i = 2;
+            $depthLeft++;
+            var_dump($posLeft);
+            $thisPosLeft = $posLeft;
+        }
+        var_dump($leftCut = substr_replace($rightCut, '', $thisPosLeft, 2));
+        
+    }
+    
+    public static function StripTag($format, $origin = false)
+    {
+
+        /*
+        while (($posRight = strpos($reversed, ']]', $posRight+$i)) !== false)
+        {
+            if($lastPosRight != 0)
+                $fragment = substr($reversed, 0, $lastPosRight);
+            else $fragment = '';
+            
+            if($fragment != '') 
+            {
+                LogCLI::Message('Cutting: '.LogCLI::GREEN_LIGHT.(strrev($fragment)).LogCLI::RESET, 5);
+                self::StripTag(strrev($fragment));
+                LogCLI::Result(LogCLI::OK);
+            }
+            $i = 2;
+            $lastPosRight = $posRight;
+            
+        }*/
+        //$path = new MakePath();
+        
+        $lastPosLeft = $posLeft = 0;
+        $i = 0;
+        $finitoLeft = false;
+        $level = 0;
+        
+        $posLeftAcc = array();
+        $posRightAcc = array();
+        
+        $iterationLeft = 0;
+        
+        while ($posLeft+$i <= (strlen($format)))
+        {
+            $posLeft = strpos($format, '[[', $posLeft+$i); 
+            if($posLeft === false) { $posLeft = strlen($format); $finitoLeft = true; }
+            
+            
+            //if($lastPosLeft != 0)
+            //var_dump($posLeft);
+            //$fragment = substr($format, $posLeft, strlen($format)-$posLeft);
+            $fragment = substr($format, $lastPosLeft, $posLeft-$lastPosLeft);
+
+            //$reversed = strrev($format);
+            
+            //else $fragment = '';
+            if($fragment != '') 
+            {
+                //self::StripTag($fragment);
+                
+                //$path->begin($fragment);
+                $level++;
+                LogCLI::Message('    '.$level.') Start: '.LogCLI::GREEN_LIGHT.($fragment).LogCLI::RESET, 5);
+                
+                $iterationLeft++;
+            
+                $lastPosRight = $posRight = 0;
+                $j = 0;
+                
+                //$finitoRight = false;
+                
+                $iterationRight = 0;
+                while($posRight+$j <= (strlen($fragment)))
+                {
+                    $posRight = strpos($fragment, ']]', $posRight+$j);
+                    //if($posRight === false) { $posRight = strlen($fragment); $finitoRight = true; }
+                    if($posRight === false) { break; }
+                    
+                    $iterationRight++;
+                    $posLeftAcc[$level][$iterationLeft] = $lastPosLeft+$lastPosRight;
+                    $posRightAcc[$level][$iterationLeft] = strlen($fragment)-$lastPosRight;
+                    //$posRightAcc[$level][$iterationLeft][$iterationRight] = $lastPosLeft+($posRight-$lastPosRight);
+                    
+                    /* napisać klasę w stylu MakePath z trzema poleceniami: start, end - start powieksza level i dokleja zawartość do niższego lvlu */
+                    
+                    LogCLI::MessageResult('Pos: '.$posRight.' LastPos: '.$lastPosRight, 5);
+                    $subfragment = substr($fragment, $lastPosRight, $posRight-$lastPosRight);
+                    
+                    LogCLI::MessageResult($level.') End: '.LogCLI::GREEN_LIGHT.($subfragment).']]'.LogCLI::RESET, 5);
+                    //$path->begin($subfragment);
+                    //$path->end();
+                    
+                    $level--;
+                    LogCLI::Result(LogCLI::OK);
+                    
+                    $j = 2;
+                    $lastPosRight = $posRight;
+                    
+                    //if($finitoRight === true) break;
+                }
+                
+                //LogCLI::Result(LogCLI::OK);
+            }
+            
+            $i = 2;
+            $lastPosLeft = $posLeft;
+            
+            if($finitoLeft === true) break;
+        }
+        LogCLI::Result(LogCLI::OK);
+        
+        //var_dump($posLeftAcc);
+        //var_dump($posRightAcc);
+        foreach($posLeftAcc as $level => $listLeft)
+        {
+            foreach($listLeft as $n => $posLeft)
+            {
+                var_dump($fragment = substr($format, $posLeft, $posRightAcc[$level][$n]));
+            }
+        }
+        //$path->end();
+        //var_dump($path->getPaths());
+    }
+    
     public static function sprintfnnew ($format, array $args = array()) {
         if(is_string($format))
         {
@@ -111,7 +256,13 @@ class ParseTools
                 // programmer did not supply a value for the named argument found in the format string
                 if (! array_key_exists($arg_key, $arg_nums) || $args[$arg_key] === false) {
                     LogCLI::MessageResult('Not set: '.LogCLI::YELLOW.$arg_key.LogCLI::RESET.', skipping', 4, LogCLI::INFO);
+                    
+                    LogCLI::MessageResult('Old format: '.LogCLI::YELLOW.$format.LogCLI::RESET, 4, LogCLI::INFO);
+                    LogCLI::MessageResult('Cutting pos: '.LogCLI::YELLOW.($arg_pos-1).LogCLI::RESET, 4, LogCLI::INFO);
+                    LogCLI::MessageResult('Cutting len: '.LogCLI::YELLOW.($arg_len+2).LogCLI::RESET, 4, LogCLI::INFO);
                     $format = substr_replace($format, $replace = '', $arg_pos-1, $arg_len+2);
+                    
+                    LogCLI::MessageResult('New format: '.LogCLI::YELLOW.$format.LogCLI::RESET, 4, LogCLI::INFO);
                 }
                 else
                 {
