@@ -25,7 +25,7 @@ class Site
         
         $settingPath = implode('/', $chain);
         
-        // are we adding a setting or replacing/merging ? [TODO - add check if the setting is iterative at all]
+        // are we adding a setting or replacing/merging ? [TODO: add check if the setting is iterative at all]
         $doNotReplace = Helpers::DoWeReplaceHelper($chain, $settingPath);
         
         if($doNotReplace === true) 

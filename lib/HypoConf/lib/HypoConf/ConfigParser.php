@@ -191,7 +191,9 @@ class ConfigParser extends CommandLine
         
         foreach(preg_split("/(\r?\n)/", $this->template) as $line)
         {
-            $parsedline = ParseTools::sprintfn($line, $result->options);
+            //$parsedline = ParseTools::sprintfn($line, $result->options);
+            $parsedline = ParseTools::parseStringWithReplacementList($line, $result->options);
+            
             // if all we got is whitespace, don't add it
             if(strlen(rtrim($parsedline)) < 1) continue;
             

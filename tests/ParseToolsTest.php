@@ -175,22 +175,20 @@ function parse($format, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/', $ifNoM
     return $format;
 }
 
-$listFormat = array(
-    "gzip_buffers" => 40,
-    "gzip_buffers_s" => 'yeah!',
-    "dupeczka" => 'ziom'
-);
-
 //$input = "poziom 0 [%(gzip_buffers) [poziom 2[poziom 3]%(gzip_buffers_inny)] poziom 1] poziom 0 [znowu poziom 1] 0 [poziom 1 %(dupeczka)[znowu poziom 2 [znowu poziom 3]]] koncowkaLVL0";
 //$formatArray = StackUp($input);
 
-$toFormat = '[[gzip_buffers %(gzip_buffers)[[ %(gzip_buffers_s)]]; this should be here]]';
+$listFormat = array(
+    "gzip_buffers" => 40,
+    "gzip_yeah" => 'yeah!'
+);
+$toFormat = '[[gzip_buffers %(gzip_buffers)[[ %(gzip_yeah)]]; this should still be here]]';
 $formatArray = StackUp($toFormat, '[[', ']]');
-//var_dump($formatArray);
 
 $parsed = parseArray($formatArray, $listFormat);
 echo r_implode(null, $parsed);
 
+//var_dump($formatArray);
 //var_dump($parsed);
 
 //$out = parse('kapucha %(gzip_buffers)s %(gzip_buffers_inny)s', $listFormat);
