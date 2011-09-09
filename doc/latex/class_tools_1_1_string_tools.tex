@@ -1,0 +1,93 @@
+\hypertarget{class_tools_1_1_string_tools}{
+\section{\-String\-Tools \-Class \-Reference}
+\label{class_tools_1_1_string_tools}\index{\-String\-Tools@{\-String\-Tools}}
+}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_tools_1_1_string_tools_aba588c7c4205b677d3afd1f803d2ab4b}{
+static {\bfseries regexpify} (\$string)}
+\label{class_tools_1_1_string_tools_aba588c7c4205b677d3afd1f803d2ab4b}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_ae93d3bc0b3706df05cb47fff89b08e37}{
+static {\bfseries indent\-Lines\-To\-Match\-Other} (\$like\-What, \$like\-Where, \$content, \$skip\-Lines=0, \$where\-To\-Stop=null)}
+\label{class_tools_1_1_string_tools_ae93d3bc0b3706df05cb47fff89b08e37}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_a29d6807e1d8f4e1ee335baf0d0fd1d1b}{
+static {\bfseries \-Return\-Last\-Bit} (\$path, \$n=1)}
+\label{class_tools_1_1_string_tools_a29d6807e1d8f4e1ee335baf0d0fd1d1b}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_af7b82890bac23b74e75bddb69aefc560}{
+static {\bfseries \-Drop\-Last\-Bit} (\$path, \$skip\-N=1)}
+\label{class_tools_1_1_string_tools_af7b82890bac23b74e75bddb69aefc560}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_a418d93d393d254cb70e404fa4bba4835}{
+static {\bfseries \-Add\-Bit} (\$path, \$string)}
+\label{class_tools_1_1_string_tools_a418d93d393d254cb70e404fa4bba4835}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_a2dd004150fb751c66d317f69f80d88c9}{
+static {\bfseries \-Make\-List} (\$args, \$delimiter= ' ')}
+\label{class_tools_1_1_string_tools_a2dd004150fb751c66d317f69f80d88c9}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_a14606dd28796f49ba6123a9b57963376}{
+static {\bfseries rimplode} (\$glue, \$pieces)}
+\label{class_tools_1_1_string_tools_a14606dd28796f49ba6123a9b57963376}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_a698c94fe68de8db4a73b87aa5bea8415}{
+static {\bfseries \-Remove\-Exclamation} (\$path)}
+\label{class_tools_1_1_string_tools_a698c94fe68de8db4a73b87aa5bea8415}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_a2df9332076726e0e5160b361840dbcc4}{
+static {\bfseries delimit} (\$value, \$delimited= ',')}
+\label{class_tools_1_1_string_tools_a2df9332076726e0e5160b361840dbcc4}
+
+\item 
+\hypertarget{class_tools_1_1_string_tools_a60ecef16632a54433b951cee3ab781e2}{
+static {\bfseries type\-List} (\$value=false, \$sign= '@', \$delimit= ',')}
+\label{class_tools_1_1_string_tools_a60ecef16632a54433b951cee3ab781e2}
+
+\item 
+static \hyperlink{class_tools_1_1_string_tools_a65dc2d63bc4580c9771d78dbf69be7e6}{sprintfn} (\$format, array \$args=array())
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_tools_1_1_string_tools_a65dc2d63bc4580c9771d78dbf69be7e6}{
+\index{\-Tools\-::\-String\-Tools@{\-Tools\-::\-String\-Tools}!sprintfn@{sprintfn}}
+\index{sprintfn@{sprintfn}!Tools::StringTools@{\-Tools\-::\-String\-Tools}}
+\subsubsection[{sprintfn}]{\setlength{\rightskip}{0pt plus 5cm}static sprintfn (
+\begin{DoxyParamCaption}
+\item[{\$}]{format, }
+\item[{array \$}]{args = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_tools_1_1_string_tools_a65dc2d63bc4580c9771d78dbf69be7e6}
+version of sprintf for cases where named arguments are desired (python syntax)
+
+with sprintf\-: sprintf('second\-: \%2\$s ; first\-: \%1\$s', '1st', '2nd');
+
+with sprintfn\-: sprintfn('second\-: \%(second)s ; first\-: \%(first)s', array( 'first' =$>$ '1st', 'second'=$>$ '2nd' ));
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$format} & sprintf format string, with any number of named arguments \\
+\hline
+array & {\em \$args} & array of \mbox{[} 'arg\-\_\-name' =$>$ 'arg value', ... \mbox{]} replacements to be made \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string$|$false result of sprintf call, or bool false on error 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+lib/hypoconf/lib/\-Hypo\-Conf/\-Tools/\-String\-Tools.\-php\end{DoxyCompactItemize}

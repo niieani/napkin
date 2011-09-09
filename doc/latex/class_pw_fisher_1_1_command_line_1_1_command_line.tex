@@ -1,0 +1,78 @@
+\hypertarget{class_pw_fisher_1_1_command_line_1_1_command_line}{
+\section{\-Command\-Line \-Class \-Reference}
+\label{class_pw_fisher_1_1_command_line_1_1_command_line}\index{\-Command\-Line@{\-Command\-Line}}
+}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_pw_fisher_1_1_command_line_1_1_command_line_aa367e54f990c7fd9c495576f3e0b8eb3}{parse\-Args} (\$argv)
+\item 
+static \hyperlink{class_pw_fisher_1_1_command_line_1_1_command_line_a933b44e772937fda17dc7d29ec94dc33}{get\-Boolean} (\$key, \$default=false)
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_pw_fisher_1_1_command_line_1_1_command_line_a67e94494731d99ed23b123e95175bc10}{
+static {\bfseries \$args}}
+\label{class_pw_fisher_1_1_command_line_1_1_command_line_a67e94494731d99ed23b123e95175bc10}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Command \-Line \-Interface (\-C\-L\-I) utility class.
+
+\begin{DoxyAuthor}{\-Author}
+\-Patrick \-Fisher $<$\href{mailto:patrick@pwfisher.com}{\tt patrick@pwfisher.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxySince}{\-Since}
+\-August 21, 2009  \href{http://pwfisher.com/nucleus/index.php?itemid=45}{\tt http\-://pwfisher.\-com/nucleus/index.\-php?itemid=45} 
+\end{DoxySince}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_pw_fisher_1_1_command_line_1_1_command_line_a933b44e772937fda17dc7d29ec94dc33}{
+\index{\-Pw\-Fisher\-::\-Command\-Line\-::\-Command\-Line@{\-Pw\-Fisher\-::\-Command\-Line\-::\-Command\-Line}!get\-Boolean@{get\-Boolean}}
+\index{get\-Boolean@{get\-Boolean}!PwFisher::CommandLine::CommandLine@{\-Pw\-Fisher\-::\-Command\-Line\-::\-Command\-Line}}
+\subsubsection[{get\-Boolean}]{\setlength{\rightskip}{0pt plus 5cm}static get\-Boolean (
+\begin{DoxyParamCaption}
+\item[{\$}]{key, }
+\item[{\$}]{default = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_pw_fisher_1_1_command_line_1_1_command_line_a933b44e772937fda17dc7d29ec94dc33}
+\-G\-E\-T \-B\-O\-O\-L\-E\-A\-N \hypertarget{class_pw_fisher_1_1_command_line_1_1_command_line_aa367e54f990c7fd9c495576f3e0b8eb3}{
+\index{\-Pw\-Fisher\-::\-Command\-Line\-::\-Command\-Line@{\-Pw\-Fisher\-::\-Command\-Line\-::\-Command\-Line}!parse\-Args@{parse\-Args}}
+\index{parse\-Args@{parse\-Args}!PwFisher::CommandLine::CommandLine@{\-Pw\-Fisher\-::\-Command\-Line\-::\-Command\-Line}}
+\subsubsection[{parse\-Args}]{\setlength{\rightskip}{0pt plus 5cm}static parse\-Args (
+\begin{DoxyParamCaption}
+\item[{\$}]{argv}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_pw_fisher_1_1_command_line_1_1_command_line_aa367e54f990c7fd9c495576f3e0b8eb3}
+\-P\-A\-R\-S\-E \-A\-R\-G\-U\-M\-E\-N\-T\-S
+
+\-This command line option parser supports any combination of three types of options (switches, flags and arguments) and returns a simple array.
+
+\mbox{[}pfisher $\sim$\mbox{]}\$ php test.\-php -\/-\/foo -\/-\/bar=baz \mbox{[}\char`\"{}foo\char`\"{}\mbox{]} =$>$ true \mbox{[}\char`\"{}bar\char`\"{}\mbox{]} =$>$ \char`\"{}baz\char`\"{}
+
+\mbox{[}pfisher $\sim$\mbox{]}\$ php test.\-php -\/abc \mbox{[}\char`\"{}a\char`\"{}\mbox{]} =$>$ true \mbox{[}\char`\"{}b\char`\"{}\mbox{]} =$>$ true \mbox{[}\char`\"{}c\char`\"{}\mbox{]} =$>$ true
+
+\mbox{[}pfisher $\sim$\mbox{]}\$ php test.\-php arg1 arg2 arg3 \mbox{[}0\mbox{]} =$>$ \char`\"{}arg1\char`\"{} \mbox{[}1\mbox{]} =$>$ \char`\"{}arg2\char`\"{} \mbox{[}2\mbox{]} =$>$ \char`\"{}arg3\char`\"{}
+
+\mbox{[}pfisher $\sim$\mbox{]}\$ php test.\-php plain-\/arg -\/-\/foo -\/-\/bar=baz -\/-\/funny=\char`\"{}spam=eggs\char`\"{} -\/-\/also-\/funny=spam=eggs $\backslash$ $>$ 'plain arg 2' -\/abc -\/k=value \char`\"{}plain arg 3\char`\"{} -\/-\/s=\char`\"{}original\char`\"{} -\/-\/s='overwrite' -\/-\/s \mbox{[}0\mbox{]} =$>$ \char`\"{}plain-\/arg\char`\"{} \mbox{[}\char`\"{}foo\char`\"{}\mbox{]} =$>$ true \mbox{[}\char`\"{}bar\char`\"{}\mbox{]} =$>$ \char`\"{}baz\char`\"{} \mbox{[}\char`\"{}funny\char`\"{}\mbox{]} =$>$ \char`\"{}spam=eggs\char`\"{} \mbox{[}\char`\"{}also-\/funny\char`\"{}\mbox{]}=$>$ \char`\"{}spam=eggs\char`\"{} \mbox{[}1\mbox{]} =$>$ \char`\"{}plain arg 2\char`\"{} \mbox{[}\char`\"{}a\char`\"{}\mbox{]} =$>$ true \mbox{[}\char`\"{}b\char`\"{}\mbox{]} =$>$ true \mbox{[}\char`\"{}c\char`\"{}\mbox{]} =$>$ true \mbox{[}\char`\"{}k\char`\"{}\mbox{]} =$>$ \char`\"{}value\char`\"{} \mbox{[}2\mbox{]} =$>$ \char`\"{}plain arg 3\char`\"{} \mbox{[}\char`\"{}s\char`\"{}\mbox{]} =$>$ \char`\"{}overwrite\char`\"{}
+
+\begin{DoxyAuthor}{\-Author}
+\-Patrick \-Fisher $<$\href{mailto:patrick@pwfisher.com}{\tt patrick@pwfisher.\-com}$>$ 
+\end{DoxyAuthor}
+\begin{DoxySince}{\-Since}
+\-August 21, 2009 
+\end{DoxySince}
+\begin{DoxySeeAlso}{\-See also}
+\href{http://www.php.net/manual/en/features.commandline.php}{\tt http\-://www.\-php.\-net/manual/en/features.\-commandline.\-php} \#81042 function arguments(\$argv) by technorati at gmail dot com, 12-\/\-Feb-\/2008 \#78651 function get\-Args(\$args) by \-B \-Crawford, 22-\/\-Oct-\/2007  \$args = \hyperlink{class_pw_fisher_1_1_command_line_1_1_command_line_aa367e54f990c7fd9c495576f3e0b8eb3}{\-Command\-Line\-::parse\-Args}(\$\-\_\-\-S\-E\-R\-V\-E\-R\mbox{[}'argv'\mbox{]}); 
+\end{DoxySeeAlso}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\-\_\-depracated/pwfisher/lib/\-Pw\-Fisher/\-Command\-Line/\-Command\-Line.\-php\end{DoxyCompactItemize}

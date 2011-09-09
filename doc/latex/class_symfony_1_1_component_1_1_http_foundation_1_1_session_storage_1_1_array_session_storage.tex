@@ -1,0 +1,170 @@
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage}{
+\section{\-Array\-Session\-Storage \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage}\index{\-Array\-Session\-Storage@{\-Array\-Session\-Storage}}
+}
+\-Inheritance diagram for \-Array\-Session\-Storage\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a975b0434ec898581f1d920e4ed1b3b79}{
+{\bfseries read} (\$key, \$default=null)}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a975b0434ec898581f1d920e4ed1b3b79}
+
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a8a41caa79708db4e79d5d453e2cae6b1}{regenerate} (\$destroy=false)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a95483af4e2c07dc9893fe058b026bd5d}{remove} (\$key)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_af8fa59992209e36dccb3eefb0f75531f}{start} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a12251d0c022e9e21c137a105ff683f13}{get\-Id} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a660fb10f6989d97867e2cd7d9107f864}{write} (\$key, \$data)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage}{\-Array\-Session\-Storage}.
+
+\begin{DoxyAuthor}{\-Author}
+\-Fabien \-Potencier $<$\href{mailto:fabien.potencier@symfony-project.com}{\tt fabien.\-potencier@symfony-\/project.\-com}$>$ 
+
+\-Bulat \-Shakirzyanov $<$\href{mailto:mallluhuct@gmail.com}{\tt mallluhuct@gmail.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a12251d0c022e9e21c137a105ff683f13}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}!get\-Id@{get\-Id}}
+\index{get\-Id@{get\-Id}!Symfony::Component::HttpFoundation::SessionStorage::ArraySessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}}
+\subsubsection[{get\-Id}]{\setlength{\rightskip}{0pt plus 5cm}get\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a12251d0c022e9e21c137a105ff683f13}
+\-Returns the session \-I\-D
+
+\begin{DoxyReturn}{\-Returns}
+mixed \-The session \-I\-D
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If the session was not started yet \\
+\hline
+\end{DoxyExceptions}
+
+
+\-Implements \hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_session_storage_interface_a12251d0c022e9e21c137a105ff683f13}{\-Session\-Storage\-Interface}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a8a41caa79708db4e79d5d453e2cae6b1}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}!regenerate@{regenerate}}
+\index{regenerate@{regenerate}!Symfony::Component::HttpFoundation::SessionStorage::ArraySessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}}
+\subsubsection[{regenerate}]{\setlength{\rightskip}{0pt plus 5cm}regenerate (
+\begin{DoxyParamCaption}
+\item[{\$}]{destroy = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a8a41caa79708db4e79d5d453e2cae6b1}
+\-Regenerates id that represents this storage.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+boolean & {\em \$destroy} & \-Destroy session when regenerating?\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean \-True if session regenerated, false if error
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If an error occurs while regenerating this storage \\
+\hline
+\end{DoxyExceptions}
+
+
+\-Implements \hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_session_storage_interface_a8a41caa79708db4e79d5d453e2cae6b1}{\-Session\-Storage\-Interface}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a95483af4e2c07dc9893fe058b026bd5d}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}!remove@{remove}}
+\index{remove@{remove}!Symfony::Component::HttpFoundation::SessionStorage::ArraySessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}remove (
+\begin{DoxyParamCaption}
+\item[{\$}]{key}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a95483af4e2c07dc9893fe058b026bd5d}
+\-Removes data from this storage.
+
+\-The preferred format for a key is directory style so naming conflicts can be avoided.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$key} & \-A unique key identifying your data\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed \-Data associated with the key
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If an error occurs while removing data from this storage \\
+\hline
+\end{DoxyExceptions}
+
+
+\-Implements \hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_session_storage_interface_a95483af4e2c07dc9893fe058b026bd5d}{\-Session\-Storage\-Interface}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_af8fa59992209e36dccb3eefb0f75531f}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}!start@{start}}
+\index{start@{start}!Symfony::Component::HttpFoundation::SessionStorage::ArraySessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_af8fa59992209e36dccb3eefb0f75531f}
+\-Starts the session. 
+
+\-Implements \hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_session_storage_interface_af8fa59992209e36dccb3eefb0f75531f}{\-Session\-Storage\-Interface}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a660fb10f6989d97867e2cd7d9107f864}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}!write@{write}}
+\index{write@{write}!Symfony::Component::HttpFoundation::SessionStorage::ArraySessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Array\-Session\-Storage}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}write (
+\begin{DoxyParamCaption}
+\item[{\$}]{key, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_array_session_storage_a660fb10f6989d97867e2cd7d9107f864}
+\-Writes data to this storage.
+
+\-The preferred format for a key is directory style so naming conflicts can be avoided.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$key} & \-A unique key identifying your data \\
+\hline
+mixed & {\em \$data} & \-Data associated with your key\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If an error occurs while writing to this storage \\
+\hline
+\end{DoxyExceptions}
+
+
+\-Implements \hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_session_storage_interface_a660fb10f6989d97867e2cd7d9107f864}{\-Session\-Storage\-Interface}.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Http\-Foundation/\-Session\-Storage/\-Array\-Session\-Storage.\-php\end{DoxyCompactItemize}

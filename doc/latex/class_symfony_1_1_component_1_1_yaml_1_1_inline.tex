@@ -1,0 +1,253 @@
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline}{
+\section{\-Inline \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline}\index{\-Inline@{\-Inline}}
+}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_a2b63bee7aa8c67d20c14ff9ba4de63a2}{load} (\$value)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_a8ef997303a6826dd4a87fff9c13b5d1d}{dump} (\$value)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_abf37f1e7c74d7a0ed52e64c25da8e454}{parse\-Scalar} (\$scalar, \$delimiters=null, \$string\-Delimiters=array('\char`\"{}', \char`\"{}'\char`\"{}), \&\$i = 0, \$evaluate = true) 
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a87b5c4996630ab02b80f5abece2c2fe0}{
+const {\bfseries \-R\-E\-G\-E\-X\-\_\-\-Q\-U\-O\-T\-E\-D\-\_\-\-S\-T\-R\-I\-N\-G} = '(?\-:\char`\"{}(\mbox{[}$^\wedge$\char`\"{}$\backslash$$\backslash$$\backslash$$\backslash$\mbox{]}$\ast$(?\-:$\backslash$$\backslash$$\backslash$$\backslash$.\mbox{[}$^\wedge$\char`\"{}$\backslash$$\backslash$$\backslash$$\backslash$\mbox{]}$\ast$)$\ast$)\char`\"{}$|$$\backslash$'(\mbox{[}$^\wedge$$\backslash$'\mbox{]}$\ast$(?\-:$\backslash$'$\backslash$'\mbox{[}$^\wedge$$\backslash$'\mbox{]}$\ast$)$\ast$)$\backslash$')'}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a87b5c4996630ab02b80f5abece2c2fe0}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_a14a553e044884f70a2f8fbbd4f2d21ac}{dump\-Array} (\$value)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_a217fb6f105d374552ebb185da7e13fc6}{parse\-Quoted\-Scalar} (\$scalar, \&\$i)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_a841085bbaa638bd7c47b77bd167d47bc}{parse\-Sequence} (\$sequence, \&\$i=0)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_a75c88cc2a3f4c2cf7f23330baa0d0a9f}{parse\-Mapping} (\$mapping, \&\$i=0)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline_a65675de8bf326ce4d0f1833119db3bd5}{evaluate\-Scalar} (\$scalar)
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a1d4101aacfa859fd673067059e704239}{
+static {\bfseries get\-Timestamp\-Regex} ()}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a1d4101aacfa859fd673067059e704239}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_inline}{\-Inline} implements a \-Y\-A\-M\-L parser/dumper for the \-Y\-A\-M\-L inline syntax.
+
+\begin{DoxyAuthor}{\-Author}
+\-Fabien \-Potencier $<$\href{mailto:fabien.potencier@symfony-project.com}{\tt fabien.\-potencier@symfony-\/project.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a8ef997303a6826dd4a87fff9c13b5d1d}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!dump@{dump}}
+\index{dump@{dump}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{dump}]{\setlength{\rightskip}{0pt plus 5cm}static dump (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a8ef997303a6826dd4a87fff9c13b5d1d}
+\-Dumps a given \-P\-H\-P variable to a \-Y\-A\-M\-L string.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$value} & \-The \-P\-H\-P variable to convert\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-The \-Y\-A\-M\-L string representing the \-P\-H\-P array
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_exception}{\-Exception}} & \-When trying to dump \-P\-H\-P resource \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a14a553e044884f70a2f8fbbd4f2d21ac}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!dump\-Array@{dump\-Array}}
+\index{dump\-Array@{dump\-Array}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{dump\-Array}]{\setlength{\rightskip}{0pt plus 5cm}static dump\-Array (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a14a553e044884f70a2f8fbbd4f2d21ac}
+\-Dumps a \-P\-H\-P array to a \-Y\-A\-M\-L string.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$value} & \-The \-P\-H\-P array to dump\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-The \-Y\-A\-M\-L string representing the \-P\-H\-P array 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a65675de8bf326ce4d0f1833119db3bd5}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!evaluate\-Scalar@{evaluate\-Scalar}}
+\index{evaluate\-Scalar@{evaluate\-Scalar}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{evaluate\-Scalar}]{\setlength{\rightskip}{0pt plus 5cm}static evaluate\-Scalar (
+\begin{DoxyParamCaption}
+\item[{\$}]{scalar}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a65675de8bf326ce4d0f1833119db3bd5}
+\-Evaluates scalars and replaces magic values.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$scalar} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A \-Y\-A\-M\-L string 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a2b63bee7aa8c67d20c14ff9ba4de63a2}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!load@{load}}
+\index{load@{load}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}static load (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a2b63bee7aa8c67d20c14ff9ba4de63a2}
+\-Convert a \-Y\-A\-M\-L string to a \-P\-H\-P array.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$value} & \-A \-Y\-A\-M\-L string\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array \-A \-P\-H\-P array representing the \-Y\-A\-M\-L string 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a75c88cc2a3f4c2cf7f23330baa0d0a9f}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!parse\-Mapping@{parse\-Mapping}}
+\index{parse\-Mapping@{parse\-Mapping}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{parse\-Mapping}]{\setlength{\rightskip}{0pt plus 5cm}static parse\-Mapping (
+\begin{DoxyParamCaption}
+\item[{\$}]{mapping, }
+\item[{\&\$}]{i = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a75c88cc2a3f4c2cf7f23330baa0d0a9f}
+\-Parses a mapping to a \-Y\-A\-M\-L string.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$mapping} & \\
+\hline
+integer & {\em \$i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A \-Y\-A\-M\-L string
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_exception}{\-Parser\-Exception}} & \-When malformed inline \-Y\-A\-M\-L string is parsed \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a217fb6f105d374552ebb185da7e13fc6}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!parse\-Quoted\-Scalar@{parse\-Quoted\-Scalar}}
+\index{parse\-Quoted\-Scalar@{parse\-Quoted\-Scalar}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{parse\-Quoted\-Scalar}]{\setlength{\rightskip}{0pt plus 5cm}static parse\-Quoted\-Scalar (
+\begin{DoxyParamCaption}
+\item[{\$}]{scalar, }
+\item[{\&\$}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a217fb6f105d374552ebb185da7e13fc6}
+\-Parses a quoted scalar to \-Y\-A\-M\-L.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$scalar} & \\
+\hline
+integer & {\em \$i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A \-Y\-A\-M\-L string
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_exception}{\-Parser\-Exception}} & \-When malformed inline \-Y\-A\-M\-L string is parsed \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_abf37f1e7c74d7a0ed52e64c25da8e454}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!parse\-Scalar@{parse\-Scalar}}
+\index{parse\-Scalar@{parse\-Scalar}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{parse\-Scalar}]{\setlength{\rightskip}{0pt plus 5cm}static parse\-Scalar (
+\begin{DoxyParamCaption}
+\item[{\$}]{scalar, }
+\item[{\$}]{delimiters = {\ttfamily null}, }
+\item[{\$}]{string\-Delimiters = {\ttfamily array('\char`\"{}',~\char`\"{}'\char`\"{})}, }
+\item[{\&\$}]{i = {\ttfamily 0}, }
+\item[{\$}]{evaluate = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_abf37f1e7c74d7a0ed52e64c25da8e454}
+\-Parses a scalar to a \-Y\-A\-M\-L string.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+scalar & {\em \$scalar} & \\
+\hline
+string & {\em \$delimiters} & \\
+\hline
+array & {\em \$string\-Delimiter} & \\
+\hline
+integer & {\em \$i} & \\
+\hline
+boolean & {\em \$evaluate} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A \-Y\-A\-M\-L string
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_exception}{\-Parser\-Exception}} & \-When malformed inline \-Y\-A\-M\-L string is parsed \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_inline_a841085bbaa638bd7c47b77bd167d47bc}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}!parse\-Sequence@{parse\-Sequence}}
+\index{parse\-Sequence@{parse\-Sequence}!Symfony::Component::Yaml::Inline@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Inline}}
+\subsubsection[{parse\-Sequence}]{\setlength{\rightskip}{0pt plus 5cm}static parse\-Sequence (
+\begin{DoxyParamCaption}
+\item[{\$}]{sequence, }
+\item[{\&\$}]{i = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_inline_a841085bbaa638bd7c47b77bd167d47bc}
+\-Parses a sequence to a \-Y\-A\-M\-L string.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$sequence} & \\
+\hline
+integer & {\em \$i} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A \-Y\-A\-M\-L string
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_exception}{\-Parser\-Exception}} & \-When malformed inline \-Y\-A\-M\-L string is parsed \\
+\hline
+\end{DoxyExceptions}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Yaml/\-Inline.\-php\end{DoxyCompactItemize}

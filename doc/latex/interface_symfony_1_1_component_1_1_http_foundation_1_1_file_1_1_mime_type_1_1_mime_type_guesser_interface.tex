@@ -1,0 +1,61 @@
+\hypertarget{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface}{
+\section{\-Mime\-Type\-Guesser\-Interface \-Interface \-Reference}
+\label{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface}\index{\-Mime\-Type\-Guesser\-Interface@{\-Mime\-Type\-Guesser\-Interface}}
+}
+\-Inheritance diagram for \-Mime\-Type\-Guesser\-Interface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.428571cm]{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface_af42fcbb87eebfa7fa5e31c9c42af0c1a}{guess} (\$path)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Guesses the mime type of a file
+
+\begin{DoxyAuthor}{\-Author}
+\-Bernhard \-Schussek $<$\href{mailto:bernhard.schussek@symfony-project.com}{\tt bernhard.\-schussek@symfony-\/project.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface_af42fcbb87eebfa7fa5e31c9c42af0c1a}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser\-Interface@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser\-Interface}!guess@{guess}}
+\index{guess@{guess}!Symfony::Component::HttpFoundation::File::MimeType::MimeTypeGuesserInterface@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser\-Interface}}
+\subsubsection[{guess}]{\setlength{\rightskip}{0pt plus 5cm}guess (
+\begin{DoxyParamCaption}
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}
+\label{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface_af42fcbb87eebfa7fa5e31c9c42af0c1a}
+\-Guesses the mime type of the file with the given path
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$path} & \-The path to the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-The mime type or \-N\-U\-L\-L, if none could be guessed 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \-File\-Not\-Found\-Exception} & \-If the file does not exist \\
+\hline
+{\em \-Access\-Denied\-Exception} & \-If the file could not be read \\
+\hline
+\end{DoxyExceptions}
+
+
+\-Implemented in \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_af42fcbb87eebfa7fa5e31c9c42af0c1a}{\-Mime\-Type\-Guesser}, \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_content_type_mime_type_guesser_af42fcbb87eebfa7fa5e31c9c42af0c1a}{\-Content\-Type\-Mime\-Type\-Guesser}, \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_fileinfo_mime_type_guesser_af42fcbb87eebfa7fa5e31c9c42af0c1a}{\-Fileinfo\-Mime\-Type\-Guesser}, and \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_file_binary_mime_type_guesser_af42fcbb87eebfa7fa5e31c9c42af0c1a}{\-File\-Binary\-Mime\-Type\-Guesser}.
+
+
+
+\-The documentation for this interface was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Http\-Foundation/\-File/\-Mime\-Type/\-Mime\-Type\-Guesser\-Interface.\-php\end{DoxyCompactItemize}

@@ -1,0 +1,205 @@
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag}{
+\section{\-Response\-Header\-Bag \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag}\index{\-Response\-Header\-Bag@{\-Response\-Header\-Bag}}
+}
+\-Inheritance diagram for \-Response\-Header\-Bag\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a8727b715a53cbd198c2fcd5ad93b34f8}{replace} (array \$headers=array())
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a3296aad565e4d799d370a8ce7b8e3576}{set} (\$key, \$values, \$replace=true)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a95483af4e2c07dc9893fe058b026bd5d}{remove} (\$key)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a645f6c034cd6799b47bef2bc43e7056f}{set\-Cookie} (\$name, \$value, \$domain=null, \$expires=null, \$path= '/', \$secure=false, \$httponly=true)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_ac9800756c1c6788144242154020190e8}{has\-Cache\-Control\-Directive} (\$key)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a1dfddc51abe579dde49fe0ef48b11d2d}{get\-Cache\-Control\-Directive} (\$key)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_ace5eb774921c2916c88d5fbf59189c5c}{compute\-Cache\-Control\-Value} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_aa21a0efb254966a8e3b55ec1e9464f0e}{
+{\bfseries \$computed\-Cache\-Control} = array()}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_aa21a0efb254966a8e3b55ec1e9464f0e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag}{\-Response\-Header\-Bag} is a container for \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_response}{\-Response} \-H\-T\-T\-P headers.
+
+\begin{DoxyAuthor}{\-Author}
+\-Fabien \-Potencier $<$\href{mailto:fabien.potencier@symfony-project.com}{\tt fabien.\-potencier@symfony-\/project.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_ace5eb774921c2916c88d5fbf59189c5c}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}!compute\-Cache\-Control\-Value@{compute\-Cache\-Control\-Value}}
+\index{compute\-Cache\-Control\-Value@{compute\-Cache\-Control\-Value}!Symfony::Component::HttpFoundation::ResponseHeaderBag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}}
+\subsubsection[{compute\-Cache\-Control\-Value}]{\setlength{\rightskip}{0pt plus 5cm}compute\-Cache\-Control\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_ace5eb774921c2916c88d5fbf59189c5c}
+\-Returns the calculated value of the cache-\/control header.
+
+\-This considers several other headers and calculates or modifies the cache-\/control header to a sensible, conservative value.
+
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a1dfddc51abe579dde49fe0ef48b11d2d}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}!get\-Cache\-Control\-Directive@{get\-Cache\-Control\-Directive}}
+\index{get\-Cache\-Control\-Directive@{get\-Cache\-Control\-Directive}!Symfony::Component::HttpFoundation::ResponseHeaderBag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}}
+\subsubsection[{get\-Cache\-Control\-Directive}]{\setlength{\rightskip}{0pt plus 5cm}get\-Cache\-Control\-Directive (
+\begin{DoxyParamCaption}
+\item[{\$}]{key}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a1dfddc51abe579dde49fe0ef48b11d2d}
+\{\} 
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_header_bag}{\-Header\-Bag}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_ac9800756c1c6788144242154020190e8}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}!has\-Cache\-Control\-Directive@{has\-Cache\-Control\-Directive}}
+\index{has\-Cache\-Control\-Directive@{has\-Cache\-Control\-Directive}!Symfony::Component::HttpFoundation::ResponseHeaderBag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}}
+\subsubsection[{has\-Cache\-Control\-Directive}]{\setlength{\rightskip}{0pt plus 5cm}has\-Cache\-Control\-Directive (
+\begin{DoxyParamCaption}
+\item[{\$}]{key}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_ac9800756c1c6788144242154020190e8}
+\{\} 
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_header_bag}{\-Header\-Bag}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a95483af4e2c07dc9893fe058b026bd5d}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}!remove@{remove}}
+\index{remove@{remove}!Symfony::Component::HttpFoundation::ResponseHeaderBag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}remove (
+\begin{DoxyParamCaption}
+\item[{\$}]{key}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a95483af4e2c07dc9893fe058b026bd5d}
+\{\-Removes a header.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$key} & \-The \-H\-T\-T\-P header name\\
+\hline
+\end{DoxyParams}
+\} 
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_header_bag_a95483af4e2c07dc9893fe058b026bd5d}{\-Header\-Bag}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a8727b715a53cbd198c2fcd5ad93b34f8}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}!replace@{replace}}
+\index{replace@{replace}!Symfony::Component::HttpFoundation::ResponseHeaderBag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}}
+\subsubsection[{replace}]{\setlength{\rightskip}{0pt plus 5cm}replace (
+\begin{DoxyParamCaption}
+\item[{array \$}]{headers = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a8727b715a53cbd198c2fcd5ad93b34f8}
+\{\-Replaces the current \-H\-T\-T\-P headers by a new set.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$headers} & \-An array of \-H\-T\-T\-P headers\\
+\hline
+\end{DoxyParams}
+\} 
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_header_bag_a8727b715a53cbd198c2fcd5ad93b34f8}{\-Header\-Bag}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a3296aad565e4d799d370a8ce7b8e3576}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}!set@{set}}
+\index{set@{set}!Symfony::Component::HttpFoundation::ResponseHeaderBag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}}
+\subsubsection[{set}]{\setlength{\rightskip}{0pt plus 5cm}set (
+\begin{DoxyParamCaption}
+\item[{\$}]{key, }
+\item[{\$}]{values, }
+\item[{\$}]{replace = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a3296aad565e4d799d370a8ce7b8e3576}
+\{\-Sets a header by name.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$key} & \-The key \\
+\hline
+string | array & {\em \$values} & \-The value or an array of values \\
+\hline
+\-Boolean & {\em \$replace} & \-Whether to replace the actual value of not (true by default)\\
+\hline
+\end{DoxyParams}
+\} 
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_header_bag_a3296aad565e4d799d370a8ce7b8e3576}{\-Header\-Bag}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a645f6c034cd6799b47bef2bc43e7056f}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}!set\-Cookie@{set\-Cookie}}
+\index{set\-Cookie@{set\-Cookie}!Symfony::Component::HttpFoundation::ResponseHeaderBag@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Response\-Header\-Bag}}
+\subsubsection[{set\-Cookie}]{\setlength{\rightskip}{0pt plus 5cm}set\-Cookie (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{value, }
+\item[{\$}]{domain = {\ttfamily null}, }
+\item[{\$}]{expires = {\ttfamily null}, }
+\item[{\$}]{path = {\ttfamily '/'}, }
+\item[{\$}]{secure = {\ttfamily false}, }
+\item[{\$}]{httponly = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_response_header_bag_a645f6c034cd6799b47bef2bc43e7056f}
+\{\-Sets a cookie.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \-The cookie name \\
+\hline
+string & {\em \$value} & \-The value of the cookie \\
+\hline
+string & {\em \$domain} & \-The domain that the cookie is available \\
+\hline
+string & {\em \$expire} & \-The time the cookie expires \\
+\hline
+string & {\em \$path} & \-The path on the server in which the cookie will be available on \\
+\hline
+bool & {\em \$secure} & \-Indicates that the cookie should only be transmitted over a secure \-H\-T\-T\-P\-S connection from the client \\
+\hline
+bool & {\em \$httponly} & \-When \-T\-R\-U\-E the cookie will not be made accessible to \-Java\-Script, preventing \-X\-S\-S attacks from stealing cookies\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Invalid\-Argument\-Exception} & \-When the cookie expire parameter is not valid\\
+\hline
+\end{DoxyExceptions}
+\} 
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_header_bag_a645f6c034cd6799b47bef2bc43e7056f}{\-Header\-Bag}.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Http\-Foundation/\-Response\-Header\-Bag.\-php\end{DoxyCompactItemize}

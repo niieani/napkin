@@ -1,0 +1,175 @@
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file}{
+\section{\-Uploaded\-File \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file}\index{\-Uploaded\-File@{\-Uploaded\-File}}
+}
+\-Inheritance diagram for \-Uploaded\-File\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_af4792981dd2724a67eaf7a1213c404e8}{\-\_\-\-\_\-construct} (\$path, \$original\-Name, \$mime\-Type, \$size, \$error)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ac06e9f7b10fca30eb41e41d4dc108b1c}{get\-Mime\-Type} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a45128bd7cae9bc9b315447474a63ed19}{get\-Original\-Name} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a24ada5decce3d1b79cd82f5a90ccf404}{get\-Error} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a2430eaa80b28941a8be89db71eea9261}{move} (\$directory)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ad552ce07f8efd83237ad1ad0a28e98ce}{do\-Move} (\$directory, \$filename)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ab81f0c5a4c611f24bba0375b91721153}{
+{\bfseries \$original\-Name}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ab81f0c5a4c611f24bba0375b91721153}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_acfce3426adc678c3e98219378516040e}{
+{\bfseries \$mime\-Type}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_acfce3426adc678c3e98219378516040e}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_af594986e4618a8d6a5d7566617f583c6}{
+{\bfseries \$size}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_af594986e4618a8d6a5d7566617f583c6}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_aeba2ab722cedda53dbb7ec1a59f45550}{
+{\bfseries \$error}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_aeba2ab722cedda53dbb7ec1a59f45550}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a6ce87f748d1f577f323acf1e0a2ae41e}{
+{\bfseries \$moved} = false}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a6ce87f748d1f577f323acf1e0a2ae41e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-A file uploaded through a form.
+
+\begin{DoxyAuthor}{\-Author}
+\-Bernhard \-Schussek $<$\href{mailto:bernhard.schussek@symfony-project.com}{\tt bernhard.\-schussek@symfony-\/project.\-com}$>$ 
+
+\-Florian \-Eckerstorfer $<$\href{mailto:florian@eckerstorfer.org}{\tt florian@eckerstorfer.\-org}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_af4792981dd2724a67eaf7a1213c404e8}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!Symfony::Component::HttpFoundation::File::UploadedFile@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}\-\_\-\-\_\-construct (
+\begin{DoxyParamCaption}
+\item[{\$}]{path, }
+\item[{\$}]{original\-Name, }
+\item[{\$}]{mime\-Type, }
+\item[{\$}]{size, }
+\item[{\$}]{error}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_af4792981dd2724a67eaf7a1213c404e8}
+\-Accepts the information of the uploaded file as provided by the \-P\-H\-P global \$\-\_\-\-F\-I\-L\-E\-S.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$tmp\-Name} & \-The full temporary path to the file \\
+\hline
+string & {\em \$name} & \-The original file name \\
+\hline
+string & {\em \$type} & \-The type of the file as provided by \-P\-H\-P \\
+\hline
+integer & {\em \$size} & \-The file size \\
+\hline
+string & {\em \$error} & \-The error constant of the upload. \-Should be one of \-P\-H\-P's \-U\-P\-L\-O\-A\-D\-\_\-\-E\-R\-R\-\_\-\-X\-X\-X constants. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ad552ce07f8efd83237ad1ad0a28e98ce}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}!do\-Move@{do\-Move}}
+\index{do\-Move@{do\-Move}!Symfony::Component::HttpFoundation::File::UploadedFile@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}}
+\subsubsection[{do\-Move}]{\setlength{\rightskip}{0pt plus 5cm}do\-Move (
+\begin{DoxyParamCaption}
+\item[{\$}]{directory, }
+\item[{\$}]{filename}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ad552ce07f8efd83237ad1ad0a28e98ce}
+
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_file_ad552ce07f8efd83237ad1ad0a28e98ce}{\-File}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a24ada5decce3d1b79cd82f5a90ccf404}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}!get\-Error@{get\-Error}}
+\index{get\-Error@{get\-Error}!Symfony::Component::HttpFoundation::File::UploadedFile@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}}
+\subsubsection[{get\-Error}]{\setlength{\rightskip}{0pt plus 5cm}get\-Error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a24ada5decce3d1b79cd82f5a90ccf404}
+\-Returns the upload error.
+
+\-If the upload was successful, the constant \-U\-P\-L\-O\-A\-D\-\_\-\-E\-R\-R\-\_\-\-O\-K is returned. \-Otherwise one of the other \-U\-P\-L\-O\-A\-D\-\_\-\-E\-R\-R\-\_\-\-X\-X\-X constants is returned.
+
+\begin{DoxyReturn}{\-Returns}
+integer \-The upload error 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ac06e9f7b10fca30eb41e41d4dc108b1c}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}!get\-Mime\-Type@{get\-Mime\-Type}}
+\index{get\-Mime\-Type@{get\-Mime\-Type}!Symfony::Component::HttpFoundation::File::UploadedFile@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}}
+\subsubsection[{get\-Mime\-Type}]{\setlength{\rightskip}{0pt plus 5cm}get\-Mime\-Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_ac06e9f7b10fca30eb41e41d4dc108b1c}
+
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_file_ac06e9f7b10fca30eb41e41d4dc108b1c}{\-File}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a45128bd7cae9bc9b315447474a63ed19}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}!get\-Original\-Name@{get\-Original\-Name}}
+\index{get\-Original\-Name@{get\-Original\-Name}!Symfony::Component::HttpFoundation::File::UploadedFile@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}}
+\subsubsection[{get\-Original\-Name}]{\setlength{\rightskip}{0pt plus 5cm}get\-Original\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a45128bd7cae9bc9b315447474a63ed19}
+\-Returns the original file name including its extension.
+
+\begin{DoxyReturn}{\-Returns}
+string \-The file name 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a2430eaa80b28941a8be89db71eea9261}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}!move@{move}}
+\index{move@{move}!Symfony::Component::HttpFoundation::File::UploadedFile@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Uploaded\-File}}
+\subsubsection[{move}]{\setlength{\rightskip}{0pt plus 5cm}move (
+\begin{DoxyParamCaption}
+\item[{\$}]{directory}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_uploaded_file_a2430eaa80b28941a8be89db71eea9261}
+
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_file_a2430eaa80b28941a8be89db71eea9261}{\-File}.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Http\-Foundation/\-File/\-Uploaded\-File.\-php\end{DoxyCompactItemize}

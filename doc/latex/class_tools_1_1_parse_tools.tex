@@ -1,0 +1,81 @@
+\hypertarget{class_tools_1_1_parse_tools}{
+\section{\-Parse\-Tools \-Class \-Reference}
+\label{class_tools_1_1_parse_tools}\index{\-Parse\-Tools@{\-Parse\-Tools}}
+}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_tools_1_1_parse_tools_a65dc2d63bc4580c9771d78dbf69be7e6}{sprintfn} (\$format, array \$args=array())
+\item 
+\hypertarget{class_tools_1_1_parse_tools_aeeda97b4e58dcc36d7a825ac8119f5cf}{
+static {\bfseries \-Remove\-Bracket} (\$format, \$depth=0)}
+\label{class_tools_1_1_parse_tools_aeeda97b4e58dcc36d7a825ac8119f5cf}
+
+\item 
+\hypertarget{class_tools_1_1_parse_tools_a0dbf596a1a7d621303910236249d129e}{
+static {\bfseries \-Strip\-Tag} (\$format, \$origin=false)}
+\label{class_tools_1_1_parse_tools_a0dbf596a1a7d621303910236249d129e}
+
+\item 
+\hypertarget{class_tools_1_1_parse_tools_a65117a38ed1eb33b1da79cd5d671ecd3}{
+static {\bfseries parse\-String\-With\-Replacement\-List} (\$to\-Format, array \$replacement\-List, \$open= '\mbox{[}', \$close= '\mbox{]}', \$pattern= '/\%$\backslash$((\mbox{[}a-\/z\-A-\/\-Z\-\_\-\mbox{]}$\backslash$w $\ast$)$\backslash$)/', \$if\-No\-Match\-Return\-False=true)}
+\label{class_tools_1_1_parse_tools_a65117a38ed1eb33b1da79cd5d671ecd3}
+
+\item 
+\hypertarget{class_tools_1_1_parse_tools_aec486908abdd23eeccac95e4a1454a94}{
+static {\bfseries parse\-Array} (array \$format\-Array, array \&\$args, \$pattern= '/\%$\backslash$((\mbox{[}a-\/z\-A-\/\-Z\-\_\-\mbox{]}$\backslash$w $\ast$)$\backslash$)/', \$if\-No\-Match\-Return\-False=true)}
+\label{class_tools_1_1_parse_tools_aec486908abdd23eeccac95e4a1454a94}
+
+\item 
+\hypertarget{class_tools_1_1_parse_tools_a59dfb76e4f4fcc1c9cd05a63c8f7767e}{
+static {\bfseries parse\-Recursive} (array \$format\-Array, array \&\$args, \$pattern= '/\%$\backslash$((\mbox{[}a-\/z\-A-\/\-Z\-\_\-\mbox{]}$\backslash$w $\ast$)$\backslash$)/', \$if\-No\-Match\-Return\-False=true)}
+\label{class_tools_1_1_parse_tools_a59dfb76e4f4fcc1c9cd05a63c8f7767e}
+
+\item 
+\hypertarget{class_tools_1_1_parse_tools_a439d5819f4798f7626033af3b9dd4139}{
+static {\bfseries parse} (\$format, array \&\$args, \$pattern= '/\%$\backslash$((\mbox{[}a-\/z\-A-\/\-Z\-\_\-\mbox{]}$\backslash$w $\ast$)$\backslash$)/', \$if\-No\-Match\-Return\-False=true)}
+\label{class_tools_1_1_parse_tools_a439d5819f4798f7626033af3b9dd4139}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Example usage\-:
+
+\$list\-Format = array( \char`\"{}gzip\-\_\-buffers\char`\"{} =$>$ 40, \char`\"{}gzip\-\_\-yeah\char`\"{} =$>$ 'yeah!' ); \$to\-Format = '\mbox{[}\mbox{[}gzip\-\_\-buffers \%(gzip\-\_\-buffers)\mbox{[}\mbox{[} \%(gzip\-\_\-yeah)\mbox{]}\mbox{]}; this should still be here\mbox{]}\mbox{]}'; \$format\-Array = \-Stack\-Up(\$to\-Format, '\mbox{[}\mbox{[}', '\mbox{]}\mbox{]}');
+
+\$parsed = parse\-Array(\$format\-Array, \$list\-Format); echo \-String\-Tools\-::rimplode(null, \$parsed); 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_tools_1_1_parse_tools_a65dc2d63bc4580c9771d78dbf69be7e6}{
+\index{\-Tools\-::\-Parse\-Tools@{\-Tools\-::\-Parse\-Tools}!sprintfn@{sprintfn}}
+\index{sprintfn@{sprintfn}!Tools::ParseTools@{\-Tools\-::\-Parse\-Tools}}
+\subsubsection[{sprintfn}]{\setlength{\rightskip}{0pt plus 5cm}static sprintfn (
+\begin{DoxyParamCaption}
+\item[{\$}]{format, }
+\item[{array \$}]{args = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_tools_1_1_parse_tools_a65dc2d63bc4580c9771d78dbf69be7e6}
+version of sprintf for cases where named arguments are desired (python syntax)
+
+with sprintf\-: sprintf('second\-: \%2\$s ; first\-: \%1\$s', '1st', '2nd');
+
+with sprintfn\-: sprintfn('second\-: \%(second)s ; first\-: \%(first)s', array( 'first' =$>$ '1st', 'second'=$>$ '2nd' ));
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$format} & sprintf format string, with any number of named arguments \\
+\hline
+array & {\em \$args} & array of \mbox{[} 'arg\-\_\-name' =$>$ 'arg value', ... \mbox{]} replacements to be made \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string$|$false result of sprintf call, or bool false on error 
+\end{DoxyReturn}
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\-\_\-depracated/\-Tools/\-Parse\-Tools.\-php\item 
+lib/hypoconf/lib/\-Hypo\-Conf/\-Tools/\-Parse\-Tools.\-php\end{DoxyCompactItemize}

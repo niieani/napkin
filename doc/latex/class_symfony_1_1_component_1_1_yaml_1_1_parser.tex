@@ -1,0 +1,319 @@
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser}{
+\section{\-Parser \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser}\index{\-Parser@{\-Parser}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_aa9388d8255ba88ef404307c6aee9fb37}{\-\_\-\-\_\-construct} (\$offset=0)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_ae646f55333c0c77dc5b912df945862c5}{parse} (\$value)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_afed732413dcd90e7e27f15f9a693a933}{get\-Real\-Current\-Line\-Nb} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_afab1ea78369d49700e8269645a560ebe}{get\-Current\-Line\-Indentation} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_a094d72cd70df641bbb7c4d87647e7afe}{get\-Next\-Embed\-Block} (\$indentation=null)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_a23295181488f2269374ba055ab73f133}{move\-To\-Next\-Line} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_a793efbbdb80289712c6d8b13974a0794}{move\-To\-Previous\-Line} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_a090d97f0d830c8a3a6d4962636b9081b}{parse\-Value} (\$value)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_aca51709db86f3336fa0cd8773cc791d0}{parse\-Folded\-Scalar} (\$separator, \$indicator= '', \$indentation=0)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_a007cdf42dc438be788d23206f14e7396}{is\-Next\-Line\-Indented} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_ae7bb7c2fd370a72c6f119b53ee64eb82}{is\-Current\-Line\-Empty} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_a071146be0626e2ff9537f3b741b511d6}{is\-Current\-Line\-Blank} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_af9c00798454b2a4b7c360c3bba9f6b10}{is\-Current\-Line\-Comment} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_a6d462f56da02d7670e368941d918f074}{cleanup} (\$value)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_aec4de82415d7f05cb9748d12d3a95a87}{
+{\bfseries \$offset} = 0}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_aec4de82415d7f05cb9748d12d3a95a87}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a470f99c17f2e6f0a5a7b96f44cfc46a5}{
+{\bfseries \$lines} = array()}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a470f99c17f2e6f0a5a7b96f44cfc46a5}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_ac1ceccab6204b114cb80206c8bc45f61}{
+{\bfseries \$current\-Line\-Nb} = -\/1}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_ac1ceccab6204b114cb80206c8bc45f61}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_ab86be58497f4553475dd9234304c7014}{
+{\bfseries \$current\-Line} = ''}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_ab86be58497f4553475dd9234304c7014}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a8f8757e72f75875c4520aa66624dfae2}{
+{\bfseries \$refs} = array()}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a8f8757e72f75875c4520aa66624dfae2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser}{\-Parser} parses \-Y\-A\-M\-L strings to convert them to \-P\-H\-P arrays.
+
+\begin{DoxyAuthor}{\-Author}
+\-Fabien \-Potencier $<$\href{mailto:fabien.potencier@symfony-project.com}{\tt fabien.\-potencier@symfony-\/project.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_aa9388d8255ba88ef404307c6aee9fb37}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}\-\_\-\-\_\-construct (
+\begin{DoxyParamCaption}
+\item[{\$}]{offset = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_aa9388d8255ba88ef404307c6aee9fb37}
+\-Constructor
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$offset} & \-The offset of \-Y\-A\-M\-L document (used for line numbers in error messages) \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a6d462f56da02d7670e368941d918f074}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!cleanup@{cleanup}}
+\index{cleanup@{cleanup}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{cleanup}]{\setlength{\rightskip}{0pt plus 5cm}cleanup (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a6d462f56da02d7670e368941d918f074}
+\-Cleanups a \-Y\-A\-M\-L string to be parsed.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$value} & \-The input \-Y\-A\-M\-L string\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A cleaned up \-Y\-A\-M\-L string 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_afab1ea78369d49700e8269645a560ebe}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!get\-Current\-Line\-Indentation@{get\-Current\-Line\-Indentation}}
+\index{get\-Current\-Line\-Indentation@{get\-Current\-Line\-Indentation}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{get\-Current\-Line\-Indentation}]{\setlength{\rightskip}{0pt plus 5cm}get\-Current\-Line\-Indentation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_afab1ea78369d49700e8269645a560ebe}
+\-Returns the current line indentation.
+
+\begin{DoxyReturn}{\-Returns}
+integer \-The current line indentation 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a094d72cd70df641bbb7c4d87647e7afe}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!get\-Next\-Embed\-Block@{get\-Next\-Embed\-Block}}
+\index{get\-Next\-Embed\-Block@{get\-Next\-Embed\-Block}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{get\-Next\-Embed\-Block}]{\setlength{\rightskip}{0pt plus 5cm}get\-Next\-Embed\-Block (
+\begin{DoxyParamCaption}
+\item[{\$}]{indentation = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a094d72cd70df641bbb7c4d87647e7afe}
+\-Returns the next embed block of \-Y\-A\-M\-L.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+integer & {\em \$indentation} & \-The indent level at which the block is to be read, or null for default\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A \-Y\-A\-M\-L string
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_exception}{\-Parser\-Exception}} & \-When indentation problem are detected \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_afed732413dcd90e7e27f15f9a693a933}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!get\-Real\-Current\-Line\-Nb@{get\-Real\-Current\-Line\-Nb}}
+\index{get\-Real\-Current\-Line\-Nb@{get\-Real\-Current\-Line\-Nb}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{get\-Real\-Current\-Line\-Nb}]{\setlength{\rightskip}{0pt plus 5cm}get\-Real\-Current\-Line\-Nb (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_afed732413dcd90e7e27f15f9a693a933}
+\-Returns the current line number (takes the offset into account).
+
+\begin{DoxyReturn}{\-Returns}
+integer \-The current line number 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a071146be0626e2ff9537f3b741b511d6}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!is\-Current\-Line\-Blank@{is\-Current\-Line\-Blank}}
+\index{is\-Current\-Line\-Blank@{is\-Current\-Line\-Blank}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{is\-Current\-Line\-Blank}]{\setlength{\rightskip}{0pt plus 5cm}is\-Current\-Line\-Blank (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a071146be0626e2ff9537f3b741b511d6}
+\-Returns true if the current line is blank.
+
+\begin{DoxyReturn}{\-Returns}
+\-Boolean \-Returns true if the current line is blank, false otherwise 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_af9c00798454b2a4b7c360c3bba9f6b10}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!is\-Current\-Line\-Comment@{is\-Current\-Line\-Comment}}
+\index{is\-Current\-Line\-Comment@{is\-Current\-Line\-Comment}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{is\-Current\-Line\-Comment}]{\setlength{\rightskip}{0pt plus 5cm}is\-Current\-Line\-Comment (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_af9c00798454b2a4b7c360c3bba9f6b10}
+\-Returns true if the current line is a comment line.
+
+\begin{DoxyReturn}{\-Returns}
+\-Boolean \-Returns true if the current line is a comment line, false otherwise 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_ae7bb7c2fd370a72c6f119b53ee64eb82}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!is\-Current\-Line\-Empty@{is\-Current\-Line\-Empty}}
+\index{is\-Current\-Line\-Empty@{is\-Current\-Line\-Empty}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{is\-Current\-Line\-Empty}]{\setlength{\rightskip}{0pt plus 5cm}is\-Current\-Line\-Empty (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_ae7bb7c2fd370a72c6f119b53ee64eb82}
+\-Returns true if the current line is blank or if it is a comment line.
+
+\begin{DoxyReturn}{\-Returns}
+\-Boolean \-Returns true if the current line is empty or if it is a comment line, false otherwise 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a007cdf42dc438be788d23206f14e7396}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!is\-Next\-Line\-Indented@{is\-Next\-Line\-Indented}}
+\index{is\-Next\-Line\-Indented@{is\-Next\-Line\-Indented}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{is\-Next\-Line\-Indented}]{\setlength{\rightskip}{0pt plus 5cm}is\-Next\-Line\-Indented (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a007cdf42dc438be788d23206f14e7396}
+\-Returns true if the next line is indented.
+
+\begin{DoxyReturn}{\-Returns}
+\-Boolean \-Returns true if the next line is indented, false otherwise 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a23295181488f2269374ba055ab73f133}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!move\-To\-Next\-Line@{move\-To\-Next\-Line}}
+\index{move\-To\-Next\-Line@{move\-To\-Next\-Line}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{move\-To\-Next\-Line}]{\setlength{\rightskip}{0pt plus 5cm}move\-To\-Next\-Line (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a23295181488f2269374ba055ab73f133}
+\-Moves the parser to the next line. \hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a793efbbdb80289712c6d8b13974a0794}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!move\-To\-Previous\-Line@{move\-To\-Previous\-Line}}
+\index{move\-To\-Previous\-Line@{move\-To\-Previous\-Line}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{move\-To\-Previous\-Line}]{\setlength{\rightskip}{0pt plus 5cm}move\-To\-Previous\-Line (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a793efbbdb80289712c6d8b13974a0794}
+\-Moves the parser to the previous line. \hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_ae646f55333c0c77dc5b912df945862c5}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!parse@{parse}}
+\index{parse@{parse}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}parse (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_ae646f55333c0c77dc5b912df945862c5}
+\-Parses a \-Y\-A\-M\-L string to a \-P\-H\-P value.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$value} & \-A \-Y\-A\-M\-L string\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed \-A \-P\-H\-P value
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_exception}{\-Parser\-Exception}} & \-If the \-Y\-A\-M\-L is not valid \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_aca51709db86f3336fa0cd8773cc791d0}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!parse\-Folded\-Scalar@{parse\-Folded\-Scalar}}
+\index{parse\-Folded\-Scalar@{parse\-Folded\-Scalar}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{parse\-Folded\-Scalar}]{\setlength{\rightskip}{0pt plus 5cm}parse\-Folded\-Scalar (
+\begin{DoxyParamCaption}
+\item[{\$}]{separator, }
+\item[{\$}]{indicator = {\ttfamily ''}, }
+\item[{\$}]{indentation = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_aca51709db86f3336fa0cd8773cc791d0}
+\-Parses a folded scalar.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$separator} & \-The separator that was used to begin this folded scalar ($|$ or $>$) \\
+\hline
+string & {\em \$indicator} & \-The indicator that was used to begin this folded scalar (+ or -\/) \\
+\hline
+integer & {\em \$indentation} & \-The indentation that was used to begin this folded scalar\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-The text value 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_parser_a090d97f0d830c8a3a6d4962636b9081b}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}!parse\-Value@{parse\-Value}}
+\index{parse\-Value@{parse\-Value}!Symfony::Component::Yaml::Parser@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Parser}}
+\subsubsection[{parse\-Value}]{\setlength{\rightskip}{0pt plus 5cm}parse\-Value (
+\begin{DoxyParamCaption}
+\item[{\$}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_parser_a090d97f0d830c8a3a6d4962636b9081b}
+\-Parses a \-Y\-A\-M\-L value.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$value} & \-A \-Y\-A\-M\-L value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mixed \-A \-P\-H\-P value
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_parser_exception}{\-Parser\-Exception}} & \-When reference doesn't not exist \\
+\hline
+\end{DoxyExceptions}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Yaml/\-Parser.\-php\end{DoxyCompactItemize}

@@ -1,0 +1,173 @@
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader}{
+\section{\-Universal\-Class\-Loader \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader}\index{\-Universal\-Class\-Loader@{\-Universal\-Class\-Loader}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_ae4c74dabb3e9ba4103ffd4e8febcac21}{
+{\bfseries get\-Namespaces} ()}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_ae4c74dabb3e9ba4103ffd4e8febcac21}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a102069675f7a94f8917f44acc2390687}{
+{\bfseries get\-Prefixes} ()}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a102069675f7a94f8917f44acc2390687}
+
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_afd147d473364c7df6b9b327bae802b82}{register\-Namespaces} (array \$namespaces)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_afdd997b01513fe834e92dd511ed52c0e}{register\-Namespace} (\$namespace, \$path)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_aac41bbf07ccda9fe0a47842e5f40cbaa}{register\-Prefixes} (array \$classes)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a0aa6735ce44d92ea33f6906ce3b14425}{register\-Prefix} (\$prefix, \$path)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_acc294a6cc8e69743746820e3d15e3f78}{register} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a8326a997d0cfe76d80196f60d240d144}{load\-Class} (\$class)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a5a7d9500de9f7c938443d65cef9a074e}{
+{\bfseries \$namespaces} = array()}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a5a7d9500de9f7c938443d65cef9a074e}
+
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a8dd2685d77e3731afd50eaa21c4f2055}{
+{\bfseries \$prefixes} = array()}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a8dd2685d77e3731afd50eaa21c4f2055}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader}{\-Universal\-Class\-Loader} implements a \char`\"{}universal\char`\"{} autoloader for \-P\-H\-P 5.\-3.
+
+\-It is able to load classes that use either\-:
+
+$\ast$ \-The technical interoperability standards for \-P\-H\-P 5.\-3 namespaces and class names (\href{http://groups.google.com/group/php-standards/web/psr-0-final-proposal}{\tt http\-://groups.\-google.\-com/group/php-\/standards/web/psr-\/0-\/final-\/proposal});
+
+$\ast$ \-The \hyperlink{namespace_p_e_a_r}{\-P\-E\-A\-R} naming convention for classes (\href{http://pear.php.net/}{\tt http\-://pear.\-php.\-net/}).
+
+\-Classes from a sub-\/namespace or a sub-\/hierarchy of \hyperlink{namespace_p_e_a_r}{\-P\-E\-A\-R} classes can be looked for in a list of locations to ease the vendoring of a sub-\/set of classes for large projects.
+
+\-Example usage\-:
+
+\$loader = new \-Universal\-Class\-Loader();
+
+// register classes with namespaces \$loader-\/$>$register\-Namespaces(array( '\-Symfony' =$>$ \-\_\-\-\_\-\-D\-I\-R\-\_\-\-\_\-.'/component', '\-Symfony' =$>$ \-\_\-\-\_\-\-D\-I\-R\-\_\-\-\_\-.'/framework', ));
+
+// register a library using the \hyperlink{namespace_p_e_a_r}{\-P\-E\-A\-R} naming convention \$loader-\/$>$register\-Prefixes(array( '\-Swift\-\_\-' =$>$ \-\_\-\-\_\-\-D\-I\-R\-\_\-\-\_\-.'/\-Swift', ));
+
+// activate the autoloader \$loader-\/$>$\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_acc294a6cc8e69743746820e3d15e3f78}{register()};
+
+\-In this example, if you try to use a class in the \-Symfony namespace or one of its children (\-Symfony for instance), the autoloader will first look for the class under the component/ directory, and it will then fallback to the framework/ directory if not found before giving up.
+
+\begin{DoxyAuthor}{\-Author}
+\-Fabien \-Potencier $<$\href{mailto:fabien.potencier@symfony-project.org}{\tt fabien.\-potencier@symfony-\/project.\-org}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a8326a997d0cfe76d80196f60d240d144}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}!load\-Class@{load\-Class}}
+\index{load\-Class@{load\-Class}!Symfony::Component::HttpFoundation::UniversalClassLoader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}}
+\subsubsection[{load\-Class}]{\setlength{\rightskip}{0pt plus 5cm}load\-Class (
+\begin{DoxyParamCaption}
+\item[{\$}]{class}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a8326a997d0cfe76d80196f60d240d144}
+\-Loads the given class or interface.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$class} & \-The name of the class \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_acc294a6cc8e69743746820e3d15e3f78}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}!register@{register}}
+\index{register@{register}!Symfony::Component::HttpFoundation::UniversalClassLoader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}}
+\subsubsection[{register}]{\setlength{\rightskip}{0pt plus 5cm}register (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_acc294a6cc8e69743746820e3d15e3f78}
+\-Registers this instance as an autoloader. \hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_afdd997b01513fe834e92dd511ed52c0e}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}!register\-Namespace@{register\-Namespace}}
+\index{register\-Namespace@{register\-Namespace}!Symfony::Component::HttpFoundation::UniversalClassLoader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}}
+\subsubsection[{register\-Namespace}]{\setlength{\rightskip}{0pt plus 5cm}register\-Namespace (
+\begin{DoxyParamCaption}
+\item[{\$}]{namespace, }
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_afdd997b01513fe834e92dd511ed52c0e}
+\-Registers a namespace.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$namespace} & \-The namespace \\
+\hline
+string & {\em \$path} & \-The location of the namespace \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_afd147d473364c7df6b9b327bae802b82}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}!register\-Namespaces@{register\-Namespaces}}
+\index{register\-Namespaces@{register\-Namespaces}!Symfony::Component::HttpFoundation::UniversalClassLoader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}}
+\subsubsection[{register\-Namespaces}]{\setlength{\rightskip}{0pt plus 5cm}register\-Namespaces (
+\begin{DoxyParamCaption}
+\item[{array \$}]{namespaces}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_afd147d473364c7df6b9b327bae802b82}
+\-Registers an array of namespaces
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$namespaces} & \-An array of namespaces (namespaces as keys and locations as values) \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a0aa6735ce44d92ea33f6906ce3b14425}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}!register\-Prefix@{register\-Prefix}}
+\index{register\-Prefix@{register\-Prefix}!Symfony::Component::HttpFoundation::UniversalClassLoader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}}
+\subsubsection[{register\-Prefix}]{\setlength{\rightskip}{0pt plus 5cm}register\-Prefix (
+\begin{DoxyParamCaption}
+\item[{\$}]{prefix, }
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_a0aa6735ce44d92ea33f6906ce3b14425}
+\-Registers a set of classes using the \hyperlink{namespace_p_e_a_r}{\-P\-E\-A\-R} naming convention.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$prefix} & \-The classes prefix \\
+\hline
+string & {\em \$path} & \-The location of the classes \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_aac41bbf07ccda9fe0a47842e5f40cbaa}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}!register\-Prefixes@{register\-Prefixes}}
+\index{register\-Prefixes@{register\-Prefixes}!Symfony::Component::HttpFoundation::UniversalClassLoader@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Universal\-Class\-Loader}}
+\subsubsection[{register\-Prefixes}]{\setlength{\rightskip}{0pt plus 5cm}register\-Prefixes (
+\begin{DoxyParamCaption}
+\item[{array \$}]{classes}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_universal_class_loader_aac41bbf07ccda9fe0a47842e5f40cbaa}
+\-Registers an array of classes using the \hyperlink{namespace_p_e_a_r}{\-P\-E\-A\-R} naming convention.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$classes} & \-An array of classes (prefixes as keys and locations as values) \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Http\-Foundation/\-Universal\-Class\-Loader.\-php\end{DoxyCompactItemize}

@@ -1,0 +1,121 @@
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting}{
+\section{\-Setting \-Class \-Reference}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting}\index{\-Setting@{\-Setting}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_hypo_conf_1_1_config_parser_1_1_setting_a0ecfad7330b11211d958ca9cb985b33f}{dispatch\-Action} (\$value, \$result, \$parser)
+\item 
+\hyperlink{class_hypo_conf_1_1_config_parser_1_1_setting_a184909dab34698899937d810a9f5d393}{validate} ()
+\item 
+\hyperlink{class_hypo_conf_1_1_config_parser_1_1_setting_ac900283b8780520c328c6457e34177f4}{set\-Defaults} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting_a0a4baf0b22973c07685c3981f0d17fc4}{
+{\bfseries \$path}}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting_a0a4baf0b22973c07685c3981f0d17fc4}
+
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting_a38addc8a958af4b42bda4fca677b4208}{
+{\bfseries \$required} = false}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting_a38addc8a958af4b42bda4fca677b4208}
+
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting_a4ef1c75208da8a21cee85665f66eeb58}{
+{\bfseries \$required\-\_\-one} = false}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting_a4ef1c75208da8a21cee85665f66eeb58}
+
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting_aa698a3e72116e8e778be0e95d908ee30}{
+{\bfseries \$action} = '\-Store\-String\-Or\-False'}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting_aa698a3e72116e8e778be0e95d908ee30}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting_a0ecfad7330b11211d958ca9cb985b33f}{
+\index{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting@{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting}!dispatch\-Action@{dispatch\-Action}}
+\index{dispatch\-Action@{dispatch\-Action}!HypoConf::ConfigParser::Setting@{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting}}
+\subsubsection[{dispatch\-Action}]{\setlength{\rightskip}{0pt plus 5cm}dispatch\-Action (
+\begin{DoxyParamCaption}
+\item[{\$}]{value, }
+\item[{\$}]{result, }
+\item[{\$}]{parser}
+\end{DoxyParamCaption}
+)}}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting_a0ecfad7330b11211d958ca9cb985b33f}
+\-Constructor.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$name} & \-The name of the option \\
+\hline
+array & {\em \$params} & \-An optional array of parameters\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void \-Formats the value \$value according to the action of the option and updates the passed \-Config\-Parser\-\_\-\-Result object.
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$value} & \-The value to format \\
+\hline
+\-Config\-Parser\-\_\-\-Result & {\em \$result} & \-The result instance \\
+\hline
+\hyperlink{class_hypo_conf_1_1_config_parser}{\-Config\-Parser} & {\em \$parser} & \-The parser instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \-Config\-Parser\-\_\-\-Exception} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting_ac900283b8780520c328c6457e34177f4}{
+\index{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting@{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting}!set\-Defaults@{set\-Defaults}}
+\index{set\-Defaults@{set\-Defaults}!HypoConf::ConfigParser::Setting@{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting}}
+\subsubsection[{set\-Defaults}]{\setlength{\rightskip}{0pt plus 5cm}set\-Defaults (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting_ac900283b8780520c328c6457e34177f4}
+\-Set the default value according to the configured action.
+
+\-Note that for backward compatibility issues this method is only called when the 'force\-\_\-options\-\_\-defaults' is set to true, it will become the default behaviour in the next major release of \hyperlink{namespace_p_e_a_r2}{\-P\-E\-A\-R2}.
+
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+\hypertarget{class_hypo_conf_1_1_config_parser_1_1_setting_a184909dab34698899937d810a9f5d393}{
+\index{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting@{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting}!validate@{validate}}
+\index{validate@{validate}!HypoConf::ConfigParser::Setting@{\-Hypo\-Conf\-::\-Config\-Parser\-::\-Setting}}
+\subsubsection[{validate}]{\setlength{\rightskip}{0pt plus 5cm}validate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_hypo_conf_1_1_config_parser_1_1_setting_a184909dab34698899937d810a9f5d393}
+\-Validates the option instance.
+
+\begin{DoxyReturn}{\-Returns}
+void 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \-Config\-Parser\-\_\-\-Exception} & \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000001}{\-Todo}]use exceptions instead \end{DoxyRefDesc}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+lib/hypoconf/lib/\-Hypo\-Conf/\-Config\-Parser/\-Setting.\-php\end{DoxyCompactItemize}

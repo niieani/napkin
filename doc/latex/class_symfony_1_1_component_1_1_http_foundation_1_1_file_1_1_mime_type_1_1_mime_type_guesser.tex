@@ -1,0 +1,114 @@
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser}{
+\section{\-Mime\-Type\-Guesser \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser}\index{\-Mime\-Type\-Guesser@{\-Mime\-Type\-Guesser}}
+}
+\-Inheritance diagram for \-Mime\-Type\-Guesser\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_a34206b433ddc68d44dcc6f8a6b1c76c0}{register} (\hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface}{\-Mime\-Type\-Guesser\-Interface} \$guesser)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_af42fcbb87eebfa7fa5e31c9c42af0c1a}{guess} (\$path)
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_ac93fbec81f07e5d15f80db907e63dc10}{get\-Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_a9b31fadd9aa0e3b6f7235c20fef02f88}{
+{\bfseries \$guessers} = array()}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_a9b31fadd9aa0e3b6f7235c20fef02f88}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-A singleton mime type guesser.
+
+\-By default, all mime type guessers provided by the framework are installed (if available on the current \-O\-S/\-P\-H\-P setup). \-You can register custom guessers by calling the \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_a34206b433ddc68d44dcc6f8a6b1c76c0}{register()} method on the singleton instance.
+
+{\ttfamily  \$guesser = \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_ac93fbec81f07e5d15f80db907e63dc10}{\-Mime\-Type\-Guesser\-::get\-Instance()}; \$guesser-\/$>$register(new \-My\-Custom\-Mime\-Type\-Guesser()); }
+
+\-The last registered guesser is preferred over previously registered ones.
+
+\begin{DoxyAuthor}{\-Author}
+\-Bernhard \-Schussek $<$\href{mailto:bernhard.schussek@symfony-project.com}{\tt bernhard.\-schussek@symfony-\/project.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_ac93fbec81f07e5d15f80db907e63dc10}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!Symfony::Component::HttpFoundation::File::MimeType::MimeTypeGuesser@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}static get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_ac93fbec81f07e5d15f80db907e63dc10}
+\-Returns the singleton instance
+
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser}{\-Mime\-Type\-Guesser} 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_af42fcbb87eebfa7fa5e31c9c42af0c1a}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser}!guess@{guess}}
+\index{guess@{guess}!Symfony::Component::HttpFoundation::File::MimeType::MimeTypeGuesser@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser}}
+\subsubsection[{guess}]{\setlength{\rightskip}{0pt plus 5cm}guess (
+\begin{DoxyParamCaption}
+\item[{\$}]{path}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_af42fcbb87eebfa7fa5e31c9c42af0c1a}
+\-Tries to guess the mime type of the given file
+
+\-The file is passed to each registered mime type guesser in reverse order of their registration (last registered is queried first). \-Once a guesser returns a value that is not \-N\-U\-L\-L, this method terminates and returns the value.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$path} & \-The path to the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-The mime type or \-N\-U\-L\-L, if none could be guessed 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \-File\-Exception} & \-If the file does not exist \\
+\hline
+\end{DoxyExceptions}
+
+
+\-Implements \hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface_af42fcbb87eebfa7fa5e31c9c42af0c1a}{\-Mime\-Type\-Guesser\-Interface}.
+
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_a34206b433ddc68d44dcc6f8a6b1c76c0}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser}!register@{register}}
+\index{register@{register}!Symfony::Component::HttpFoundation::File::MimeType::MimeTypeGuesser@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-File\-::\-Mime\-Type\-::\-Mime\-Type\-Guesser}}
+\subsubsection[{register}]{\setlength{\rightskip}{0pt plus 5cm}register (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Mime\-Type\-Guesser\-Interface} \$}]{guesser}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_a34206b433ddc68d44dcc6f8a6b1c76c0}
+\-Registers a new mime type guesser
+
+\-When guessing, this guesser is preferred over previously registered ones.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\hyperlink{interface_symfony_1_1_component_1_1_http_foundation_1_1_file_1_1_mime_type_1_1_mime_type_guesser_interface}{\-Mime\-Type\-Guesser\-Interface} & {\em \$guesser} & \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Http\-Foundation/\-File/\-Mime\-Type/\-Mime\-Type\-Guesser.\-php\end{DoxyCompactItemize}

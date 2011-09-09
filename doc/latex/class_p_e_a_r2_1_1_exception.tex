@@ -1,0 +1,106 @@
+\hypertarget{class_p_e_a_r2_1_1_exception}{
+\section{\-Exception \-Class \-Reference}
+\label{class_p_e_a_r2_1_1_exception}\index{\-Exception@{\-Exception}}
+}
+\-Inheritance diagram for \-Exception\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_p_e_a_r2_1_1_exception}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_e_a_r2_1_1_exception_a67c5e674888283173defbcbb65c52677}{\-\_\-\-\_\-construct} (\$message, \$p2=null, \$p3=null)
+\item 
+\hyperlink{class_p_e_a_r2_1_1_exception_ae6e62c450fbf2ac0a98e7c298ec28a6d}{get\-Cause\-Message} (array \&\$causes)
+\item 
+\hypertarget{class_p_e_a_r2_1_1_exception_a4b44bdc08deded3f53f07b4dbf5e4037}{
+{\bfseries get\-Trace\-Safe} ()}
+\label{class_p_e_a_r2_1_1_exception_a4b44bdc08deded3f53f07b4dbf5e4037}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_p_e_a_r2_1_1_exception_af85daa39ef3df0244a5f17a7fb2d044f}{add\-Observer} (\$callback, \$label= 'default')
+\item 
+\hypertarget{class_p_e_a_r2_1_1_exception_aaf4649e65c5836be3dfbd15ebaca11ca}{
+static {\bfseries remove\-Observer} (\$label= 'default')}
+\label{class_p_e_a_r2_1_1_exception_aaf4649e65c5836be3dfbd15ebaca11ca}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_p_e_a_r2_1_1_exception_a67c5e674888283173defbcbb65c52677}{
+\index{\-P\-E\-A\-R2\-::\-Exception@{\-P\-E\-A\-R2\-::\-Exception}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!PEAR2::Exception@{\-P\-E\-A\-R2\-::\-Exception}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}\-\_\-\-\_\-construct (
+\begin{DoxyParamCaption}
+\item[{\$}]{message, }
+\item[{\$}]{p2 = {\ttfamily null}, }
+\item[{\$}]{p3 = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}
+\label{class_p_e_a_r2_1_1_exception_a67c5e674888283173defbcbb65c52677}
+\-Supported signatures\-:
+\begin{DoxyItemize}
+\item \hyperlink{namespace_p_e_a_r2___exception}{\-P\-E\-A\-R2\-\_\-\-Exception}(string \$message);
+\item \hyperlink{namespace_p_e_a_r2___exception}{\-P\-E\-A\-R2\-\_\-\-Exception}(string \$message, int \$code);
+\item \hyperlink{namespace_p_e_a_r2___exception}{\-P\-E\-A\-R2\-\_\-\-Exception}(string \$message, \hyperlink{class_p_e_a_r2_1_1_exception}{\-Exception} \$cause);
+\item \hyperlink{namespace_p_e_a_r2___exception}{\-P\-E\-A\-R2\-\_\-\-Exception}(string \$message, \hyperlink{class_p_e_a_r2_1_1_exception}{\-Exception} \$cause, int \$code);
+\item \hyperlink{namespace_p_e_a_r2___exception}{\-P\-E\-A\-R2\-\_\-\-Exception}(string \$message, \hyperlink{namespace_p_e_a_r2}{\-P\-E\-A\-R2} \$cause);
+\item \hyperlink{namespace_p_e_a_r2___exception}{\-P\-E\-A\-R2\-\_\-\-Exception}(string \$message, \hyperlink{namespace_p_e_a_r2}{\-P\-E\-A\-R2} \$cause, int \$code); 
+\begin{DoxyParams}{\-Parameters}
+{\em string} & exception message \\
+\hline
+{\em int$|$\-Exception$|$\-P\-E\-A\-R2$\backslash$\-Multi\-Errors$|$null} & exception cause \\
+\hline
+{\em int$|$null} & exception code or null \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_p_e_a_r2_1_1_exception_af85daa39ef3df0244a5f17a7fb2d044f}{
+\index{\-P\-E\-A\-R2\-::\-Exception@{\-P\-E\-A\-R2\-::\-Exception}!add\-Observer@{add\-Observer}}
+\index{add\-Observer@{add\-Observer}!PEAR2::Exception@{\-P\-E\-A\-R2\-::\-Exception}}
+\subsubsection[{add\-Observer}]{\setlength{\rightskip}{0pt plus 5cm}static add\-Observer (
+\begin{DoxyParamCaption}
+\item[{\$}]{callback, }
+\item[{\$}]{label = {\ttfamily 'default'}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_p_e_a_r2_1_1_exception_af85daa39ef3df0244a5f17a7fb2d044f}
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$callback} & -\/ \-A valid php callback, see php func is\-\_\-callable()
+\begin{DoxyItemize}
+\item \-A \-P\-E\-A\-R2\-\_\-\-Exception\-::\-O\-B\-S\-E\-R\-V\-E\-R\-\_\-$\ast$ constant
+\item \-An array(const \-P\-E\-A\-R2\-\_\-\-Exception\-::\-O\-B\-S\-E\-R\-V\-E\-R\-\_\-$\ast$, mixed \$options) 
+\end{DoxyItemize}\\
+\hline
+string & {\em \$label} & \-The name of the observer. \-Use this if you want to remove it later with remove\-Observer() \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_p_e_a_r2_1_1_exception_ae6e62c450fbf2ac0a98e7c298ec28a6d}{
+\index{\-P\-E\-A\-R2\-::\-Exception@{\-P\-E\-A\-R2\-::\-Exception}!get\-Cause\-Message@{get\-Cause\-Message}}
+\index{get\-Cause\-Message@{get\-Cause\-Message}!PEAR2::Exception@{\-P\-E\-A\-R2\-::\-Exception}}
+\subsubsection[{get\-Cause\-Message}]{\setlength{\rightskip}{0pt plus 5cm}get\-Cause\-Message (
+\begin{DoxyParamCaption}
+\item[{array \&\$}]{causes}
+\end{DoxyParamCaption}
+)}}
+\label{class_p_e_a_r2_1_1_exception_ae6e62c450fbf2ac0a98e7c298ec28a6d}
+\-Function must be public to call on caused exceptions 
+\begin{DoxyParams}{\-Parameters}
+{\em array} & \\
+\hline
+\end{DoxyParams}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/pear2/lib/\-P\-E\-A\-R2/\-Exception.\-php\end{DoxyCompactItemize}

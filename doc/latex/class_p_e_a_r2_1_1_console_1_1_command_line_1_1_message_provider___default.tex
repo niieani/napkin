@@ -1,0 +1,152 @@
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default}{
+\section{\-Message\-Provider\-\_\-\-Default \-Class \-Reference}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default}\index{\-Message\-Provider\-\_\-\-Default@{\-Message\-Provider\-\_\-\-Default}}
+}
+\-Inheritance diagram for \-Message\-Provider\-\_\-\-Default\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_af448a5f2e64ff7a482a69ea3197d0389}{get} (\$code, \$vars=array())
+\item 
+\hyperlink{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_acdb5c6fb4f925e7b0c846875d1cc8186}{get\-With\-Custom\-Messages} (\$code, \$vars=array(), \$messages=array())
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_af7d8089e2f5a59a12cbf6ae46ea7b7aa}{replace\-Template\-Vars} (\$message, \$vars=array())
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_aaf8d38bd4e7d07a3d97cc2f497f6d13f}{\$messages}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_af448a5f2e64ff7a482a69ea3197d0389}{
+\index{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}!get@{get}}
+\index{get@{get}!PEAR2::Console::CommandLine::MessageProvider_Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}get (
+\begin{DoxyParamCaption}
+\item[{\$}]{code, }
+\item[{\$}]{vars = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_af448a5f2e64ff7a482a69ea3197d0389}
+\-Retrieve the given string identifier corresponding message.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$code} & \-The string identifier of the message \\
+\hline
+array & {\em \$vars} & \-An array of template variables\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{interface_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider_af448a5f2e64ff7a482a69ea3197d0389}{\-Message\-Provider}.
+
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_acdb5c6fb4f925e7b0c846875d1cc8186}{
+\index{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}!get\-With\-Custom\-Messages@{get\-With\-Custom\-Messages}}
+\index{get\-With\-Custom\-Messages@{get\-With\-Custom\-Messages}!PEAR2::Console::CommandLine::MessageProvider_Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}}
+\subsubsection[{get\-With\-Custom\-Messages}]{\setlength{\rightskip}{0pt plus 5cm}get\-With\-Custom\-Messages (
+\begin{DoxyParamCaption}
+\item[{\$}]{code, }
+\item[{\$}]{vars = {\ttfamily array()}, }
+\item[{\$}]{messages = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_acdb5c6fb4f925e7b0c846875d1cc8186}
+\-Retrieve the given string identifier corresponding message.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$code} & \-The string identifier of the message \\
+\hline
+array & {\em \$vars} & \-An array of template variables \\
+\hline
+array & {\em \$messages} & \-An optional array of messages to use. \-Array indexes are message codes.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{interface_p_e_a_r2_1_1_console_1_1_command_line_1_1_custom_message_provider_acdb5c6fb4f925e7b0c846875d1cc8186}{\-Custom\-Message\-Provider}.
+
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_af7d8089e2f5a59a12cbf6ae46ea7b7aa}{
+\index{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}!replace\-Template\-Vars@{replace\-Template\-Vars}}
+\index{replace\-Template\-Vars@{replace\-Template\-Vars}!PEAR2::Console::CommandLine::MessageProvider_Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}}
+\subsubsection[{replace\-Template\-Vars}]{\setlength{\rightskip}{0pt plus 5cm}replace\-Template\-Vars (
+\begin{DoxyParamCaption}
+\item[{\$}]{message, }
+\item[{\$}]{vars = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_af7d8089e2f5a59a12cbf6ae46ea7b7aa}
+\-Replaces template vars in a message
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$message} & \-The message \\
+\hline
+array & {\em \$vars} & \-An array of template variables\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string 
+\end{DoxyReturn}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_aaf8d38bd4e7d07a3d97cc2f497f6d13f}{
+\index{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}!\$messages@{\$messages}}
+\index{\$messages@{\$messages}!PEAR2::Console::CommandLine::MessageProvider_Default@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Message\-Provider\-\_\-\-Default}}
+\subsubsection[{\$messages}]{\setlength{\rightskip}{0pt plus 5cm}array \$messages\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_message_provider___default_aaf8d38bd4e7d07a3d97cc2f497f6d13f}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+        'OPTION_VALUE_REQUIRED'   => 'Option "{$name}" requires a value.',
+        'OPTION_VALUE_UNEXPECTED' => 'Option "{$name}" does not expect a value
+       (got "{$value}").',
+        'OPTION_VALUE_NOT_VALID'  => 'Option "{$name}" must be one of the
+       following: "{$choices}" (got "{$value}").',
+        'OPTION_VALUE_TYPE_ERROR' => 'Option "{$name}" requires a value of type
+       {$type} (got "{$value}").',
+        'OPTION_AMBIGUOUS'        => 'Ambiguous option "{$name}", can be one of
+       the following: {$matches}.',
+        'OPTION_UNKNOWN'          => 'Unknown option "{$name}".',
+        'ARGUMENT_REQUIRED'       => 'You must provide at least {$argnum}
+       argument{$plural}.',
+        'PROG_HELP_LINE'          => 'Type "{$progname} --help" to get help.',
+        'PROG_VERSION_LINE'       => '{$progname} version {$version}.',
+        'COMMAND_HELP_LINE'       => 'Type "{$progname} <command> --help" to
+       get help on specific command.',
+        'USAGE_WORD'              => 'Usage',
+        'OPTION_WORD'             => 'Options',
+        'ARGUMENT_WORD'           => 'Arguments',
+        'COMMAND_WORD'            => 'Commands',
+        'PASSWORD_PROMPT'         => 'Password: ',
+        'PASSWORD_PROMPT_ECHO'    => 'Password (warning: will echo): ',
+        'INVALID_CUSTOM_INSTANCE' => 'Instance does not implement the required
+       interface',
+        'LIST_OPTION_MESSAGE'     => 'lists valid choices for option {$name}',
+        'LIST_DISPLAYED_MESSAGE'  => 'Valid choices are: ',
+        'INVALID_SUBCOMMAND'      => 'Command "{$command}" is not valid.',
+    )
+\end{DoxyCode}
+\-Associative array of messages 
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/pear2/lib/\-P\-E\-A\-R2/\-Console/\-Command\-Line/\-Message\-Provider/\-Default.\-php\end{DoxyCompactItemize}

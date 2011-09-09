@@ -1,0 +1,85 @@
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser}{
+\section{\-Xml\-Parser \-Class \-Reference}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser}\index{\-Xml\-Parser@{\-Xml\-Parser}}
+}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_a81b49840824d3195e1492dabaaac0f6c}{parse} (\$xmlfile)
+\item 
+static \hyperlink{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_ad44128f8d5e83ad6829e85d6d597210b}{parse\-String} (\$xmlstr)
+\item 
+static \hyperlink{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_a94aac519f29e177fa747400ceafc6a39}{validate} (\$doc)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_a81b49840824d3195e1492dabaaac0f6c}{
+\index{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser}!parse@{parse}}
+\index{parse@{parse}!PEAR2::Console::CommandLine::XmlParser@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser}}
+\subsubsection[{parse}]{\setlength{\rightskip}{0pt plus 5cm}static parse (
+\begin{DoxyParamCaption}
+\item[{\$}]{xmlfile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_a81b49840824d3195e1492dabaaac0f6c}
+\-Parses the given xml definition file and returns a \hyperlink{namespace_p_e_a_r2}{\-P\-E\-A\-R2} instance constructed with the xml data.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$xmlfile} & \-The xml file to parse\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{namespace_p_e_a_r2}{\-P\-E\-A\-R2} \-A parser instance 
+\end{DoxyReturn}
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_ad44128f8d5e83ad6829e85d6d597210b}{
+\index{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser}!parse\-String@{parse\-String}}
+\index{parse\-String@{parse\-String}!PEAR2::Console::CommandLine::XmlParser@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser}}
+\subsubsection[{parse\-String}]{\setlength{\rightskip}{0pt plus 5cm}static parse\-String (
+\begin{DoxyParamCaption}
+\item[{\$}]{xmlstr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_ad44128f8d5e83ad6829e85d6d597210b}
+\-Parses the given xml definition string and returns a \hyperlink{namespace_p_e_a_r2}{\-P\-E\-A\-R2} instance constructed with the xml data.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$xmlstr} & \-The xml string to parse\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{namespace_p_e_a_r2}{\-P\-E\-A\-R2} \-A parser instance 
+\end{DoxyReturn}
+\hypertarget{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_a94aac519f29e177fa747400ceafc6a39}{
+\index{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser}!validate@{validate}}
+\index{validate@{validate}!PEAR2::Console::CommandLine::XmlParser@{\-P\-E\-A\-R2\-::\-Console\-::\-Command\-Line\-::\-Xml\-Parser}}
+\subsubsection[{validate}]{\setlength{\rightskip}{0pt plus 5cm}static validate (
+\begin{DoxyParamCaption}
+\item[{\$}]{doc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_p_e_a_r2_1_1_console_1_1_command_line_1_1_xml_parser_a94aac519f29e177fa747400ceafc6a39}
+\-Validates the xml definition using \-Relax \-N\-G.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+\-Dom\-Document & {\em \$doc} & \-The document to validate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean \-Whether the xml data is valid or not. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \-P\-E\-A\-R2$\backslash$\-Console$\backslash$\-Command\-Line\-\_\-\-Exception} & \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyRefDesc}{\-Todo}
+\item[\hyperlink{todo__todo000007}{\-Todo}]use exceptions only \end{DoxyRefDesc}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/pear2/lib/\-P\-E\-A\-R2/\-Console/\-Command\-Line/\-Xml\-Parser.\-php\end{DoxyCompactItemize}

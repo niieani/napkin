@@ -1,0 +1,126 @@
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_yaml}{
+\section{\-Yaml \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_yaml}\index{\-Yaml@{\-Yaml}}
+}
+\subsection*{\-Static \-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a864e42e0c0857cf55be1ec4f008edc3b}{set\-Spec\-Version} (\$version)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a85e91f9d5d0fe9f3cc335c1b3e7bf8c1}{get\-Spec\-Version} ()
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_yaml_ae9c877233944ff7dc1a24e61895c25a0}{load} (\$input)
+\item 
+static \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a7316b7295161b4744e2817b2b65b29f9}{dump} (\$array, \$inline=2)
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a6fef0dc9bb3b676cb3717c2241685ca8}{
+static {\bfseries \$spec} = '1.\-2'}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a6fef0dc9bb3b676cb3717c2241685ca8}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_yaml}{\-Yaml} offers convenience methods to load and dump \-Y\-A\-M\-L.
+
+\begin{DoxyAuthor}{\-Author}
+\-Fabien \-Potencier $<$\href{mailto:fabien.potencier@symfony-project.com}{\tt fabien.\-potencier@symfony-\/project.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a7316b7295161b4744e2817b2b65b29f9}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}!dump@{dump}}
+\index{dump@{dump}!Symfony::Component::Yaml::Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}}
+\subsubsection[{dump}]{\setlength{\rightskip}{0pt plus 5cm}static dump (
+\begin{DoxyParamCaption}
+\item[{\$}]{array, }
+\item[{\$}]{inline = {\ttfamily 2}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a7316b7295161b4744e2817b2b65b29f9}
+\-Dumps a \-P\-H\-P array to a \-Y\-A\-M\-L string.
+
+\-The dump method, when supplied with an array, will do its best to convert the array into friendly \-Y\-A\-M\-L.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+array & {\em \$array} & \-P\-H\-P array \\
+\hline
+integer & {\em \$inline} & \-The level where you switch to inline \-Y\-A\-M\-L\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-A \-Y\-A\-M\-L string representing the original \-P\-H\-P array 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a85e91f9d5d0fe9f3cc335c1b3e7bf8c1}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}!get\-Spec\-Version@{get\-Spec\-Version}}
+\index{get\-Spec\-Version@{get\-Spec\-Version}!Symfony::Component::Yaml::Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}}
+\subsubsection[{get\-Spec\-Version}]{\setlength{\rightskip}{0pt plus 5cm}static get\-Spec\-Version (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a85e91f9d5d0fe9f3cc335c1b3e7bf8c1}
+\-Gets the \-Y\-A\-M\-L specification version to use.
+
+\begin{DoxyReturn}{\-Returns}
+string \-The \-Y\-A\-M\-L specification version 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_yaml_ae9c877233944ff7dc1a24e61895c25a0}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}!load@{load}}
+\index{load@{load}!Symfony::Component::Yaml::Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}static load (
+\begin{DoxyParamCaption}
+\item[{\$}]{input}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_yaml_ae9c877233944ff7dc1a24e61895c25a0}
+\-Loads \-Y\-A\-M\-L into a \-P\-H\-P array.
+
+\-The load method, when supplied with a \-Y\-A\-M\-L stream (string or file), will do its best to convert \-Y\-A\-M\-L in a file into a \-P\-H\-P array.
+
+\-Usage\-: {\ttfamily  \$array = \hyperlink{class_symfony_1_1_component_1_1_yaml_1_1_yaml_ae9c877233944ff7dc1a24e61895c25a0}{\-Yaml\-::load}('config.yml'); print\-\_\-r(\$array); }
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$input} & \-Path of \-Y\-A\-M\-L file or string containing \-Y\-A\-M\-L\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+array \-The \-Y\-A\-M\-L converted to a \-P\-H\-P array
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Invalid\-Argument\-Exception} & \-If the \-Y\-A\-M\-L is not valid \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a864e42e0c0857cf55be1ec4f008edc3b}{
+\index{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}!set\-Spec\-Version@{set\-Spec\-Version}}
+\index{set\-Spec\-Version@{set\-Spec\-Version}!Symfony::Component::Yaml::Yaml@{\-Symfony\-::\-Component\-::\-Yaml\-::\-Yaml}}
+\subsubsection[{set\-Spec\-Version}]{\setlength{\rightskip}{0pt plus 5cm}static set\-Spec\-Version (
+\begin{DoxyParamCaption}
+\item[{\$}]{version}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_symfony_1_1_component_1_1_yaml_1_1_yaml_a864e42e0c0857cf55be1ec4f008edc3b}
+\-Sets the \-Y\-A\-M\-L specification version to use.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$version} & \-The \-Y\-A\-M\-L specification version\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Invalid\-Argument\-Exception} & \-When version of \-Y\-A\-M\-L specs is not supported \\
+\hline
+\end{DoxyExceptions}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Yaml/\-Yaml.\-php\end{DoxyCompactItemize}

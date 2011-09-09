@@ -1,0 +1,219 @@
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage}{
+\section{\-Pdo\-Session\-Storage \-Class \-Reference}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage}\index{\-Pdo\-Session\-Storage@{\-Pdo\-Session\-Storage}}
+}
+\-Inheritance diagram for \-Pdo\-Session\-Storage\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_ac3d45478b892e61eac4a5d6ee77122e3}{\-\_\-\-\_\-construct} ($\backslash$\-P\-D\-O \$db, \$options=null)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_af8fa59992209e36dccb3eefb0f75531f}{start} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a3459ba99cac83957d4af8d7fc41a0d92}{session\-Open} (\$path=null, \$name=null)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a1cdaef3bc11fefe27825850088848e0c}{session\-Close} ()
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a57de760698d4a775d2e31f6342dfef07}{session\-Destroy} (\$id)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a7f05355413742bdd16e7feb66bff3bfc}{session\-G\-C} (\$lifetime)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a683ea7db0e432689a7dea9d27a3673c0}{session\-Read} (\$id)
+\item 
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_aa3be326788d6e143a5f2773ae5cbf8c7}{session\-Write} (\$id, \$data)
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a1fa3127fc82f96b1436d871ef02be319}{
+{\bfseries \$db}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a1fa3127fc82f96b1436d871ef02be319}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage}{\-Pdo\-Session\-Storage}.
+
+\begin{DoxyAuthor}{\-Author}
+\-Fabien \-Potencier $<$\href{mailto:fabien.potencier@symfony-project.com}{\tt fabien.\-potencier@symfony-\/project.\-com}$>$ 
+\end{DoxyAuthor}
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_ac3d45478b892e61eac4a5d6ee77122e3}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}\-\_\-\-\_\-construct (
+\begin{DoxyParamCaption}
+\item[{$\backslash$\-P\-D\-O \$}]{db, }
+\item[{\$}]{options = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_ac3d45478b892e61eac4a5d6ee77122e3}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Invalid\-Argument\-Exception} & \-When \char`\"{}db\-\_\-table\char`\"{} option is not provided \\
+\hline
+\end{DoxyExceptions}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a1cdaef3bc11fefe27825850088848e0c}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!session\-Close@{session\-Close}}
+\index{session\-Close@{session\-Close}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{session\-Close}]{\setlength{\rightskip}{0pt plus 5cm}session\-Close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a1cdaef3bc11fefe27825850088848e0c}
+\-Closes a session.
+
+\begin{DoxyReturn}{\-Returns}
+boolean true, if the session was closed, otherwise false 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a57de760698d4a775d2e31f6342dfef07}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!session\-Destroy@{session\-Destroy}}
+\index{session\-Destroy@{session\-Destroy}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{session\-Destroy}]{\setlength{\rightskip}{0pt plus 5cm}session\-Destroy (
+\begin{DoxyParamCaption}
+\item[{\$}]{id}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a57de760698d4a775d2e31f6342dfef07}
+\-Destroys a session.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$id} & \-A session \-I\-D\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+bool true, if the session was destroyed, otherwise an exception is thrown
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If the session cannot be destroyed \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a7f05355413742bdd16e7feb66bff3bfc}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!session\-G\-C@{session\-G\-C}}
+\index{session\-G\-C@{session\-G\-C}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{session\-G\-C}]{\setlength{\rightskip}{0pt plus 5cm}session\-G\-C (
+\begin{DoxyParamCaption}
+\item[{\$}]{lifetime}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a7f05355413742bdd16e7feb66bff3bfc}
+\-Cleans up old sessions.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+int & {\em \$lifetime} & \-The lifetime of a session\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+bool true, if old sessions have been cleaned, otherwise an exception is thrown
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If any old sessions cannot be cleaned \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a3459ba99cac83957d4af8d7fc41a0d92}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!session\-Open@{session\-Open}}
+\index{session\-Open@{session\-Open}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{session\-Open}]{\setlength{\rightskip}{0pt plus 5cm}session\-Open (
+\begin{DoxyParamCaption}
+\item[{\$}]{path = {\ttfamily null}, }
+\item[{\$}]{name = {\ttfamily null}}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a3459ba99cac83957d4af8d7fc41a0d92}
+\-Opens a session.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$path} & (ignored) \\
+\hline
+string & {\em \$name} & (ignored)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+boolean true, if the session was opened, otherwise an exception is thrown 
+\end{DoxyReturn}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a683ea7db0e432689a7dea9d27a3673c0}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!session\-Read@{session\-Read}}
+\index{session\-Read@{session\-Read}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{session\-Read}]{\setlength{\rightskip}{0pt plus 5cm}session\-Read (
+\begin{DoxyParamCaption}
+\item[{\$}]{id}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_a683ea7db0e432689a7dea9d27a3673c0}
+\-Reads a session.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$id} & \-A session \-I\-D\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+string \-The session data if the session was read or created, otherwise an exception is thrown
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If the session cannot be read \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_aa3be326788d6e143a5f2773ae5cbf8c7}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!session\-Write@{session\-Write}}
+\index{session\-Write@{session\-Write}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{session\-Write}]{\setlength{\rightskip}{0pt plus 5cm}session\-Write (
+\begin{DoxyParamCaption}
+\item[{\$}]{id, }
+\item[{\$}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_aa3be326788d6e143a5f2773ae5cbf8c7}
+\-Writes session data.
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+string & {\em \$id} & \-A session \-I\-D \\
+\hline
+string & {\em \$data} & \-A serialized chunk of session data\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+bool true, if the session was written, otherwise an exception is thrown
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em $\backslash$\-Runtime\-Exception} & \-If the session data cannot be written \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_af8fa59992209e36dccb3eefb0f75531f}{
+\index{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}!start@{start}}
+\index{start@{start}!Symfony::Component::HttpFoundation::SessionStorage::PdoSessionStorage@{\-Symfony\-::\-Component\-::\-Http\-Foundation\-::\-Session\-Storage\-::\-Pdo\-Session\-Storage}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_pdo_session_storage_af8fa59992209e36dccb3eefb0f75531f}
+\-Starts the session. 
+
+\-Reimplemented from \hyperlink{class_symfony_1_1_component_1_1_http_foundation_1_1_session_storage_1_1_native_session_storage_af8fa59992209e36dccb3eefb0f75531f}{\-Native\-Session\-Storage}.
+
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+vendor/symfony/lib/\-Symfony/\-Component/\-Http\-Foundation/\-Session\-Storage/\-Pdo\-Session\-Storage.\-php\end{DoxyCompactItemize}

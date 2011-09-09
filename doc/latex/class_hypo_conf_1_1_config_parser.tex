@@ -1,0 +1,96 @@
+\hypertarget{class_hypo_conf_1_1_config_parser}{
+\section{\-Config\-Parser \-Class \-Reference}
+\label{class_hypo_conf_1_1_config_parser}\index{\-Config\-Parser@{\-Config\-Parser}}
+}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_a85ac5b7f54ad67ec6b5b9dc282717602}{
+{\bfseries \-\_\-\-\_\-construct} (array \$params=array())}
+\label{class_hypo_conf_1_1_config_parser_a85ac5b7f54ad67ec6b5b9dc282717602}
+
+\item 
+\hyperlink{class_hypo_conf_1_1_config_parser_ae03731b7b23af731256f6502c308193a}{add\-Setting} (\$name, \$params=array())
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_a23c674543d1d8d0ea0151b9172a8fd6a}{
+{\bfseries parse\-Result} (\$user\-Configuration=null)}
+\label{class_hypo_conf_1_1_config_parser_a23c674543d1d8d0ea0151b9172a8fd6a}
+
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_a6b313d54e051724d81600661b8337fce}{
+{\bfseries parse} (\$user\-Configuration=null)}
+\label{class_hypo_conf_1_1_config_parser_a6b313d54e051724d81600661b8337fce}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_aa3e9534005fd516d941f6a5569896e01}{
+{\bfseries \$template}}
+\label{class_hypo_conf_1_1_config_parser_aa3e9534005fd516d941f6a5569896e01}
+
+\item 
+\hypertarget{class_hypo_conf_1_1_config_parser_ab2a3e8712b2462d01e8ebacaa08bafa7}{
+{\bfseries \$configuration} = array()}
+\label{class_hypo_conf_1_1_config_parser_ab2a3e8712b2462d01e8ebacaa08bafa7}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static {\bfseries \$actions}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{class_hypo_conf_1_1_config_parser_ae03731b7b23af731256f6502c308193a}{
+\index{\-Hypo\-Conf\-::\-Config\-Parser@{\-Hypo\-Conf\-::\-Config\-Parser}!add\-Setting@{add\-Setting}}
+\index{add\-Setting@{add\-Setting}!HypoConf::ConfigParser@{\-Hypo\-Conf\-::\-Config\-Parser}}
+\subsubsection[{add\-Setting}]{\setlength{\rightskip}{0pt plus 5cm}add\-Setting (
+\begin{DoxyParamCaption}
+\item[{\$}]{name, }
+\item[{\$}]{params = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}
+\label{class_hypo_conf_1_1_config_parser_ae03731b7b23af731256f6502c308193a}
+\-Adds a setting
+
+
+\begin{DoxyParams}[1]{\-Parameters}
+mixed & {\em \$name} & \-A string containing the option name or an instance of \-Config\-Parser\-\_\-\-Option \\
+\hline
+array & {\em \$params} & \-An array containing the option attributes\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+\-Config\-Parser\-\_\-\-Option \-The added option 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{\-See also}
+\-Config\-Parser\-\_\-\-Option 
+\end{DoxySeeAlso}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{class_hypo_conf_1_1_config_parser_a6cafc5f8d4f5d73acc0b5c6daaa766c1}{
+\index{\-Hypo\-Conf\-::\-Config\-Parser@{\-Hypo\-Conf\-::\-Config\-Parser}!\$actions@{\$actions}}
+\index{\$actions@{\$actions}!HypoConf::ConfigParser@{\-Hypo\-Conf\-::\-Config\-Parser}}
+\subsubsection[{\$actions}]{\setlength{\rightskip}{0pt plus 5cm}\$actions\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{class_hypo_conf_1_1_config_parser_a6cafc5f8d4f5d73acc0b5c6daaa766c1}
+{\bfseries \-Initial value\-:}
+\begin{DoxyCode}
+ array(
+        'IPPort'              => array('HypoConf\\ConfigParser\\Action\\IPPort'
+      , true),
+        'StoreOnOff'          => array('HypoConf\\ConfigParser\\Action\\
+      StoreOnOff', true),
+        'StoreStemOrFalse'    => array('HypoConf\\ConfigParser\\Action\\
+      StoreStemOrFalse', true),
+        'StoreStringOrFalse'  => array('HypoConf\\ConfigParser\\Action\\
+      StoreStringOrFalse', true)
+    )
+\end{DoxyCode}
+
+
+\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+lib/hypoconf/lib/\-Hypo\-Conf/\-Config\-Parser.\-php\end{DoxyCompactItemize}
