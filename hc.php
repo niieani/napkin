@@ -21,14 +21,14 @@ use HypoConf\Paths;
 //use HypoConf;
 //use HypoConf\ConfigScopes\ApplicationsDB;
 //use ConfigScopes\TemplatesDB;
+//use Applications\Nginx;
+//use ConfigStyles\BracketConfig\NginxConfig;
+//use ConfigStyles\BracketConfig\NginxScope;
 use PEAR2\Console\CommandLine;
 
 Paths::$root = __DIR__;
 Paths::$db = __DIR__.'/database';
 
-//use Applications\Nginx;
-//use ConfigStyles\BracketConfig\NginxConfig;
-//use ConfigStyles\BracketConfig\NginxScope;
 
 //define('HC_DIR', __DIR__);
 
@@ -79,20 +79,20 @@ $cmd = array();
 
 // add the foo subcommand
 $cmd['enable'] = $parser->addCommand('enable', array(
-    'description' => 'output the given string with a foo prefix',
-    'aliases' => array('dis', 'd')
+    'description' => 'Enables a site',
+    'aliases' => array('en', 'e')
 ));
 $cmd['enable']->addArgument('enable', array(
-    'description' => 'the text to output'
+//    'description' => 'Enables a site'
 ));
 
 // add the bar subcommand
 $cmd['disable'] = $parser->addCommand('disable', array(
-    'description' => 'output the given string with a bar prefix',
-    'aliases' => array('en', 'e')
+    'description' => 'Disables a site',
+    'aliases' => array('dis', 'd')
 ));
 $cmd['disable']->addArgument('disable', array(
-    'description' => 'the text to output'
+//    'description' => 'Disables a site'
 ));
 $cmd['disable']->addOption('placeholder', array(
     'short_name'  => '-p',
@@ -119,7 +119,7 @@ $cmd['set']->addArgument('values', array(
 
 // add the setlist subcommand
 $cmd['setlist'] = $parser->addCommand('setlist', array(
-    'description' => 'Shows the list of available settings.',
+    'description' => 'Shows the list of all available settings.',
     'aliases'     => array('sl', 'settings')
 ));
 $cmd['setlist']->addArgument('name', array(
@@ -182,26 +182,26 @@ $cmd['generate']->addArgument('file', array(
 
 //reload
 $cmd['reload'] = $parser->addCommand('reload', array(
-    'description' => 'output the given string with a bar prefix',
+    'description' => 'reload server',
     'aliases' => array('r', 'load', 'activate')
 ));
 
-//move
-$cmd['move'] = $parser->addCommand('move', array(
-    'description' => 'output the given string with a bar prefix',
-    'aliases' => array('mv')
+//chuser
+$cmd['chuser'] = $parser->addCommand('chuser', array(
+    'description' => 'TODO',
+    'aliases' => array('mv', 'move')
 ));
-$cmd['move']->addArgument('site', array(
-    'description' => 'the text to output'
+$cmd['chuser']->addArgument('site', array(
+    'description' => 'TODO'
 ));
-$cmd['move']->addArgument('username', array(
-    'description' => 'the text to output',
+$cmd['chuser']->addArgument('username', array(
+    'description' => 'TODO',
     'optional' => TRUE
 ));
 
 //drop
 $cmd['drop'] = $parser->addCommand('drop', array(
-    'description' => 'output the given string with a bar prefix',
+    'description' => 'drops the database',
     'aliases' => array('dropdb')
 ));
 $cmd['drop']->addArgument('database', array(
@@ -217,21 +217,21 @@ $cmd['rename']->addArgument('oldname', array(
     'description' => 'current name of website or username'
 ));
 $cmd['rename']->addArgument('newname', array(
-    'description' => 'the desired name'
+    'description' => 'the desired new name'
 ));
 
 //remove
 $cmd['remove'] = $parser->addCommand('remove', array(
-    'description' => 'output the given string with a bar prefix',
+    'description' => 'removes a website or user',
     'aliases' => array('rm')
 ));
 $cmd['remove']->addArgument('name', array(
-    'description' => 'the text to output'
+    'description' => 'current name of website or username'
 ));
 
-//remove
+//debug
 $cmd['debug'] = $parser->addCommand('debug', array(
-    'description' => 'output the given string with a bar prefix'
+    'description' => 'TODO'
 ));
 
 // run the parser
@@ -243,13 +243,13 @@ try {
         LogCLI::SetVerboseLevel($result->options['verbose']);
         //else LogCLI::SetVerboseLevel(1);
     }
-    LogCLI::Message(LogCLI::GREEN.'Running the HypoConf engine...'.LogCLI::RESET, 1);
+    LogCLI::Message(LogCLI::GREEN.'Running the HypoConf engine...'.LogCLI::RESET, 2);
     if ($result->command_name)
     {
         switch($result->command_name)
         {
             case 'debug':
-                
+                LogCLI::Message(LogCLI::BLUE.'Sorry, not implemented yet... :-D'.LogCLI::RESET, 1);
                 break;
                 
             case 'help':
@@ -299,7 +299,7 @@ try {
 
 function displayHelp($setting = false)
 {
-    echo 'HypoConf Manual'.PHP_EOL;
+    echo PHP_EOL.'HypoConf Manual'.PHP_EOL;
     switch($setting)
     {
         case '_NotImplemented':
@@ -341,7 +341,7 @@ EOT;
             break;
             
         default:
-            echo <<<'EOT'
+            echo <<< 'EOT'
 
 A configuration manager for nginx, PHP with PHP-FPM and MySQL 
 with a Command Line Interface
@@ -376,6 +376,7 @@ Commands:
   remove    output the given string with a bar prefix (alias: rm)
 
 EOT;
+
     }
 }
 

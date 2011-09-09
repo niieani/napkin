@@ -1,7 +1,11 @@
 <?php
-// inspired by Bash Beauty - http://www.zulius.com/freebies/bash-beauty-output-for-bash-scripts/
-// class by Bazyli Brzoska
-/* Example usage:
+/**
+ * inspired by Bash Beauty - http://www.zulius.com/freebies/bash-beauty-output-for-bash-scripts/
+ * @author Bazyli Brzoska
+ */
+
+/*
+ *  Example usage:
 
 LogCLI::SetDisplayTime(true);
 LogCLI::SetRunTimer(true);
