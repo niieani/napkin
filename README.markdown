@@ -1,4 +1,4 @@
-NAPCIN - Nginx and PHP Configuration Is Neat
+napcin [read: napkin] - nginx and PHP configuration is neat
 ======
 
 
