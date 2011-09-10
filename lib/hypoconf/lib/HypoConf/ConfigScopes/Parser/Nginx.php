@@ -264,6 +264,7 @@ class Nginx extends ConfigScopes\Parser
         
         /*
          * COMMON 'CUSTOM' SETTING FOR INSERTING CUSTOM CODE
+         * Available in each configuration segment
          */
         foreach($this->parsers as &$parser)
         {

@@ -1,29 +1,29 @@
-[[user %(user)s[[ %(group)s]];]]
-[[worker_processes %(processes)s;]]
+[[user %(user)[[ %(group)]];]]
+[[worker_processes %(processes);]]
 events
 {
-    [[worker_connections %(connections)s;]]
-    [[use %(use)s;]]
-    [[multi_accept %(multi_accept)s;]]
+    [[worker_connections %(connections);]]
+    [[use %(use);]]
+    [[multi_accept %(multi_accept);]]
 }
 http
 {
-    [[error_log %(errorlog)s]][[ %(errorlogstyle)s;]]
-    [[include %(mimepath)s;]]
-    [[sendfile %(sendfile)s;]]
-    [[tcp_nopush %(nopush)s;]]
-    [[tcp_nodelay %(nodelay)s;]]
-    [[keepalive_timeout %(keepalivetimeout)s;]]
-    [[client_max_body_size %(max_body)s;]]
+    [[error_log %(errorlog)]][[ %(errorlogstyle);]]
+    [[include %(mimepath);]]
+    [[sendfile %(sendfile);]]
+    [[tcp_nopush %(nopush);]]
+    [[tcp_nodelay %(nodelay);]]
+    [[keepalive_timeout %(keepalivetimeout);]]
+    [[client_max_body_size %(max_body);]]
 
     ## Gzip Compression
-    [[gzip %(gzip)s;]]
-    [[gzip_disable %(gzip_disable)s;]]
-    [[gzip_min_length %(gzip_min)s;]]
-    [[gzip_comp_level %(gzip_comp_level)s;]]
-    [[gzip_proxied %(gzip_proxied)s;]]
-    [[gzip_buffers %(gzip_buffers_num)s %(gzip_buffers_size)sk;]]
-    [[gzip_types %(gzip_types)s;]]
+    [[gzip %(gzip);]]
+    [[gzip_disable %(gzip_disable);]]
+    [[gzip_min_length %(gzip_min);]]
+    [[gzip_comp_level %(gzip_comp_level);]]
+    [[gzip_proxied %(gzip_proxied);]]
+    [[gzip_buffers %(gzip_buffers_num)s %(gzip_buffers_size)k;]]
+    [[gzip_types %(gzip_types);]]
 
     ## Log Format
     <<logformat>>

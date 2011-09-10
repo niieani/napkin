@@ -104,18 +104,19 @@ class StringTools
     // recursive implode
     public static function rimplode( $glue, $pieces )
     {
-      foreach( $pieces as $r_pieces )
-      {
-        if( is_array( $r_pieces ) )
+        $retVal = array();
+        foreach( $pieces as $r_pieces )
         {
-          $retVal[] = self::rimplode( $glue, $r_pieces );
+            if( is_array( $r_pieces ) )
+            {
+                $retVal[] = self::rimplode( $glue, $r_pieces );
+            }
+            else
+            {
+                $retVal[] = $r_pieces;
+            }
         }
-        else
-        {
-          $retVal[] = $r_pieces;
-        }
-      }
-      return implode( $glue, $retVal );
+        return implode( $glue, $retVal );
     }
     
     public static function RemoveExclamation($path)

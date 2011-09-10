@@ -17,6 +17,8 @@ class NginxConfig
     public static function LoadAndSave($arguments, $file)
     {
         $settingsNginx = ApplicationsDB::GetAllSettings('nginx');
+//        var_dump($settingsNginx);
+//        echo "WTF!!!";
         /*
         LogCLI::MessageResult('Listing available settings.', 6, LogCLI::INFO);
         
@@ -33,7 +35,7 @@ class NginxConfig
         
         $settingPath = implode('/', $chain);
         
-        // are we adding a setting or replacing/merging ? [TODO - add check if the setting is iterative at all]
+        // are we adding a setting or replacing/merging ? TODO - add check if the setting is iterative at all
         $doNotReplace = Helpers::DoWeReplaceHelper($chain, $settingPath);
         
         if($doNotReplace === true) 

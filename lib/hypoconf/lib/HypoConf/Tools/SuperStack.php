@@ -5,7 +5,7 @@
  * Time: 23:32
  */
 
-namespace Tools\SuperStack;
+namespace Tools;
 
 class SuperStack
 {

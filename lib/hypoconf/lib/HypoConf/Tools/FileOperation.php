@@ -7,6 +7,7 @@ use \Symfony\Component\Yaml\Dumper;
 
 class FileOperation
 {
+    //TODO: Consider using glob() function instead (whichever is faster?) http://php.net/manual/en/function.glob.php
     public static function getAllFilesByExtension($path='.', $extension = 'yml')
     {
         $Directory = new \RecursiveDirectoryIterator($path);

@@ -1,1 +1,1 @@
-listen [[%(listen)s]][[ %(listen_options)s]];
+listen [[%(listen)]][[ %(listen_options)]];

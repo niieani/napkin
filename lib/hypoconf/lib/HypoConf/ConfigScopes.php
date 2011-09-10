@@ -56,7 +56,7 @@ class ConfigScopes
     {
         if($scope === false) $scope = $this->rootscope;
         
-        LogCLI::Message(LogCLI::YELLOW.'Making a list of available settings:'.LogCLI::RESET, 5);
+        LogCLI::Message(LogCLI::YELLOW.'Making a list of available settings '.LogCLI::BLUE.'@'.$scope.LogCLI::GREEN.':'.LogCLI::RESET, 5);
         foreach($this->parsers as $parsername => $parser)
         {
             foreach($parser->options as $option)

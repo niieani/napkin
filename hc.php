@@ -337,6 +337,7 @@ Examples:
   hc set site.com,@myuser,+mytemplate +listing /files
   hc set site.com +access '^/files$' deny
 
+
 EOT;
             break;
             
@@ -374,6 +375,7 @@ Commands:
   drop      output the given string with a bar prefix (alias: dropdb)
   rename    renames a website or a user (alias: ren)
   remove    output the given string with a bar prefix (alias: rm)
+
 
 EOT;
 

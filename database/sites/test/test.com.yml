@@ -1,8 +1,0 @@
-domain:
-  - onet.pl
-  - onet.eu
-support:
-  php: '1'
-php:
-  index: index.asp
-name_comment: onet.com

@@ -18,9 +18,12 @@ class Helpers
     {
         return (count($values) === 1) ? $values[0] : $values;
     }
-    
+
     public static function SearchConfigs(&$settings, $settingPath, $iterativeSetting = 0)
     {
+        // TODO: problem with this function
+        echo var_dump($settings).PHP_EOL.var_dump($settingPath).PHP_EOL;
+
         $searchResults = ArrayTools::TraverseTreeWithPath(&$settings, $settingPath);
         if(empty($searchResults))
         {

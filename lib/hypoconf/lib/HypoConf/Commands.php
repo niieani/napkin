@@ -10,7 +10,7 @@ use Tools\Tree;
 use Tools\FileOperation;
 
 //only for cores
-use Tools\System;
+//use Tools\System;
 
 use HypoConf\Paths;
 use HypoConf\ConfigParser;
@@ -52,11 +52,18 @@ class Commands
                 }
             else 
             {
+                /**
+                 * If it's a main config edit than allow all the options (Commands\Set\NginxConfig)
+                 * TODO: Can we merge these two classes?
+                 */
                 if($argument['text'] == 'config')
                 {
                     $file = Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml';
                     Commands\Set\NginxConfig::LoadAndSave($arguments, $file);
                 }
+                /*
+                 * If it's only a site edit, allow only what's in the 'server' scope (Commands\Set\Site)
+                 */
                 else // opening a site or default site
                 {
                     //$siteYML = array_search(strtolower($argument['text']),array_map('strtolower',$files));

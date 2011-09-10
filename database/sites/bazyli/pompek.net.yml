@@ -1,5 +1,0 @@
-support:
-  php: '0'
-listen:
-  -
-    port: '80'

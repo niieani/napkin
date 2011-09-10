@@ -59,6 +59,7 @@ class ApplicationsDB
         
         self::$DB[$application]['scopesInstance'] = new HypoConf\ConfigScopes(&self::$DB[$application]['parsers'], &self::$DB[$application]['templates']);
         self::$DB[$application]['scopesInstance']->rootscope = $application;
+//        echo PHP_EOL.$application.PHP_EOL;
         
         return self::$DB[$application]['scopesInstance'];
     }
@@ -94,7 +95,8 @@ class ApplicationsDB
     
     public static function GetAllSettings($application)
     {
-        return self::$DB[$application]['scopesInstance']->returnSettingsList();
+//        echo PHP_EOL.var_dump(self::$DB[$application]['scopesInstance']->rootscope).PHP_EOL;
+        return self::$DB[$application]['scopesInstance']->returnSettingsList(); //in brackets self::$DB[$application]['scopesInstance']->rootscope or maybe simpler would be just ($application), since it's the same ?
         //self::$DB[$application]['settingsList'] =
     }
     
