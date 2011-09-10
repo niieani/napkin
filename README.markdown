@@ -1,7 +1,7 @@
 napcin
 ======
 
-napcin [ *napkin* ] - nginx and PHP configuration is neat
+napcin /*napkin*/ - **n**ginx **a**nd **P**HP **c**onfiguration **i**s **n**eat
 
 A little about the project
 ------
