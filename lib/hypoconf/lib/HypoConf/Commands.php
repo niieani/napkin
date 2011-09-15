@@ -96,26 +96,32 @@ class Commands
     public static function GenerateParsed($arguments)
     {
         $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
-        
+
         foreach($arguments['file'] as $dir)
         {
             $fileslist = FileOperation::getAllFilesByExtension(Paths::$db.Paths::$separator.Paths::$defaultGroup.Paths::$separator.$dir, 'yml');
-            //$pathinfo = array();
-            //$siteYML = false;
-            foreach($fileslist as $file)
+
+            if(!isset($fileslist) || $fileslist !== false)
             {
-                $files[] = $file;
+                foreach($fileslist as $file)
+                {
+                    $files[] = $file;
+                }
+            }
+            else
+            {
+    //            user_error('No such site: '.$arguments['file'], E_USER_ERROR);
+                user_error('No such site: '.$dir, E_USER_WARNING);
+                return false;
             }
         }
-        //var_dump($files);
+
         $nginx = new ConfigScopes\SettingsDB();
         $nginx->MergeFromYAML(Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml', false, true, true); //true for compilation
         $nginx->MergeFromYAMLs($files, 'server', true, true); //true for compilation
-        //$nginx->MergeFromYAMLs($files, 'server', true, true); //true for compilation
-        
-        
+
         ApplicationsDB::LoadConfig(&$nginx->DB);
-        
+
         $parsedFile = $configScopesNginx->parseTemplateRecursively('nginx');
         echo PHP_EOL.$parsedFile;
     }

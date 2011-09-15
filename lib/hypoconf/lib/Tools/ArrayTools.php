@@ -2,7 +2,7 @@
 
 namespace Tools;
 
-use \Tools\LogCLI;
+//use \Tools\LogCLI;
 
 class ArrayTools
 {

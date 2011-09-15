@@ -2,35 +2,21 @@
 require_once __DIR__.'/autoload.php';
 
 use Tools\LogCLI;
-use Tools\StringTools;
-use Tools\ArrayTools;
-use Tools\Tree;
-use Tools\FileOperation;
-
-//only for cores
-use Tools\System;
-
-//use ConfigParser\ConfigParser;
-//use ConfigScopes\ConfigScopes;
-//use ConfigScopes\SettingsDB;
+use Tools\Errors;
 
 use HypoConf\Commands;
-use HypoConf\ConfigParser;
-use HypoConf\ConfigScopes;
 use HypoConf\Paths;
-//use HypoConf;
-//use HypoConf\ConfigScopes\ApplicationsDB;
-//use ConfigScopes\TemplatesDB;
-//use Applications\Nginx;
-//use ConfigStyles\BracketConfig\NginxConfig;
-//use ConfigStyles\BracketConfig\NginxScope;
+
 use PEAR2\Console\CommandLine;
+//use PEAR2\Console\Color;
+
+//Errors::Handle(E_USER_NOTICE, 'errortest');
+
+//set_error_handler(array('Errors', 'Handle'));
+set_error_handler('\Tools\Errors::Handle');
 
 Paths::$root = __DIR__;
 Paths::$db = __DIR__.'/database';
-
-
-//define('HC_DIR', __DIR__);
 
 // create the parser
 $parser = new CommandLine(array(
@@ -155,18 +141,18 @@ $cmd['unset']->addArgument('value', array(
 
 //add
 $cmd['add'] = $parser->addCommand('add', array(
-    'description' => 'output the given string with a bar prefix',
+    'description' => '',
     'aliases' => array('a')
 ));
 $cmd['add']->addArgument('name', array(
-    'description' => 'the text to output'
+    'description' => ''
 ));
 $cmd['add']->addArgument('name2', array(
-    'description' => 'the text to output',
+    'description' => '',
     'optional' => TRUE
 ));
 $cmd['add']->addArgument('template', array(
-    'description' => 'the text to output',
+    'description' => '',
     'optional' => TRUE
 ));
 
@@ -354,27 +340,26 @@ Usage:
 Options:
   -v, --verbose  turn on verbose output
   -s, --stdout   turn on output to console instead of writing files
-  -!, --debug    turn on debugging
+  -d, --debug    turn on debugging
   -f, --force    force a specific action without asking for confirmation
   -h, --help     show this help message and exit
   --version      show the program version and exit
 
 Commands:
-  enable    output the given string with a foo prefix (aliases: dis, d)
-  disable   output the given string with a bar prefix (aliases: en, e)
+  enable    aa (aliases: dis, d)
+  disable   aa (aliases: en, e)
   set       Sets the parameter of a website, user or template to specified
             value(s). (aliases: s, setting)
-  help      shows general help or if help [argument] specified displays
-            more about a certain function (alias: h)
+  help      shows general help or help [argument] displays more help about
+            a certain function (alias: h)
   unset     unsets a given setting (alias: us)
-  add       output the given string with a bar prefix (alias: a)
-  generate  output the given string with a bar prefix (aliases: gen, g)
-  reload    output the given string with a bar prefix (aliases: r, load,
-            activate)
-  move      output the given string with a bar prefix (alias: mv)
-  drop      output the given string with a bar prefix (alias: dropdb)
+  add       aa (alias: a)
+  generate  aa (aliases: gen, g)
+  reload    aa (aliases: r, load, activate)
+  move      aa (alias: mv)
+  drop      aa (alias: dropdb)
   rename    renames a website or a user (alias: ren)
-  remove    output the given string with a bar prefix (alias: rm)
+  remove    aa (alias: rm)
 
 
 EOT;

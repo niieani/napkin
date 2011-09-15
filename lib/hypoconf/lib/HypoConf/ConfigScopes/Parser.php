@@ -3,7 +3,7 @@ namespace HypoConf\ConfigScopes;
 
 use HypoConf;
 
-//use \Tools\ArrayTools;
+//use HypoConf\Tools\ArrayTools;
 //use \Tools\LogCLI;
 
 abstract class Parser

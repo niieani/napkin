@@ -3,11 +3,10 @@
 namespace HypoConf;
 
 use Tools\LogCLI;
-//use Tools\StringTools;
 
-//use Tools\ArrayTools;
-//use Tools\Tree;
-//use Tools\FileOperation;
+/**
+ * @link http://alanhogan.com/tips/php/directory-separator-not-necessary
+ */
 
 class Paths
 {

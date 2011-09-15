@@ -133,7 +133,8 @@ class SettingsDB
             LogCLI::Message('Parsing YAML file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
             try
             {
-                $config = YAML::load($file);
+                //$config = YAML::load($file);
+                $config = Yaml::parse($file);
                 
                 // if the file is empty create an empty array:
                 if(empty($config)) $config = array();

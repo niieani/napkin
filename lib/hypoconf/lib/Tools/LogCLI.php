@@ -28,7 +28,8 @@ need to add multilevel logging (when called two times, just nest instead of erro
 */
 
 namespace Tools;
-use \Tools\Timer;
+//use \Tools\Timer;
+//use Timer;
 
 class LogCLI
 {
@@ -170,7 +171,7 @@ class LogCLI
     }
     private static function DisplayMessage($message, $type = null)
     {
-        (self::$numColsKnown) === true ?: self::GetNumCols();
+        self::$numColsKnown === true ?: self::GetNumCols();
         
         //echo PHP_EOL."(DISPLAYMESSAGE)";
         $output = (self::$displayTime === true) ? "\x20".self::getDateTime()."\x20" : "\x20";
@@ -273,7 +274,7 @@ class LogCLI
         if(is_bool($runTimer)) self::$runTimer = $runTimer;
     }
     
-    public static function Error($message)
+    public static function Error($message, $level = self::FAIL, $force = false)
     {
         /*
         if (self::$messageSet === true) { 
@@ -282,27 +283,32 @@ class LogCLI
             self::Result($type, true, 1);
         }
         */
-        if(self::$verboseLevel != -1) //if not quiet
+        if($force == true || self::$verboseLevel != -1) //if not quiet
         {
-            //self::DisplayMessage($message, self::FATAL);
-            self::MessageResult($message, 0, self::FAIL); //, 1
+//            self::MessageResult($message, 0, self::FAIL); //, 1
+            self::MessageResult($message, 0, $level); //, 1
         }
         //self::$messageSet = false;
     }
     
     public static function Fail($message)
     {
-        self::Error(self::RED.'[ERROR] '.self::RESET.self::YELLOW.$message.self::RESET);
+        self::Error(self::RED.'[ERROR] '.self::RESET.self::YELLOW.$message.self::RESET, self::FAIL);
     }
     
     public static function Warning($message)
     {
-        self::Error(self::RED.'[WARN] '.self::RESET.self::YELLOW.$message.self::RESET);
+        self::Error(self::RED.'[WARN] '.self::RESET.self::YELLOW.$message.self::RESET, self::WARN);
     }
     
     public static function Fatal($message)
     {
-        self::Error(self::RED.'[UNRECOVERABLE ERROR] '.self::RESET.self::YELLOW.$message.self::RESET);
+        self::Error(self::RED.'[UNRECOVERABLE ERROR] '.self::RESET.self::YELLOW.$message.self::RESET, self::FATAL);
+    }
+
+    public static function Notice($message)
+    {
+        self::Error(self::YELLOW.'[NOTICE] '.self::RESET.self::BLUE.$message.self::RESET, self::INFO);
     }
     
     private static function getDateTime()

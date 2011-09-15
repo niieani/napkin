@@ -10,17 +10,25 @@ class FileOperation
     //TODO: Consider using glob() function instead (whichever is faster?) http://php.net/manual/en/function.glob.php
     public static function getAllFilesByExtension($path='.', $extension = 'yml')
     {
-        $Directory = new \RecursiveDirectoryIterator($path);
-    	$Iterator = new \RecursiveIteratorIterator($Directory);
-    	$Regex = new \RegexIterator($Iterator, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH);
-    	$Files = array();
-    
-    	foreach ($Regex as $File)
-    	{
-    	        $Files[] = $File[0];
-    	}
-    	sort($Files, SORT_LOCALE_STRING);
-    	return $Files;
+        if(is_dir($path))
+        {
+            $Directory = new \RecursiveDirectoryIterator($path);
+            $Iterator = new \RecursiveIteratorIterator($Directory);
+            $Regex = new \RegexIterator($Iterator, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH);
+            $Files = array();
+
+            foreach ($Regex as $File)
+            {
+                    $Files[] = $File[0];
+            }
+            sort($Files, SORT_LOCALE_STRING);
+            return $Files;
+        }
+        else
+        {
+            user_error('No such directory: '.$path, E_USER_ERROR);
+            return false;
+        }
     }
     
     public static function ToYAMLFile($array, $stdout = false, $file="tmp.yml")
