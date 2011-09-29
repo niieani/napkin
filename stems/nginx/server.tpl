@@ -1,6 +1,6 @@
 server[[ #%(name_comment)s]]
 {
-    <<listen>>
+    <!<listen>!>
     [[server_name %(domain);]]
     [[root %(dir);]]
     [[index %(index);]]

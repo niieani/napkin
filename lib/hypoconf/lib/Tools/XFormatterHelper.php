@@ -1,51 +1,80 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: NIXin
+ * By: Bazyli Brzóska
  * Date: 25.09.2011
  * Time: 01:09
- * To change this template use File | Settings | File Templates.
  */
 
-//use Symfony\Component\Console;
 namespace Tools;
+use \Symfony\Component\Console\Helper\FormatterHelper;
 
-class XFormatterHelper extends Symfony\Component\Console\FormatterHelper
+class XFormatterHelper extends FormatterHelper
 {
-
     /**
-     * Formats a message as a block of text.
+     * Formats multiple messages as side-by-side blocks of text, separated by $glue.
      *
-     * @param string|array $messages The message to write in the block
-     * @param string       $style    The style to apply to the whole block
-     * @param Boolean      $large    Whether to return a large block
+     * @param array     $blocks   Multidimensional array with ['messages'] and ['style'] and optionally ['large'] for each block
+     * @param string    $glue     What separates the blocks
+     * @param bool      $large    Whether to return a large block
+     * @param bool      $alignToCenter
+     * @param bool      $copyLastLine
      *
      * @return string The formatter message
      */
-    public function formatMultipleBlocks($messages, $style, $large = false)
+    public function formatMultipleBlocks($blocks, $glue = ' ', $large = false, $alignToCenter = true, $copyLastLine = false)
     {
-        $messages = (array) $messages;
+        $formattedBlocks = array();
+        $output = null;
+        $indent = array();
+        $count = array();
+        $start = array();
+        $longest = 0;
+        if($copyLastLine) $indentString = array();
 
-        $len = 0;
-        $lines = array();
-        foreach ($messages as $message) {
-            $lines[] = sprintf($large ? '  %s  ' : ' %s ', $message);
-            $len = max($this->strlen($message) + ($large ? 4 : 2), $len);
+        foreach($blocks as $id => &$block)
+        {
+            if(!isset($block['large'])) $block['large'] = $large;
+            $formattedBlocks[$id] = explode(PHP_EOL, $this->formatBlock($block['messages'], $block['style'], $block['large']));
+            if(($count[$id] = count($formattedBlocks[$id])) > $longest) $longest = $count[$id];
         }
+        $middle = $longest / 2;
+        foreach($blocks as $id => &$block)
+        {
+            $start[$id] = floor($middle - ($count[$id] / 2));
+            $fragment = end($formattedBlocks[$id]).$glue;
+            $indent[$id] = $this->strlen(str_replace(array("<{$block['style']}>", "</{$block['style']}>"), '', $fragment));
+            if($copyLastLine) $indentString[$id] = $fragment;
+        }
+        for($i = 0; $i < $longest; ++$i)
+        {
+            foreach(array_keys($formattedBlocks) as $id) //foreach($blocks as $id => &$block)
+            {
+                $shiftI = $alignToCenter === true ? $i - $start[$id] : $i;
+                if(isset($formattedBlocks[$id][$shiftI]))
+                {
+                    $output .= $formattedBlocks[$id][$shiftI].$glue;
+                }
+                else
+                {
+                    if($copyLastLine) $output .= $indentString[$id];
+                    else $output .= str_repeat(' ', $indent[$id]);
+                }
+            }
+            $output .= PHP_EOL;
+        }
+        return rtrim($output); // trim the last end of line
+    }
 
-        $messages = $large ? array(str_repeat(' ', $len)) : array();
-        foreach ($lines as $line) {
-            $messages[] = $line.str_repeat(' ', $len - $this->strlen($line));
-        }
-        if ($large) {
-            $messages[] = str_repeat(' ', $len);
-        }
-
-        foreach ($messages as &$message) {
-            $message = sprintf('<%s>%s</%s>', $style, $message, $style);
-        }
-
-        return implode("\n", $messages);
+    /**
+     * Returns the length of a string, uses mb_strlen if it is available.
+     *
+     * @param string $string The string to check its length
+     *
+     * @return integer The length of the string
+     */
+    private function strlen($string)
+    {
+        return function_exists('mb_strlen') ? mb_strlen($string, mb_detect_encoding($string)) : strlen($string);
     }
 
     /**

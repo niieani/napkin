@@ -5,14 +5,8 @@
  * Time: 13:02
  */
 
-use Symfony\Component\Finder\Finder;
+use Tools\StringTools;
 
 include ('../autoload.php');
 
-$finder = new Finder();
-$finder->files()->name('*.yml')->in('../database')->sortByName();
-
-foreach ($finder as $file) {
-    print $file->getRealpath()."\n";
-}
-
+var_dump(StringTools::TypeList('mambo,@jambo,+camper', array('@')));

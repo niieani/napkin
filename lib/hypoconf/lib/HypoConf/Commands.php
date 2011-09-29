@@ -24,7 +24,7 @@ class Commands
         LogCLI::Message('Listing available settings: ', 0);
         $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
         //$settings = ApplicationsDB::GetSettingsList('nginx', 'server');
-        $settingsNginx = ApplicationsDB::GetAllSettings('nginx');
+        $settingsNginx = ApplicationsDB::GetSettingsList('nginx');
         $settings = ArrayTools::GetMultiDimentionalElementsWithChildren(&$settingsNginx);
         foreach($settings as $setting)
         {
@@ -44,7 +44,7 @@ class Commands
          * to a custom action, or just a normal setting.
          */
         
-        foreach(StringTools::typeList($arguments['name']) as $argument)
+        foreach(StringTools::TypeList($arguments['name']) as $argument)
         {
             if ($argument['exclamation'] !== false) 
                 {
@@ -69,7 +69,7 @@ class Commands
                     //$siteYML = array_search(strtolower($argument['text']),array_map('strtolower',$files));
                     //var_dump($files);
                     
-                    $siteYML = self::GetFullPath($argument['text']);
+                    $siteYML = Paths::GetFullPath($argument['text']);
                     
                     if($siteYML !== false)
                         Commands\Set\Site::LoadAndSave($arguments, $siteYML);
@@ -128,7 +128,7 @@ class Commands
     
     public static function Add($arguments)
     {
-        foreach(StringTools::typeList($arguments['name'], '@') as $argument)
+        foreach(StringTools::TypeList($arguments['name'], '@') as $argument)
         {
             $name = $argument['text'];
             
@@ -165,7 +165,7 @@ class Commands
                 $path = Paths::$db.Paths::$separator.$group.Paths::$separator.$username.Paths::$separator;
                 if(file_exists($path))
                 {
-                    if(!file_exists($path.$website.'.yml') && self::GetFullPath($website) === false)
+                    if(!file_exists($path.$website.'.yml') && Paths::GetFullPath($website) === false)
                     {
                         FileOperation::CreateEmptyFile($path.$website.'.yml');
                         LogCLI::Result(LogCLI::OK);
@@ -183,21 +183,5 @@ class Commands
                 }
             }
         }
-    }
-    
-    public static function GetFullPath($site)
-    {
-        $files = FileOperation::getAllFilesByExtension(Paths::$db, 'yml');
-        $pathinfo = array();
-        //$siteYML = false;
-        foreach($files as $id => $file)
-        {
-            $pathinfo[$id] = FileOperation::pathinfo_utf($file);
-            if($pathinfo[$id]['filename'] == $site)
-            {
-                return $files[$id];
-            }
-        }
-        return false;
     }
 }

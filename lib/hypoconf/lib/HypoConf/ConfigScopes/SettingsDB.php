@@ -77,6 +77,11 @@ class SettingsDB
         ArrayTools::createArrayElementByPath($this->DB, $path, $setting, 0); //skip any or not?
         //var_dump($this->DB);
     }
+
+    public function ReturnOneByPath($path)
+    {
+        return ArrayTools::accessArrayElementByPath($this->DB, $path);
+    }
     
     public function RemoveByPath($path)
     {
@@ -122,8 +127,14 @@ class SettingsDB
         }
     }
     
-    //public function ApplyAllDefaultsToAllElements()
-    
+    /**
+     * @param string $file path to a YAML file
+     * @param string|bool $path start the merge at designated settings path
+     * @param bool $addDefaults
+     * @param bool $mergeDefaults
+     * @param bool $createNewIfNonexistant
+     * @return void
+     */
     public function MergeFromYAML($file, $path = false, $addDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = true)
     {
         LogCLI::Message('Loading file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
@@ -151,7 +162,7 @@ class SettingsDB
                     //var_dump($this->defaultsDefinitions);
                 }
                 
-                LogCLI::MessageResult('Settings DB updated!', 5, LogCLI::INFO);
+                LogCLI::MessageResult('Settings DB populated with new data!', 5, LogCLI::INFO);
                 LogCLI::Result(LogCLI::OK);
             }
             catch (\Exception $e)

@@ -198,6 +198,7 @@ class ConfigParser extends CommandLine
             if(strlen(rtrim($parsedline)) < 1) continue;
             
             // if we got a multiline responds we have to indent it
+            // TODO: maybe explode "\n" would be better?
             if(count($lines = preg_split("/(\r?\n)/", $parsedline)) > 1)
             {
                 $indentedlines = array_shift($lines).PHP_EOL;

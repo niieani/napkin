@@ -2,27 +2,26 @@
 
 namespace Tools;
 
-use \Symfony\Component\Yaml\Yaml;
-use \Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Finder\Finder;
 
 class FileOperation
 {
-    //TODO: Consider using glob() function instead (whichever is faster?) http://php.net/manual/en/function.glob.php
     public static function getAllFilesByExtension($path='.', $extension = 'yml')
     {
         if(is_dir($path))
         {
-            $Directory = new \RecursiveDirectoryIterator($path);
-            $Iterator = new \RecursiveIteratorIterator($Directory);
-            $Regex = new \RegexIterator($Iterator, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH);
-            $Files = array();
+            $files = array();
+            $finder = new Finder();
+            $finder->files()->name('*.'.$extension)->in($path)->sortByName();
 
-            foreach ($Regex as $File)
+            foreach ($finder as $file)
             {
-                    $Files[] = $File[0];
+                $files[] = $file->getRealpath();
+//              print $file->getRealpath()."\n";
             }
-            sort($Files, SORT_LOCALE_STRING);
-            return $Files;
+            return $files;
         }
         else
         {
@@ -36,7 +35,7 @@ class FileOperation
             $dumper = new Dumper();
             $yaml = $dumper->dump($array, 6);
             if ($stdout === false) file_put_contents($file, $yaml);
-            else echo PHP_EOL.$yaml;
+            else print PHP_EOL.$yaml;
     }
     
     public static function pathinfo_utf($path) 
@@ -70,7 +69,35 @@ class FileOperation
     
     public static function CreateEmptyFile($path)
     {
-        // this needs proper error handling!
+        // TODO: this needs proper error handling!
         fclose(fopen($path, 'x'));
     }
+
+    //---: Consider using glob() function instead (whichever is faster?) http://php.net/manual/en/function.glob.php
+    /*
+     * DEPRACATED by Symfony/Finder: TODO: this is actually a bit faster than Symfony/Finder
+     * 
+    public static function getAllFilesByExtension($path='.', $extension = 'yml')
+    {
+        if(is_dir($path))
+        {
+            $Directory = new \RecursiveDirectoryIterator($path);
+            $Iterator = new \RecursiveIteratorIterator($Directory);
+            $Regex = new \RegexIterator($Iterator, '/^.+\.'.$extension.'$/i', \RecursiveRegexIterator::GET_MATCH);
+            $Files = array();
+
+            foreach ($Regex as $File)
+            {
+                    $Files[] = $File[0];
+            }
+            sort($Files, SORT_LOCALE_STRING);
+            return $Files;
+        }
+        else
+        {
+            user_error('No such directory: '.$path, E_USER_ERROR);
+            return false;
+        }
+    }
+    */
 }

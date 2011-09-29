@@ -6,6 +6,13 @@ namespace Tools;
 
 class ArrayTools
 {
+    public static function dearraizeIfNotRequired($values)
+    {
+        if(is_array($values))
+            return (count($values) === 1) ? $values[0] : $values;
+        else return $values;
+    }
+
     public static function accessArrayElementByPath(&$arr, $path = null, $checkEmpty = false, $emptyResponse = null) //$trimPath=0
     {
         // Check path
@@ -32,7 +39,7 @@ class ArrayTools
         return $path;
     }
     
-    // this should be actually renamed to mergeArrayElementByPath
+    // TODO: this should be actually renamed to mergeArrayElementByPath
     public static function createArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0, $noOverride = false) //$trimPath=0
     {
         // Check path
@@ -153,7 +160,8 @@ class ArrayTools
             }
             foreach($iterator->current() as $value)
             {
-                if(!is_array($value))
+//                if(!is_array($value))
+                if(is_string($value))
                 {
                     $subpath = $path . "/" . $value;
                     $elements[] = ltrim($subpath, "/");

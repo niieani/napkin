@@ -27,6 +27,8 @@ need to add multilevel logging (when called two times, just nest instead of erro
 
 */
 
+// TODO: try integrating with Monolog - http://symfony.com/doc/2.0/cookbook/logging/monolog.html
+
 namespace Tools;
 //use \Tools\Timer;
 //use Timer;

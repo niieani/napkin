@@ -17,11 +17,10 @@ class Site
     public static function LoadAndSave($arguments, $file)
     {
         $settings = ApplicationsDB::GetSettingsList('nginx', 'server');
-        //LogCLI::MessageResult('Listing available settings.', 6, LogCLI::INFO);
         
-        $value = Helpers::SetValueHelper($arguments['values']);
+        $value = ArrayTools::dearraizeIfNotRequired($arguments['values']);
         
-        $chain = StringTools::delimit($arguments['chain'], '.');
+        $chain = StringTools::Delimit($arguments['chain'], '.');
         
         $settingPath = implode('/', $chain);
         
@@ -43,7 +42,7 @@ class Site
                 // 1. cut the last part and store it $lastbit
                 $lastbit = StringTools::ReturnLastBit($path);
                 $secondlast = StringTools::ReturnLastBit($path, 2);
-                //var_dump($secondlast);
+
                 if($secondlast !== false && is_numeric($secondlast))
                 {
                     $path = StringTools::DropLastBit($path, 2); //droping the fixed 0 and the last key

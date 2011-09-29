@@ -7,6 +7,7 @@ use Tools\StringTools;
 
 class Nginx extends ConfigScopes\Parser
 {
+    /*
     public function FixPath($path, $iterativeSetting = 0)
     {
         if(is_string($iterativeSetting))
@@ -17,18 +18,21 @@ class Nginx extends ConfigScopes\Parser
         elseif(($pos = strpos($path, 'server/')) !== false && $pos === 0)
         {
             $path = StringTools::DropLastBit($path, -1);
-        
+
             if(($pos = strpos($path, 'listen/')) !== false && $pos === 0)
             {
-                $last = StringTools::ReturnLastBit($path);
+//                $last = StringTools::ReturnLastBit($path);
                 $path = StringTools::DropLastBit($path);
-                $path .= '/'.$iterativeSetting.'/'.$last;
+//                $path .= '/'.$last;
+//                $path .= '/'.$iterativeSetting.'/'.$last;
             }
         }
         //    $path = substr_replace($path, 'server/'.$iterativeSetting.'/', 0, strlen('nginx/server'));
             
         return $path;
     }
+    */
+    
     public function __construct(array &$templates)
     {
         /*
@@ -247,7 +251,7 @@ class Nginx extends ConfigScopes\Parser
             'version'     => '0.9',
             'template'    => &$templates['listen']
         ));
-        
+        /*
         $this->parsers['listen']->addSetting('listen', array(
             'path'        => array('ip'=>'ip','port'=>'port'),
             'default'     => array('ip'=>null,'port'=>'80'),
@@ -255,12 +259,22 @@ class Nginx extends ConfigScopes\Parser
             'action'      => 'IPPort',
             'description' => 'IP and port'
         ));
+        */
+
+
+        $this->parsers['listen']->addSetting('listen', array(
+            'path'        => 'listen',
+            'action'      => 'StoreStringOrFalse',
+            'description' => 'listen (ip and/or port)'
+        ));
+
+        /*
         $this->parsers['listen']->addSetting('listen_options', array(
             'path'        => 'listen_options',
             'action'      => 'StoreStringOrFalse',
             'description' => 'listen options'
         ));
-
+        */
         
         /*
          * COMMON 'CUSTOM' SETTING FOR INSERTING CUSTOM CODE

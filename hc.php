@@ -10,9 +10,6 @@ use HypoConf\Paths;
 use PEAR2\Console\CommandLine;
 //use PEAR2\Console\Color;
 
-//Errors::Handle(E_USER_NOTICE, 'errortest');
-
-//set_error_handler(array('Errors', 'Handle'));
 set_error_handler('\Tools\Errors::Handle');
 
 Paths::$root = __DIR__;

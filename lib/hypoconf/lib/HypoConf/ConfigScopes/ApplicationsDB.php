@@ -14,16 +14,19 @@ class ApplicationsDB
 {
     //protected static $DB = array();
     protected static $DB = array();
-    protected static $AppsDir = 'stems/';
+    protected static $AppsDir = 'stems/'; //TODO: move to Paths::
     protected static $SettingsDB;
-    
+
+    /**
+     * @var array nested array list of application parser classes (class, internal)
+     */
     public static $applications = array(
         'nginx'              => array('HypoConf\\ConfigScopes\\Parser\\Nginx', true)
     );
     
     public static function LoadAll()
     {
-        foreach(self::$applications as $application)
+        foreach(self::$applications as $application => $details)
         {
             self::LoadApplication($application);
         }
@@ -33,17 +36,20 @@ class ApplicationsDB
     {
         self::$applications[$application] = array($classname, false);
     }
-    
+
+    /**
+     * @static
+     * @param string $application
+     * @return object returns ConfigScopes instance
+     */
     public static function LoadApplication($application)
     {
         // load templates:
         $templateFiles = FileOperation::getAllFilesByExtension(self::$AppsDir.$application, 'tpl');
-        //var_dump($templateFiles);
         self::$DB[$application]['templatesInstance'] = new TemplatesDB($templateFiles);
         self::$DB[$application]['templates'] = self::$DB[$application]['templatesInstance']->DB;
         
         // register possible settings:
-        
         if(isset(self::$applications[$application]))
         {
             $classInfo = self::$applications[$application];
@@ -51,7 +57,7 @@ class ApplicationsDB
         }
         else
         {
-            // throw error
+            // TODO: throw error
         }
         
         self::$DB[$application]['parserInstance'] = new $className(self::$DB[$application]['templates']);
@@ -59,7 +65,6 @@ class ApplicationsDB
         
         self::$DB[$application]['scopesInstance'] = new HypoConf\ConfigScopes(&self::$DB[$application]['parsers'], &self::$DB[$application]['templates']);
         self::$DB[$application]['scopesInstance']->rootscope = $application;
-//        echo PHP_EOL.$application.PHP_EOL;
         
         return self::$DB[$application]['scopesInstance'];
     }
@@ -76,13 +81,6 @@ class ApplicationsDB
             $application['scopesInstance']->config = &$config;
         }
     }
-    /*
-    public function LoadConfigFromFiles(&$files, $compilation = false)
-    {
-        self::$SettingsDB = new ConfigScopes\SettingsDB();
-        self::$SettingsDB->MergeFromYAML($file, $compilation); //true for compilation
-    }
-    */
     public static function GetTemplates($application)
     {
         return self::$DB[$application]['templates'];
@@ -92,16 +90,33 @@ class ApplicationsDB
     {
         return self::$DB[$application]['parsers'];
     }
-    
+
+    /**
+     * @static
+     * @param string $application name of application
+     * @param string|false $scope if null, returns all settings
+     * @return array a list of settings
+     */
+    public static function GetSettingsList($application, $scope = false)
+    {
+        return self::$DB[$application]['scopesInstance']->returnSettingsList($scope);
+    }
+
+    /*
+     * DEPRACATED by universal GetSettingsList:
     public static function GetAllSettings($application)
     {
 //        echo PHP_EOL.var_dump(self::$DB[$application]['scopesInstance']->rootscope).PHP_EOL;
         return self::$DB[$application]['scopesInstance']->returnSettingsList(); //in brackets self::$DB[$application]['scopesInstance']->rootscope or maybe simpler would be just ($application), since it's the same ?
         //self::$DB[$application]['settingsList'] =
     }
-    
-    public static function GetSettingsList($application, $scope)
+    */
+
+    /*
+    public function LoadConfigFromFiles(&$files, $compilation = false)
     {
-        return self::$DB[$application]['scopesInstance']->returnSettingsList($scope);
+        self::$SettingsDB = new ConfigScopes\SettingsDB();
+        self::$SettingsDB->MergeFromYAML($file, $compilation); //true for compilation
     }
+    */
 }

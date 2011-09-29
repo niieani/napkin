@@ -10,20 +10,22 @@ namespace HypoConf\ConsoleCommands;
 use Symfony\Component\Console as Console;
 use Tools\LogCLI;
 use Tools\StringTools;
+use Tools\ArrayTools;
 use Tools\Tree;
 use HypoConf\ConfigScopes;
 use HypoConf\ConfigScopes\ApplicationsDB;
 use HypoConf\Paths;
+use Tools\XFormatterHelper;
 //use HypoConf\Commands;
 use HypoConf\Commands\Helpers;
 
-class LoadSetAndSave extends Console\Command\Command
+class LoadSetAndSaveTest extends Console\Command\Command
 {
     protected function configure()
     {
         $this
-            ->setName('set')
-            ->setAliases(array('s'))
+            ->setName('settest')
+            ->setAliases(array('st'))
             ->setDescription('Changes the value and updates the config file')
             ->setHelp('Changes the value and updates the config file.')
             ->addArgument('name', Console\Input\InputArgument::REQUIRED, 'Site, user (when prefixed with @) or template (when prefixed with +)')
@@ -38,20 +40,7 @@ class LoadSetAndSave extends Console\Command\Command
         $chain = $input->getArgument('chain');
         $values = $input->getArgument('values');
 
-//        foreach($values as $value)
-//        {
-//            $output->writeln($name.' <question>'.$value.'</question>');
-//        }
-
-        //self::$ApplicationsDB = new ConfigScopes\ApplicationsDB();
-//        $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
-
         ApplicationsDB::LoadAll();
-
-        /*
-         * There needs to be a check wheter the 'set' operation is a reference
-         * to a custom action (like DB create), or just a normal setting.
-         */
 
         foreach(StringTools::TypeList($name) as $argument)
         {
@@ -62,117 +51,102 @@ class LoadSetAndSave extends Console\Command\Command
             }
             else
             {
-                if($argument['text'] == 'config')
-                {
-                    $file = Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.Paths::$defaultConfig;
-                    $this->LoadAndSave($chain, $file, $values, 'defaults', $output);
-                }
-                /*
-                 * If it's only a site edit, allow only what's in the 'server' scope (Commands\Set\Site)
-                 */
-                else // opening a site or default site
-                {
-                    $siteYML = Paths::GetFullPath($argument['text']);
+                //siteYML
+                $file = Paths::GetFullPath($argument['text']);
 
-                    if($siteYML !== false)
-                        $this->LoadAndSave($chain, $siteYML, $values, 'server', $output);
-//                        Commands\Set\Site::LoadAndSave($values, $siteYML);
+                if($file !== false)
+                {
+                    $application = 'nginx';
+                    $basicScope = 'server';
+//                    $basicScope = false;
+
+                    $settings = ApplicationsDB::GetSettingsList($application, $basicScope);
+//                    $iterativeSetting = 0;
+                    var_dump($settings);
+
+                    $value = ArrayTools::dearraizeIfNotRequired($values);
+
+                    $chain = StringTools::Delimit($chain, '.');
+
+                    $settingPath = implode('/', $chain);
+
+                    LogCLI::MessageResult('Path of the setting: '.$settingPath, 4, LogCLI::INFO);
+
+                    if ($path = Helpers::SearchConfigs(&$settings, $settingPath, $application, $basicScope))
+                    {
+                        $settingsDB = new ConfigScopes\SettingsDB();
+
+                        // load the original file first
+                        $settingsDB->MergeFromYAML($file, false, false, false); //true for compilation
+
+                        $currentSetting = $settingsDB->ReturnOneByPath($settingPath);
+
+                        /**
+                         * if there is a difference
+                         * TODO: probably dearraize not required here
+                         */
+                        if(ArrayTools::dearraizeIfNotRequired($currentSetting) != $value)
+                        {
+                            $this->setHelperSet(new Console\Helper\HelperSet(
+                                                    array(
+                                                        new Console\Helper\FormatterHelper(),
+                                                        new Console\Helper\DialogHelper(),
+                                                        new XFormatterHelper()
+                                                        )));
+
+                            $formatter = $this->getHelperSet()->get('xformatter');
+
+                            $toFormat = array(
+                                array('messages' => (array) $currentSetting, 'style' => 'error'),
+                                array('messages' => array('> >'), 'style' => 'fg=yellow;bg=black;other=blink;other=bold', 'large' => false),
+                                array('messages' => (array) $values, 'style' => 'fg=black;bg=yellow;other=bold')
+                                );
+
+                            //array_merge(array('With the following data:'), (array) $values)
+
+                            $output->writeln($formatter->formatMultipleBlocks($toFormat, ' ', true));
+
+                            $dialog = $this->getHelperSet()->get('dialog');
+                            if (!$dialog->askConfirmation($output, 'Are you sure that you want to make this change? (type "y" to confirm) ', false)) {
+                                return;
+                            }
+
+                            // make the tree
+                            $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
+
+                            // add/replace the setting
+                            $settingsDB->MergeFromArray($setting, false, false);
+
+                            // save the file with the new setting
+                            $settingsDB->ReturnYAML($file);
+                        }
+                        /**
+                         * nothing to do, it's all the same
+                         */
+                        else
+                        {
+                            $output->writeln('<fg=yellow;other=bold>No need to change, the values are already identical!</fg=yellow;other=bold>');
+                        }
+                    }
                     else
                     {
-                        LogCLI::Fail('Sorry, no site by name: '.$argument['text']);
+
                     }
-                }
-                /* TODO: add notification if modified the file or added a new option (important)
-                */
-            }
-        }
-
-    }
-
-    //SITE
-    protected function LoadAndSave($chain, $file, $values, $scope = '', Console\Output\OutputInterface $output)
-    {
-        if(empty($scope))
-        {
-            $settings = ApplicationsDB::GetSettingsList('nginx');
-            $iterativeSetting = 'defaults';
-        }
-        else
-        {
-            $settings = ApplicationsDB::GetSettingsList('nginx', $scope);
-            $iterativeSetting = 0;
-        }
-
-        $value = Helpers::DearraizeIfNotRequired($values);
-
-        $chain = StringTools::Delimit($chain, '.');
-
-        $settingPath = implode('/', $chain);
-
-        /*
-        // are we adding a setting or replacing/merging ? TODO: add check if the setting is iterative at all
-        $doNotReplace = Helpers::DoWeReplaceHelper($chain, $settingPath);
-
-        if($doNotReplace === true)
-            $settingPath = StringTools::RemoveExclamation($settingPath); //remove the + from the beginning
-
-        */
-
-        if($path = Helpers::SearchConfigs(&$settings, $settingPath, $iterativeSetting))
-        {
-            $settingsDB = new ConfigScopes\SettingsDB();
-
-            // load the original file first
-            $settingsDB->MergeFromYAML($file, false, false, false); //true for compilation
-
-            $currentSetting = $settingsDB->ReturnOneByPath($settingPath);
-//            LogCLI::MessageResult('Replace? '.$currentSetting, 1, LogCLI::INFO);
-
-            $dialog = $this->getHelperSet()->get('dialog');
-            if (!$dialog->askConfirmation($output, '<question>Replace "'.$currentSetting.'" with "'.end($values).'"? (type "y" to confirm)</question> ', false)) {
-                return;
-            }
-
-            //TODO: format array to human readable (if not array, pass) - see if I already implemented this
-
-            //TODO: messages like: "modifying XX: old value - AA, new value - BB"
-
-            /*
-            if($doNotReplace === true)
-            { //adding without removing
-                // 1. cut the last part and store it $lastbit
-                $lastbit = StringTools::ReturnLastBit($path);
-                $secondlast = StringTools::ReturnLastBit($path, 2);
-
-                if($secondlast !== false && is_numeric($secondlast))
-                {
-                    $path = StringTools::DropLastBit($path, 2); //droping the fixed 0 and the last key
-
-                    // 2. arraize $value
-                    $setting = array($lastbit => $value);
                 }
                 else
                 {
-                    $setting = $value;
+                    LogCLI::Fail('Sorry, no site by name: '.$argument['text']);
                 }
-
-                // 3. add value
-                $settingsDB->MergeOneIterativeByPath($path, $setting);
             }
-            else
-            {
-            */
-                // make the tree
-                $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
-
-                // add/replace the setting
-                $settingsDB->MergeFromArray($setting, false, false);
-            /*
-            }
-            */
-
-            // save the file with the new setting
-            $settingsDB->ReturnYAML($file);
         }
+
+                            $formatter = $this->getHelperSet()->get('formatter');
+$output->writeln("\n\n".$formatter->formatBlock('jestem blokiem i nikt mi nie podskoczy!', 'error', true));
+        
+        $output->writeln('tekst niesformatowany');
+        $output->writeln('<info>tekst zielony</info>');
+        $output->writeln('<comment>tekst żółty</comment>');
+        $output->writeln('<fg=yellow;bg=white;other=blink;other=bold>pogrubiony migający tekst żółty na białym tle</fg=yellow;bg=white;other=blink;other=bold>');
     }
+
 }

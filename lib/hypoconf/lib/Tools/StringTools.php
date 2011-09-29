@@ -79,11 +79,20 @@ class StringTools
     {
         return $path.'/'.$string;
     }
-    
-    public static function MakeList($args, $delimiter = ' ')
+
+    /**
+     * Formats an array to string with a specified delimiter,
+     * or returns the string if not provided an array
+     * @static
+     * @param array|string $array
+     * @param string $delimiter
+     * @return string
+     */
+    public static function MakeList($array, $delimiter = ' ')
     {
-        if(is_array($args)) return implode($delimiter, $args);
-        else return $args;
+        return is_array($array) ? implode($delimiter, $array) : $array;
+//        if(is_array($array)) return implode($delimiter, $array);
+//        else return $array;
     }
     
     /*
@@ -124,58 +133,62 @@ class StringTools
         return substr($path, 1);
     }
     
-    public static function delimit($value, $delimited = ',')
+    public static function Delimit($value, $delimited = ',')
     {
         return explode($delimited, str_replace(' ', '', $value));
     }
-    
-    public static function typeList($value=false, $sign = '@', $delimit = ',')
+
+    /*
+    public static function HasExclamation($value, $sign = '@')
     {
-        if (!$delimit) $list = array($value);
-        else $list = self::delimit($value, $delimit);
         $info = array();
+        if (strpos($value, $sign) === 0)
+        {
+          $info['exclamation'] = $sign;
+          $info['text'] = substr($value, 1);
+        }
+        else
+        {
+          $info['exclamation'] = false;
+          $info['text'] = $value;
+        }
+        return $info;
+    }
+    */
+
+    /**
+     * @static
+     * @param string $value
+     * @param array|string $signs
+     * @param string $delimiter
+     * @return array
+     */
+    public static function TypeList($value, $signs = array('@'), $delimiter = ',')
+    {
+        $info = array();
+        if (!$delimiter) $list = array($value);
+        else $list = self::Delimit($value, $delimiter);
+
+        if(!is_array($signs)) $signs = array($signs);
+
         foreach ($list as $k => $v)
         {
-        //if(strstr($v, $sign))
-        //{
-            if(is_array($sign)) 
+            $firstChar = substr($v, 0, 1);
+            $key = array_search($firstChar, $signs);
+            if($key !== false)
             {
-                $signs = $sign;
-                foreach ($signs as &$sign)
-                {
-                	$pos = strpos($v, $sign);
-                	if ($pos === 0)
-                	{
-                		$info[$k]['exclamation'] = $sign;
-                		$info[$k]['text'] = substr($v, 1);
-                    	break;
-                	}
-                	else
-                	{
-                		$info[$k]['exclamation'] = false;
-                		$info[$k]['text'] = $v;
-                	}
-                }
+                $info[$k]['exclamation'] = $signs[$key];
+                $info[$k]['text'] = substr($v, 1);
             }
             else
             {
-                $pos = strpos($v, $sign);
-                if ($pos === 0)
-                {
-                	$info[$k]['exclamation'] = $sign;
-                	$info[$k]['text'] = substr($v, 1);
-                }
-                else
-                {
-                	$info[$k]['exclamation'] = false;
-                	$info[$k]['text'] = $v;
-                }
+                $info[$k]['exclamation'] = false;
+                $info[$k]['text'] = $v;
             }
-        //}
         }
-        return ($info);
+        return $info;
     }
-    
+
     /*
     public static function strstr_after($haystack, $needle) {
         $pos = strpos($haystack, $needle);
@@ -197,12 +210,13 @@ class StringTools
      *  'second'=> '2nd'
      * ));
      *
+     * @static
      * @param string $format sprintf format string, with any number of named arguments
      * @param array $args array of [ 'arg_name' => 'arg value', ... ] replacements to be made
      * @return string|false result of sprintf call, or bool false on error
      */
-    public static function sprintfn ($format, array $args = array()) {
-        
+    public static function sprintfn($format, array $args = array())
+    {
         LogCLI::Message('Parsing: '.LogCLI::GREEN_LIGHT.$format.LogCLI::RESET, 5);
         
         // map of argument names to their corresponding sprintf numeric argument value
@@ -256,7 +270,59 @@ class StringTools
         LogCLI::Result(LogCLI::INFO);
         return vsprintf($format, array_values($args));
     }
-    
+
+
+    /*
+     * DEPRACATED VERSION
+    public static function typeList($value=false, $sign = '@', $Delimit = ',')
+    {
+        if (!$Delimit) $list = array($value);
+        else $list = self::Delimit($value, $Delimit);
+        $info = array();
+        foreach ($list as $k => $v)
+        {
+        //if(strstr($v, $sign))
+        //{
+            if(is_array($sign))
+            {
+                $signs = $sign;
+                foreach ($signs as &$sign)
+                {
+                	$pos = strpos($v, $sign);
+                	if ($pos === 0)
+                	{
+                		$info[$k]['exclamation'] = $sign;
+                		$info[$k]['text'] = substr($v, 1);
+                    	break;
+                	}
+                	else
+                	{
+                		$info[$k]['exclamation'] = false;
+                		$info[$k]['text'] = $v;
+                	}
+                }
+            }
+            else
+            {
+                $pos = strpos($v, $sign);
+                if ($pos === 0)
+                {
+                	$info[$k]['exclamation'] = $sign;
+                	$info[$k]['text'] = substr($v, 1);
+                }
+                else
+                {
+                	$info[$k]['exclamation'] = false;
+                	$info[$k]['text'] = $v;
+                }
+            }
+        //}
+        }
+        return ($info);
+    }
+    */
+
+
     /**
      * version of sprintf for cases where named arguments are desired (php syntax)
      *
