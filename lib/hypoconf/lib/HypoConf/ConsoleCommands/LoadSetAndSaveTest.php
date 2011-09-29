@@ -139,14 +139,6 @@ class LoadSetAndSaveTest extends Console\Command\Command
                 }
             }
         }
-
-                            $formatter = $this->getHelperSet()->get('formatter');
-$output->writeln("\n\n".$formatter->formatBlock('jestem blokiem i nikt mi nie podskoczy!', 'error', true));
-        
-        $output->writeln('tekst niesformatowany');
-        $output->writeln('<info>tekst zielony</info>');
-        $output->writeln('<comment>tekst żółty</comment>');
-        $output->writeln('<fg=yellow;bg=white;other=blink;other=bold>pogrubiony migający tekst żółty na białym tle</fg=yellow;bg=white;other=blink;other=bold>');
     }
 
 }
