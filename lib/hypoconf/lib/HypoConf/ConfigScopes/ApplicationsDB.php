@@ -58,6 +58,7 @@ class ApplicationsDB
         else
         {
             // TODO: throw error
+            return false;
         }
         
         self::$DB[$application]['parserInstance'] = new $className(self::$DB[$application]['templates']);

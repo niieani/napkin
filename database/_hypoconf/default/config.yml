@@ -16,5 +16,4 @@ nginx:
     tokens: prod
 server:
   defaults:
-    listen:
-      port: '100'
+    index: 'index.php'

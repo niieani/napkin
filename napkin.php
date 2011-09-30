@@ -26,6 +26,7 @@ $application = new Console\Application('NAPCIN', '0.9.0');
 $application->add(new HypoConf\ConsoleCommands\ListSettings('list'));
 $application->add(new HypoConf\ConsoleCommands\LoadSetAndSave('set'));
 $application->add(new HypoConf\ConsoleCommands\LoadSetAndSaveTest('settest'));
+$application->add(new HypoConf\ConsoleCommands\Generate('gen1'));
 $application->run();
 
 //$shell = new Console\Shell($application);

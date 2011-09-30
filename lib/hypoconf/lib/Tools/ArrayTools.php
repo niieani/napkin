@@ -13,6 +13,55 @@ class ArrayTools
         else return $values;
     }
 
+    public static function isAssoc(array $array) //http://stackoverflow.com/questions/173400/php-arrays-a-good-way-to-check-if-an-array-is-associative-or-sequential
+    {
+        return (bool)count(array_filter(array_keys($array), 'is_string'));
+    }
+
+    public static function isIterativeScope($configData)
+    {
+        if(is_array($configData))
+        {
+            if(!self::isAssoc($configData))
+            {
+                if(is_array(current($configData))) return true;
+            }
+        }
+        return false;
+    }
+
+    public static function translateToIterativeScope($name, $configData)
+    {
+        $output = array();
+        if(is_array($configData))
+        {
+            //$name = current(array_keys($configData));
+            foreach($configData as $data)
+            {
+                $output[][$name] = $data;
+            }
+        }
+        else
+        {
+            $output[][$name] = $configData;
+        }
+        //return array($name => $output);
+        return $output;
+    }
+
+    public static function translateFromIterativeScope(array $configData)
+    {
+        $output = array();
+        foreach($configData as $entry)
+        {
+            foreach($entry as $data)
+            {
+                $output[] = $data;
+            }
+        }
+        return $output;
+    }
+
     public static function accessArrayElementByPath(&$arr, $path = null, $checkEmpty = false, $emptyResponse = null) //$trimPath=0
     {
         // Check path

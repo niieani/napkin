@@ -40,7 +40,11 @@ class Errors
 
             default:
 //                echo "Unknown error type: [$errno] $errstr<br />\n";
+                $trace = debug_backtrace();
                 LogCLI::Fail($errstr);
+                LogCLI::Fail('File: '.$trace[0]['file']);
+                LogCLI::Fail('Line: '.$trace[0]['line']);
+                LogCLI::Fail('Function: '.$trace[0]['function']);
                 break;
         }
 
