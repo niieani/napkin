@@ -27,7 +27,7 @@ class Generate extends Console\Command\Command
     {
         $this
             ->setName('generateone')
-            ->setAliases(array('gen1'))
+            //->setAliases(array('gen1'))
             ->setDescription('Generates and outputs the config file')
             ->setHelp('Generates and outputs the config file.')
             ->addArgument('application', Console\Input\InputArgument::REQUIRED, 'Which application should we generate the config for')
@@ -39,6 +39,8 @@ class Generate extends Console\Command\Command
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $application = $input->getArgument('application');
+
+        // TODO: this should be USER or optionally GROUP/USER or ALL when generating everything
         $directories = $input->getArgument('directories');
         $files = array();
         
@@ -68,10 +70,10 @@ class Generate extends Console\Command\Command
         $settingsDB->MergeFromYAML(Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml', false, true, true); //true for compilation
 
         // merging the files
-        $settingsDB->MergeFromYAMLs($files, 'nginx/server', true, true); //true for compilation
+        $settingsDB->MergeFromYAMLs($files, 'nginx/server', true, true, false, true); //true for compilation
 
-        var_dump($settingsDB->DB);
-
+        //var_dump($settingsDB->DB);
+        
         ApplicationsDB::LoadConfig(&$settingsDB->DB);
 
         $parsedFile = $configScopes->parseTemplateRecursively($application);

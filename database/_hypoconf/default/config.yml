@@ -1,6 +1,6 @@
 nginx:
   user: www-data
-  group: grupas
+  group: grupa
   connections: '8000'
   multi_accept: '1'
   errorlog:
@@ -14,6 +14,6 @@ nginx:
   http:
     ignore_invalid_headers: on
     tokens: prod
-server:
-  defaults:
-    index: 'index.php'
+  server:
+    defaults:
+      listen: 1000

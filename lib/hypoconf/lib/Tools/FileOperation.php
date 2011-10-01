@@ -29,6 +29,27 @@ class FileOperation
             return false;
         }
     }
+
+    public static function findFile($name, $path='.', $extension = 'yml')
+    {
+        if(is_dir($path))
+        {
+            $files = array();
+            $finder = new Finder();
+            $finder->files()->name($name.'.'.$extension)->in($path)->sortByName();
+
+            foreach ($finder as $file)
+            {
+                $files[] = $file->getRealpath();
+            }
+            return $files;
+        }
+        else
+        {
+            user_error('No such directory: '.$path, E_USER_ERROR);
+            return false;
+        }
+    }
     
     public static function ToYAMLFile($array, $stdout = false, $file="tmp.yml")
     {

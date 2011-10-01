@@ -12,6 +12,7 @@ use Tools\LogCLI;
 
 //use HypoConf\Commands;
 use HypoConf\Paths;
+use Tools\XFormatterHelper;
 
 use Symfony\Component\Console as Console;
 
@@ -22,11 +23,21 @@ Paths::$db = __DIR__.'/database';
 
 LogCLI::SetVerboseLevel(6);
 
-$application = new Console\Application('NAPCIN', '0.9.0');
-$application->add(new HypoConf\ConsoleCommands\ListSettings('list'));
-$application->add(new HypoConf\ConsoleCommands\LoadSetAndSave('set'));
-$application->add(new HypoConf\ConsoleCommands\LoadSetAndSaveTest('settest'));
-$application->add(new HypoConf\ConsoleCommands\Generate('gen1'));
+$application = new Console\Application('NAPKIN', '0.9.0');
+
+$application->setHelperSet(new Console\Helper\HelperSet(
+                    array(
+                        new Console\Helper\FormatterHelper(),
+                        new Console\Helper\DialogHelper(),
+                        new XFormatterHelper()
+                    )));
+
+$application->add(new HypoConf\ConsoleCommands\ListSettings());
+$application->add(new HypoConf\ConsoleCommands\LoadSetAndSave());
+//$application->add(new HypoConf\ConsoleCommands\LoadSetAndSaveTest('settest'));
+$application->add(new HypoConf\ConsoleCommands\Generate());
+$application->add(new HypoConf\ConsoleCommands\AddSite());
+$application->add(new HypoConf\ConsoleCommands\AddUser());
 $application->run();
 
 //$shell = new Console\Shell($application);

@@ -88,8 +88,7 @@ class ArrayTools
         return $path;
     }
     
-    // TODO: this should be actually renamed to mergeArrayElementByPath
-    public static function createArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0, $noOverride = false) //$trimPath=0
+    public static function mergeArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0, $noOverride = false) //$trimPath=0
     {
         // Check path
         if (!$path) user_error("Missing array path for array", E_USER_WARNING);
@@ -231,7 +230,17 @@ class ArrayTools
      * @access public
      * @return array Resulting array, once all have been merged
      */
-    
+
+
+
+    /**
+     * Safe merge of arrays.
+     *
+     * @static
+     * @param $arr1
+     * @param $arr2
+     * @return array
+     */
     public static function MergeArrays($arr1, $arr2) 
     {
         // Holds all the arrays passed
@@ -253,7 +262,19 @@ class ArrayTools
        
         // Merge all arrays on the first array
         foreach ( $params as $array ) {
+            /*
+             * if we have a numeric array, let's reset it, $array has priority over $return
+             * and we would be replacing the values anyway (so we don't want any leftovers)
+             */
+            if(!self::isAssoc($array) && count($return) > count($array))
+                $return = array();
+
             foreach ( $array as $key => $value ) {
+//                if (isset ( $return [$key] ) && is_numeric($key) && !is_array($value)) //
+//                {
+//                    LogCLI::MessageResult('Key: '.LogCLI::BLUE.$key.LogCLI::RESET, 2, LogCLI::INFO);
+//                    LogCLI::MessageResult('Key: '.LogCLI::BLUE.$value.LogCLI::RESET, 2, LogCLI::INFO);
+//                }
                 // Numeric keyed values are added (unless already there)
                 //if (is_numeric ( $key ) && (! in_array ( $value, $return ))) {
                 /*

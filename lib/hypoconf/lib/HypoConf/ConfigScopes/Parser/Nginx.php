@@ -168,9 +168,22 @@ class Nginx extends ConfigScopes\Parser
             'action'      => 'StoreStringOrFalse',
             'description' => 'listen options'
         ));
-        
-        $this->parsers['server']->addSetting('name_comment', array(
+
+        $this->parsers['server']->addSetting('dir', array(
+            'path'        => 'dir',
+            'action'      => 'StoreStringOrFalse'
+        ));
+
+        $this->parsers['server']->addSetting('comment', array(
             'path'        => 'name_comment',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('filename', array(
+            'path'        => 'filename',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('parent', array(
+            'path'        => 'parent',
             'action'      => 'StoreStringOrFalse'
         ));
 

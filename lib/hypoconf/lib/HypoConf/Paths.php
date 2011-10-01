@@ -25,7 +25,6 @@ class Paths
     {
         $files = FileOperation::getAllFilesByExtension(Paths::$db, 'yml');
         $pathinfo = array();
-        //$siteYML = false;
         foreach($files as $id => $file)
         {
             $pathinfo[$id] = FileOperation::pathinfo_utf($file);

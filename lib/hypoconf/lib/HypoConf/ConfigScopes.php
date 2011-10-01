@@ -100,13 +100,13 @@ class ConfigScopes
             $scope = StringTools::ReturnLastBit($path);
             if(isset($this->settingsList[$scope]))
             {
-                ArrayTools::createArrayElementByPath(&$settingsInPaths, $path, $this->settingsList[$scope]);
+                ArrayTools::mergeArrayElementByPath(&$settingsInPaths, $path, $this->settingsList[$scope]);
                 //var_dump($this->settingsList[$scope]);
             }
             else
             {
                 LogCLI::Warning('The specification for the stem '.LogCLI::GREEN.$scope.LogCLI::YELLOW.' is missing in the parser class.');
-                //ArrayTools::createArrayElementByPath(&$settingsInPaths, $path, $this->settingsList);
+                //ArrayTools::mergeArrayElementByPath(&$settingsInPaths, $path, $this->settingsList);
             }
         }
         //var_dump($settingsInPaths);

@@ -1,7 +1,8 @@
-server[[ #%(name_comment)s]]
+[[# generated from: %(filename) #]]
+server[[ #%(comment)]]
 {
-    <!<listen>!>
     [[server_name %(domain);]]
+    <!<listen>!>
     [[root %(dir);]]
     [[index %(index);]]
     [[access_log %(logaccessfile) %(logaccessstyle);]]

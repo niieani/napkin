@@ -17,8 +17,8 @@ class ListSettings extends Console\Command\Command
     protected function configure()
     {
         $this
-            ->setName('list')
-            ->setAliases(array('l', 'setlist'))
+            ->setName('setlist')
+            //->setAliases(array('l'))
             ->setDescription('Lists all available settings')
             ->setHelp('Lists all available settings.')
             ->addArgument('application', Console\Input\InputArgument::OPTIONAL, 'List settings used by a specific application', 'nginx');

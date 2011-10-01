@@ -3,17 +3,18 @@ namespace HypoConf\ConfigScopes;
 
 use HypoConf;
 
-use \Tools\LogCLI;
-use \Tools\FileOperation;
-use \Tools\ArrayTools;
-use \Tools\StringTools;
-use \Symfony\Component\Yaml\Yaml;
-
+use Tools\LogCLI;
+use Tools\FileOperation;
+use Tools\ArrayTools;
+use Tools\StringTools;
+use HypoConf\Paths;
+use Symfony\Component\Yaml\Yaml;
 
 class SettingsDB
 {
     public $DB = array();
-    protected $defaultsDefinitions;
+    protected $defaultsDefinitions = array();
+    protected $parentDefinitions = array();
     
     public function __construct(array $preliminary = null)
     {
@@ -34,48 +35,92 @@ class SettingsDB
             LogCLI::Result(LogCLI::OK);
         }
     }
-    
-    // useful for pre-compilation of config file
-    public function ApplyDefaultsToAllElements(array &$setting, $path, $nameOfObjectToApplyToAll = 'defaults', $parentGiven = false)
+
+    /*
+    protected function ApplyDefaultsNonIterative(array &$setting, array &$defaultsDefinitions, $path, $nameOfObjectToApply = 'defaults')
     {
-        if($parentGiven === false)
+        $child = StringTools::ReturnLastBit($path);
+        $parent = StringTools::DropLastBit($path);
+
+        $parentConfig = ArrayTools::accessArrayElementByPath(&$setting, $parent);
+
+        LogCLI::MessageResult('Parent '.LogCLI::GREEN.$parent.LogCLI::RESET, 6, LogCLI::INFO);
+
+        $thisDefault = &$defaultsDefinitions;
+        //$thisDefault = ArrayTools::accessArrayElementByPath(&$defaultsDefinitions, $parent);
+
+
+        if(!isset($thisDefault[$nameOfObjectToApply]))
+            return false;
+
+        $defaults = $thisDefault[$nameOfObjectToApply];
+
+        $config = &$parentConfig[$child];
+
+        LogCLI::MessageResult('Applying non-iterative defaults to object '.LogCLI::GREEN.$path.LogCLI::RESET, 6, LogCLI::INFO);
+        $config = ArrayTools::MergeArrays($defaults, $config);
+        var_dump($config);
+
+        ArrayTools::replaceArrayElementByPath($this->DB, $path, $config);
+    }
+    */
+
+    // useful for pre-compilation of config file
+    protected function ApplyDefaults(array &$setting, array &$defaultsDefinitions, $path, $nameOfObjectToApply = 'defaults', $directDefinition = false, $applyToAll = false)
+    {
+        if($applyToAll === false)
         {
+            $child = StringTools::ReturnLastBit($path);
             $parent = StringTools::DropLastBit($path);
-            $objectName = StringTools::DropLastBit($parent, -1);
-            
-            $parentConfig = ArrayTools::accessArrayElementByPath(&$setting, $parent);
-            //var_dump($parentConfig);
         }
         else
         {
             $parent = $path;
-            $objectName = $path;
-            // not actually the parent, need to change the naming scheme
-            $parentConfig = ArrayTools::accessArrayElementByPath(&$setting, $path);
         }
-        
-        $thisDefault = ArrayTools::accessArrayElementByPath(&$this->defaultsDefinitions, $parent);
-        //$defaults = $parentConfig[$nameOfObjectToApplyToAll];
-        $defaults = $thisDefault[$nameOfObjectToApplyToAll];
-        
-        foreach($parentConfig as $key => &$config)
+
+        $parentConfig = ArrayTools::accessArrayElementByPath(&$setting, $parent);
+
+        if($directDefinition === false)
+            $thisDefault = ArrayTools::accessArrayElementByPath(&$defaultsDefinitions, $parent);
+        else
+            $thisDefault = &$defaultsDefinitions;
+
+        if(!isset($thisDefault[$nameOfObjectToApply]))
+            return false;
+
+        $defaults = $thisDefault[$nameOfObjectToApply];
+
+        if($applyToAll === false)
         {
-            if(is_numeric($key))
+            $config = &$parentConfig[$child];
+            if(is_numeric($child))
             {
-                LogCLI::MessageResult('Applying defaults of: '.LogCLI::BLUE.$path.LogCLI::RESET.' to objects ['.LogCLI::GREEN.$objectName.LogCLI::RESET.'], iteration nr '.LogCLI::YELLOW.$key.LogCLI::RESET, 6, LogCLI::INFO);
+                LogCLI::MessageResult('Applying defaults to object '.LogCLI::GREEN.$parent.'/'.LogCLI::YELLOW.$child.LogCLI::RESET, 6, LogCLI::INFO);
+
                 // this will not override any configs, only merge in the ones that were not set
-                //$config = array_merge_recursive($config, $defaults);
                 $config = ArrayTools::MergeArrays($defaults, $config);
             }
         }
-        ArrayTools::replaceArrayElementByPath($this->DB, $parent, $parentConfig); 
+        else
+        {
+            foreach($parentConfig as $child => &$config)
+            {
+                if(is_numeric($child))
+                {
+                    LogCLI::MessageResult('Applying defaults to object '.LogCLI::GREEN.$parent.'/'.LogCLI::YELLOW.$child.LogCLI::RESET, 6, LogCLI::INFO);
+                    // this will not override any configs, only merge in the ones that were not set
+                    $config = ArrayTools::MergeArrays($defaults, $config);
+                }
+            }
+        }
+        // finally replace the array element
+        ArrayTools::replaceArrayElementByPath($this->DB, $parent, $parentConfig);
     }
-    
+
     public function MergeOneByPath($path, $setting)
     {
         // verify this works?
-        ArrayTools::createArrayElementByPath($this->DB, $path, $setting, 0); //skip any or not?
-        //var_dump($this->DB);
+        ArrayTools::mergeArrayElementByPath($this->DB, $path, $setting, 0); //skip any or not?
     }
 
     public function ReturnOneByPath($path)
@@ -87,23 +132,28 @@ class SettingsDB
     {
         ArrayTools::unsetArrayElementByPath($this->DB, $path); //skip any or not?
     }
-    
+
+    /**
+     * @param string    $path     where to merge
+     * @param array     $setting  what to merge
+     *
+     * @return int                number of iteration of the newly merged/added element
+     */
     public function MergeOneIterativeByPath($path, $setting)
     {
-        // verify this works?
-        ArrayTools::createArrayElementByPath($this->DB, $path, array($setting), 0, true); //do not override, iterative element!
-        //var_dump($this->DB);
+        return end(array_keys(ArrayTools::mergeArrayElementByPath($this->DB, $path, array($setting), 0, true))); //do not override, iterative element!
+        //return number of iteration
     }
     
-    //public function ReplaceFromArray(array $settingsArray, $addDefaults = false)
+    //public function ReplaceFromArray(array $settingsArray, $applyDefaults = false)
     
-    public function MergeFromArray(array $settingsArray, $addDefaults = false, $mergeDefaults = true)
+    public function MergeFromArray(array $settingsArray, $applyDefaults = false, $mergeDefaults = true)
     {
-        if($mergeDefaults === true) $this->MergeDefaultsDB($settingsArray, $addDefaults);
+        if($mergeDefaults === true) $this->MergeDefaultsDB($settingsArray, &$this->defaultsDefinitions, $applyDefaults);
         $this->DB = ArrayTools::MergeArrays($this->DB, $settingsArray);
     }
     
-    public function MergeDefaultsDB(array $settingsArray, $addDefaults = false)
+    public function MergeDefaultsDB(array $settingsArray, array &$defaultsDefinitions, $applyDefaults = false)
     {
         if($defaultsDefinitionsPaths = ArrayTools::TraverseTree($settingsArray, 'defaults'))
         {
@@ -112,16 +162,22 @@ class SettingsDB
             foreach($defaultsDefinitionsPaths as $defaultsPath)
             {
                 LogCLI::MessageResult('Copying to defaults storage: '.LogCLI::BLUE.$defaultsPath.LogCLI::RESET, 5, LogCLI::INFO);
+
+                //LogCLI::MessageResult(LogCLI::BLUE.$defaultsPath.LogCLI::RESET, 5, LogCLI::INFO);
+                //var_dump($defaultsPath);
+
                 // let's copy all the definitions and merge them, overriding any previously set settings in this instance
-                ArrayTools::createArrayElementByPath($this->defaultsDefinitions, $defaultsPath, ArrayTools::accessArrayElementByPath($settingsArray, $defaultsPath), 0);
-                
+//                ArrayTools::mergeArrayElementByPath($this->defaultsDefinitions, $defaultsPath, ArrayTools::accessArrayElementByPath($settingsArray, $defaultsPath), 0);
+                ArrayTools::mergeArrayElementByPath(&$defaultsDefinitions, $defaultsPath, ArrayTools::accessArrayElementByPath($settingsArray, $defaultsPath), 0);
+
                 // remove the defaults, not needed anymore, have them in a separated array
                 $this->RemoveByPath($defaultsPath);
                 
-                // optionally apply them
-                if($addDefaults === true)
+                // optionally apply them to all elements
+                if($applyDefaults === true)
                 {
-                    $this->ApplyDefaultsToAllElements(&$this->DB, $defaultsPath);
+                    $this->ApplyDefaults(&$this->DB, &$defaultsDefinitions, $defaultsPath, 'defaults', false, true);
+//                    $this->ApplyDefaults(&$this->DB, &$this->defaultsDefinitions, $defaultsPath, 'defaults', true);
                 }
             }
         }
@@ -130,12 +186,12 @@ class SettingsDB
     /**
      * @param string $file path to a YAML file
      * @param string|bool $path start the merge at designated settings path
-     * @param bool $addDefaults
+     * @param bool $applyDefaults
      * @param bool $mergeDefaults
      * @param bool $createNewIfNonexistant
      * @return void
      */
-    public function MergeFromYAML($file, $path = false, $addDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = true)
+    public function MergeFromYAML($file, $path = false, $applyDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = false, $addFilename = false)
     {
         LogCLI::Message('Loading file: '.LogCLI::BLUE.$file.LogCLI::RESET, 1);
         if (file_exists($file))
@@ -146,23 +202,72 @@ class SettingsDB
             {
                 //$config = YAML::load($file);
                 $config = Yaml::parse($file);
-                
-                // if the file is empty create an empty array:
-                if(empty($config)) $config = array();
-                
-                if($path === false)
+//                 if the file is empty create an empty array:
+//                    $config = array();
+                if(!empty($config))
                 {
-                    $this->DB = ArrayTools::MergeArrays($this->DB, $config);
-                    if($mergeDefaults === true) $this->MergeDefaultsDB($config, $addDefaults);
+                    if($path === false)
+                    {
+                        $this->DB = ArrayTools::MergeArrays($this->DB, $config);
+                        //var_dump("DUPA");
+                        if($mergeDefaults === true) $this->MergeDefaultsDB($config, &$this->defaultsDefinitions, $applyDefaults);
+                    }
+                    else
+                    {
+                        if($addFilename === true)
+                        {
+    //                      $fileInfo = FileOperation::pathinfo_utf($file);
+    //                      $config['filename'] = $fileInfo['filename'];
+                            $config['filename'] = $file;
+                            //var_dump($config);
+                        }
+
+                        $iteration = $this->MergeOneIterativeByPath($path, &$config);
+                        //var_dump($this->defaultsDefinitions);
+
+                        /**
+                         * applying parents as defaults
+                         */
+                        if(isset($config['parent']))
+                        {
+                            foreach((array) $config['parent'] as $parentName)
+                            {
+                                if(is_array($parentFiles = FileOperation::findFile($parentName, Paths::$db)))
+                                {
+                                    if(count($parentFiles) > 1)
+                                    {
+                                        LogCLI::MessageResult('You have to be more specific in the way you specify the parent, found more than one file under this name: '.$parentName, 0, LogCLI::INFO);
+                                    }
+                                    else
+                                    {
+                                        $parentFile = &current($parentFiles);
+
+                                        LogCLI::Message('Parent definition found: '.LogCLI::BLUE.$parentFile.LogCLI::RESET.', parsing and merging.', 2);
+                                        if(!isset($this->parentDefinitions[$parentFile]))
+                                        {
+                                            $parentConfig = array('defaults' => Yaml::parse($parentFile));
+                                            $this->parentDefinitions[$parentFile] = array();
+                                            $this->MergeDefaultsDB($parentConfig, &$this->parentDefinitions[$parentFile], false);
+                                        }
+        //                                $this->ApplyDefaultsNonIterative(&$this->DB, &$this->parentDefinitions[$parentFile], $path.'/'.$iteration, 'defaults', false);
+                                        $this->ApplyDefaults(&$this->DB, &$this->parentDefinitions[$parentFile], $path.'/'.$iteration, 'defaults', true, false); //defaultsDefinitions
+                                        LogCLI::Result(LogCLI::OK);
+                                    }
+                                    //var_dump($this->parentDefinitions);
+                                }
+                            }
+                        }
+                        
+                        if($applyDefaults === true) $this->ApplyDefaults(&$this->DB, &$this->defaultsDefinitions, $path.'/'.$iteration, 'defaults', false, false); //defaultsDefinitions
+
+                    }
+
+                    LogCLI::MessageResult('Settings DB populated with new data!', 5, LogCLI::INFO);
                 }
                 else
                 {
-                    $this->MergeOneIterativeByPath($path, &$config);
-                    if($addDefaults === true) $this->ApplyDefaultsToAllElements(&$this->DB, $path, 'defaults', true); //defaultsDefinitions
-                    //var_dump($this->defaultsDefinitions);
+                    LogCLI::MessageResult('File empty, ignoring', 5, LogCLI::INFO);
                 }
-                
-                LogCLI::MessageResult('Settings DB populated with new data!', 5, LogCLI::INFO);
                 LogCLI::Result(LogCLI::OK);
             }
             catch (\Exception $e)
@@ -174,7 +279,7 @@ class SettingsDB
         else 
         {
             LogCLI::Result(LogCLI::FAIL);
-            LogCLI::Fatal("No such file: $file");
+            LogCLI::Fail("No such file: $file");
             if($createNewIfNonexistant === true)
             {
                 LogCLI::Message('Creating a new empty file.', 0);
@@ -182,7 +287,7 @@ class SettingsDB
                 {
                     //fclose(fopen($file, 'x'));
                     FileOperation::CreateEmptyFile($file);
-                    $this->MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, false);
+                    $this->MergeFromYAML($file, $path, $applyDefaults, $mergeDefaults, false);
                     LogCLI::Result(LogCLI::OK);
                 }
                 catch (\Exception $e)
@@ -194,11 +299,11 @@ class SettingsDB
         }
     }
     
-    public function MergeFromYAMLs(array $files, $path = false, $addDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = true)
+    public function MergeFromYAMLs(array $files, $path = false, $applyDefaults = false, $mergeDefaults = true, $createNewIfNonexistant = false, $addFilename = false)
     {
         foreach($files as $file)
         {
-            $this->MergeFromYAML($file, $path, $addDefaults, $mergeDefaults, $createNewIfNonexistant);
+            $this->MergeFromYAML($file, $path, $applyDefaults, $mergeDefaults, $createNewIfNonexistant, $addFilename);
         }
     }
 }

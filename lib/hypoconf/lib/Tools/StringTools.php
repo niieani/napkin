@@ -67,10 +67,14 @@ class StringTools
             $pathElements = explode('/', $path);
             $pathElements = array_splice($pathElements, -$skipN);
         }
-        if($skipN > 0)
+        elseif($skipN > 0)
         {
             $pathElements = explode('/', $path);
             $pathElements = array_splice($pathElements, 0, count($pathElements)-$skipN);
+        }
+        else
+        {
+            $pathElements = array($path);
         }
         return implode('/', $pathElements);
     }
@@ -133,9 +137,9 @@ class StringTools
         return substr($path, 1);
     }
     
-    public static function Delimit($value, $delimited = ',')
+    public static function Delimit($value, $delimiter = ',')
     {
-        return explode($delimited, str_replace(' ', '', $value));
+        return explode($delimiter, str_replace(' ', '', $value));
     }
 
     /*
@@ -160,12 +164,13 @@ class StringTools
      * @static
      * @param string $value
      * @param array|string $signs
-     * @param string $delimiter
+     * @param string|bool $delimiter    if false, don't delimit
      * @return array
      */
     public static function TypeList($value, $signs = array('@'), $delimiter = ',')
     {
         $info = array();
+
         if (!$delimiter) $list = array($value);
         else $list = self::Delimit($value, $delimiter);
 
