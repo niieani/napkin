@@ -24,7 +24,17 @@ class StoreStemOrFalse extends CommandLine\Action
     public function execute($value = false, $params = array())
     {
         //var_dump($value); var_dump($params);
-        (!empty($value) && strlen((string)$value) != 0 && isset($params['template'])) ? $this->setResult('<<'.$params['template'].'>>') : $this->setResult(false);
+        if(isset($params['iterative']) && $params['iterative'] == true)
+        {
+            $openBracket = '<!<';
+            $closeBracket = '>!>';
+        }
+        else
+        {
+            $openBracket = '<<';
+            $closeBracket = '>>';
+        }
+        (!empty($value) && strlen((string)$value) != 0 && isset($params['template'])) ? $this->setResult($openBracket.$params['template'].$closeBracket) : $this->setResult(false);
     }
     // }}}
 }

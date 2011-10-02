@@ -34,7 +34,8 @@ class ListSettings extends Console\Command\Command
         $configScopesNginx = ApplicationsDB::LoadApplication($application);
 //        $settingsNginx = ApplicationsDB::GetSettingsList('nginx', 'server');
         $settingsNginx = ApplicationsDB::GetSettingsList($application);
-        $settings = ArrayTools::GetMultiDimentionalElementsWithChildren(&$settingsNginx);
+        $settings = ArrayTools::GetMultiDimentionalElements(&$settingsNginx, true, true);
+//        $settings = ArrayTools::GetMultiDimentionalElementsWithChildren(&$settingsNginx);
         foreach($settings as $setting)
         {
             LogCLI::MessageResult(LogCLI::BLUE.$setting, 0, LogCLI::INFO);

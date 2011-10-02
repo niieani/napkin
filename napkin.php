@@ -23,7 +23,7 @@ Paths::$db = __DIR__.'/database';
 
 LogCLI::SetVerboseLevel(6);
 
-$application = new Console\Application('NAPKIN', '0.9.0');
+$application = new Console\Application('NAPKIN', '0.9.1');
 
 $application->setHelperSet(new Console\Helper\HelperSet(
                     array(
@@ -34,7 +34,6 @@ $application->setHelperSet(new Console\Helper\HelperSet(
 
 $application->add(new HypoConf\ConsoleCommands\ListSettings());
 $application->add(new HypoConf\ConsoleCommands\LoadSetAndSave());
-//$application->add(new HypoConf\ConsoleCommands\LoadSetAndSaveTest('settest'));
 $application->add(new HypoConf\ConsoleCommands\Generate());
 $application->add(new HypoConf\ConsoleCommands\AddSite());
 $application->add(new HypoConf\ConsoleCommands\AddUser());

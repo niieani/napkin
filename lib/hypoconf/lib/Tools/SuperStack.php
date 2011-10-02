@@ -31,7 +31,6 @@ class SuperStack
         $this->parentID[$this->level] = count($this->superStack);
         $this->superStack[] = &$this->currentPointer[$next];
         $this->currentPointer = &$this->currentPointer[$next];
-
     }
     public function End()
     {

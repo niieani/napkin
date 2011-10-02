@@ -9,7 +9,7 @@ use HypoConf;
 abstract class Parser
 {
     protected $parsers = array();
-    public function GetSubParsers()
+    public function getSubParsers()
     {
         return $this->parsers;
     }

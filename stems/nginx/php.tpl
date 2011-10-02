@@ -16,5 +16,5 @@ location ~ \.php$
     [[include %(include_params);]]
     [[fastcgi_ignore_client_abort %(ignoreabort);]]
     [[fastcgi_param HTTPS %(https);]]
-    [[fastcgi_index %(index)]];
+    [[fastcgi_index %(index);]]
 }

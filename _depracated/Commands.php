@@ -25,7 +25,8 @@ class Commands
         $configScopesNginx = ApplicationsDB::LoadApplication('nginx');
         //$settings = ApplicationsDB::GetSettingsList('nginx', 'server');
         $settingsNginx = ApplicationsDB::GetSettingsList('nginx');
-        $settings = ArrayTools::GetMultiDimentionalElementsWithChildren(&$settingsNginx);
+//        $settings = ArrayTools::GetMultiDimentionalElementsWithChildren(&$settingsNginx);
+        $settings = ArrayTools::GetMultiDimentionalElements(&$settingsNginx, true);
         foreach($settings as $setting)
         {
             //var_dump($setting);

@@ -9,7 +9,17 @@ class StringTools
     {
         return '/'.$string.'/';
     }
-    
+
+    public static function multilineStringToArray($string)
+    {
+        $output = array();
+        foreach(explode(PHP_EOL, $string) as $line)
+        {
+            $output[] = $line;
+        }
+        return $output;
+    }
+
     public static function indentLinesToMatchOther($likeWhat, $likeWhere, $content, $skipLines = 0, $whereToStop = null)
     {
         foreach(preg_split("/(\r?\n)/", $likeWhere) as $line)
@@ -92,7 +102,7 @@ class StringTools
      * @param string $delimiter
      * @return string
      */
-    public static function MakeList($array, $delimiter = ' ')
+    public static function makeList($array, $delimiter = ' ')
     {
         return is_array($array) ? implode($delimiter, $array) : $array;
 //        if(is_array($array)) return implode($delimiter, $array);
@@ -100,7 +110,7 @@ class StringTools
     }
     
     /*
-    public static function MakeList($args, $delimiter = ' ')
+    public static function makeList($args, $delimiter = ' ')
     {
         foreach($args as $k => $list)
         {

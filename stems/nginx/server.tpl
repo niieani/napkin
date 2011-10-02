@@ -10,5 +10,6 @@ server[[ #%(comment)]]
     [[%(@@ssl@@)]]
     [[%(@@faviconfix@@)]]
     [[%(@@php@@)]]
+    [[%(@@deny@@)]]
     [[%(custom)]]
 }

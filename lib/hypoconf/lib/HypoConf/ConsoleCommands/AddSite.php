@@ -25,7 +25,7 @@ class AddSite extends Console\Command\Command
             ->addArgument('name', Console\Input\InputArgument::REQUIRED, 'Name(s)')
             ->addArgument('user', Console\Input\InputArgument::OPTIONAL, 'User', Paths::$defaultUser)
             ->addArgument('group', Console\Input\InputArgument::OPTIONAL, 'Group', Paths::$defaultGroup)
-            ->addOption('template', 't', Console\Input\InputOption::VALUE_OPTIONAL, 'Template');
+            ->addOption('parent', 'p', Console\Input\InputOption::VALUE_OPTIONAL, 'Parent site');
     }
 
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
@@ -33,10 +33,10 @@ class AddSite extends Console\Command\Command
         $names = StringTools::Delimit($input->getArgument('name'), ',');
         $user = $input->getArgument('user');
         $group = $input->getArgument('group');
-        $template = $input->getOption('template');
+        $parent = $input->getOption('parent');
 
-        // TODO
-        if(!empty($template)) var_dump($template);
+        // TODO support
+        if(!empty($parent)) var_dump($parent);
 
         foreach($names as $website)
         {

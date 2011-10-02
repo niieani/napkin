@@ -9,17 +9,13 @@ use HypoConf\ConfigParser;
 
 use PEAR2\Console;
 
-//require_once 'Console/CommandLine/Element.php';
-//require_once 'Console/CommandLine/Option.php';
-
-//require_once 'Console/CommandLine.php';
-
 class Setting extends Console\CommandLine\Option
 {
     public $path;
     public $required = false;
     public $required_one = false;
     public $action = 'StoreStringOrFalse';
+    public $divideBy = ' ';
     //public $default = false;
     
     // }}}

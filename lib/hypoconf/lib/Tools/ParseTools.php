@@ -55,7 +55,6 @@ class ParseTools
                 {
                     return array('unset' => $id);
                 }
-
             }
             else
             {
@@ -81,8 +80,10 @@ class ParseTools
             }
             else //not found, replace with null:
             {
-                if($ifNoMatchReturnFalse === true) return false;
-                else $format = str_replace($match[0], null, $format);
+                if($ifNoMatchReturnFalse === true)
+                    return false;
+                else
+                    $format = str_replace($match[0], null, $format);
             }
         }
         return $format;

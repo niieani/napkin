@@ -30,8 +30,9 @@ class LoadSetAndSave extends Console\Command\Command
             ->setHelp('Changes the value and updates the config file.')
             ->addArgument('name', Console\Input\InputArgument::REQUIRED, 'Site, user (when prefixed with @) or template (when prefixed with +)')
             ->addArgument('path', Console\Input\InputArgument::REQUIRED, 'Configuration chain (eg. nginx/php)')
-            ->addArgument('values', Console\Input\InputArgument::REQUIRED + Console\Input\InputArgument::IS_ARRAY, 'Values to set (can be multiple)');
-//        $this->addOption('more', 'm', Console\Input\InputOption::VALUE_NONE, 'Tell me more');
+            ->addArgument('values', Console\Input\InputArgument::IS_ARRAY, 'Values to set (can be multiple)');
+//            ->addArgument('values', Console\Input\InputArgument::REQUIRED + Console\Input\InputArgument::IS_ARRAY, 'Values to set (can be multiple)')
+//            ->addOption('multiline', 'm', Console\Input\InputOption::VALUE_OPTIONAL, 'Multiline input');
 
     }
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
@@ -39,6 +40,33 @@ class LoadSetAndSave extends Console\Command\Command
         $name = $input->getArgument('name');
         $settingPath = $input->getArgument('path');
         $values = $input->getArgument('values');
+//        $multiline = $input->getOption('multiline');
+
+        if(empty($values))
+        {
+            // enable multiline input
+            $dialog = $this->getHelperSet()->get('dialog');
+            if (!$dialog->askConfirmation($output, '<question>Would you like to provide multiline input? Answering no, quits the command. (y/n) </question> ', false)) {
+                return;
+            }
+            else
+            {
+                $input = array();
+                $output->writeln('Type <info>EOT</info> in a new line when you finished inputting all the options.');
+                while(1)
+                {
+                    $input[] = $dialog->ask($output, null, 'foo');
+                    if((end($input)) == 'EOT')
+                    {
+                        array_pop($input);
+                        break;
+                    }
+                }
+                $values[] = implode(PHP_EOL, $input);
+//                $values = $input;
+                //var_dump($values);
+            }
+        }
 
         ApplicationsDB::LoadAll();
 
@@ -60,8 +88,6 @@ class LoadSetAndSave extends Console\Command\Command
                     $basicScope = 'server';
 
                     $settings = ApplicationsDB::GetSettingsList($application, $basicScope);
-
-                    //var_dump($settings);
 
                     $value = ArrayTools::dearraizeIfNotRequired($values);
 
@@ -87,10 +113,21 @@ class LoadSetAndSave extends Console\Command\Command
                         {
                             $formatter = $this->getHelperSet()->get('xformatter');
 
+                            $displayValues = array();
+                            foreach ($values as $valueLine)
+                            {
+                                $displayValues = array_merge($displayValues, StringTools::multilineStringToArray($valueLine));
+                            }
+                            $displayCurrentSetting = array();
+                            foreach ((array) $currentSetting as $valueLine)
+                            {
+                                $displayCurrentSetting = array_merge($displayCurrentSetting, StringTools::multilineStringToArray($valueLine));
+                            }
+
                             $toFormat = array(
-                                array('messages' => (array) $currentSetting, 'style' => 'error'),
+                                array('messages' => $displayCurrentSetting, 'style' => 'error'),
                                 array('messages' => array('> >'), 'style' => 'fg=yellow;bg=black;other=blink;other=bold', 'large' => false),
-                                array('messages' => (array) $values, 'style' => 'fg=black;bg=yellow;other=bold')
+                                array('messages' => $displayValues, 'style' => 'fg=black;bg=yellow;other=bold')
                                 );
 
                             //array_merge(array('With the following data:'), (array) $values)
@@ -106,8 +143,10 @@ class LoadSetAndSave extends Console\Command\Command
                             // make the tree
                             $setting = Tree::addToTreeAndSet(explode('/', $path), $value);
 
+                            //var_dump($setting);
+
                             // add/replace the setting
-                            $settingsDB->mergeFromArray($setting, false, false);
+                            $settingsDB->mergeFromArray($setting);
 
                             // save the file with the new setting
                             $settingsDB->returnYAML($file);

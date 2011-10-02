@@ -171,7 +171,7 @@ class ArrayTools
         return $path;
     }
     
-    public static function GetMultiDimentionalElements(&$ArrayInput)
+    public static function GetMultiDimentionalElements(&$ArrayInput, $withChildren = false, $onlyValues = true)
     {
         //if(is_array($ArrayInput) && !is_object($ArrayInput))
         //{
@@ -184,14 +184,43 @@ class ArrayTools
             for ($path = "", $i = 0; $i <= $iterator->getDepth(); $i++) {
                 $path .= "/" . $iterator->getSubIterator($i)->key();
             }
-            // Output depth and "path"
-            //printf("%d %s\n", $iterator->getDepth() + 1, ltrim($path, "/"));
-            $elements[] = ltrim($path, "/");
+            if($withChildren === true)
+            {
+                foreach($iterator->current() as $name => $value)
+                {
+                    if($onlyValues === true && is_array($value))
+                    {
+                        $continue = false;
+                    }
+                    else
+                    {
+                        $continue = true;
+                    }
+                    // TODO: for now, this works, but maybe determining by the array key isn't the brightest idea
+                    if(is_string($name) && $continue === true)
+                    {
+                        $subpath = $path . "/" . $name;
+                        $elements[] = ltrim($subpath, "/");
+                    }
+                    elseif(is_numeric($name) && $continue === true)
+                    {
+                        $subpath = $path . "/" . $value;
+                        $elements[] = ltrim($subpath, "/");
+                    }
+                }
+            }
+            else
+            {
+                // Output depth and "path"
+                //printf("%d %s\n", $iterator->getDepth() + 1, ltrim($path, "/"));
+                $elements[] = ltrim($path, "/");
+            }
         }
         return $elements;
         //}
     }
     
+    /*
     public static function GetMultiDimentionalElementsWithChildren(&$ArrayInput)
     {
         //if(is_array($ArrayInput) && !is_object($ArrayInput))
@@ -206,12 +235,14 @@ class ArrayTools
                 
                 $path .= "/" . $iterator->getSubIterator($i)->key();
             }
-            foreach($iterator->current() as $value)
+            foreach($iterator->current() as $name => $value)
             {
 //                if(!is_array($value))
-                if(is_string($value))
+//                if(is_string($value))
+                if(is_string($name))
                 {
-                    $subpath = $path . "/" . $value;
+                    $subpath = $path . "/" . $name;
+//                    $subpath = $path . "/" . $value;
                     $elements[] = ltrim($subpath, "/");
                 }
             }
@@ -219,7 +250,8 @@ class ArrayTools
         return $elements;
         //}
     }
-    
+    */
+
     /**
      * Merges any number of arrays of any dimensions, the later overwriting
      * previous keys, unless the key is numeric, in whitch case, duplicated
@@ -313,7 +345,8 @@ class ArrayTools
         $matchAccuracy = array();
         $lookForPathParts = array_reverse(explode('/', $lookForPath));
         
-        foreach(self::GetMultiDimentionalElementsWithChildren($paths) as $num => $path)
+//        foreach(self::GetMultiDimentionalElementsWithChildren($paths) as $num => $path)
+        foreach(self::GetMultiDimentionalElements($paths, true) as $num => $path)
         {
             if (strpos($path, $lookForPath) !== false)
             {
@@ -350,6 +383,7 @@ class ArrayTools
         $matches = array();
         foreach(self::GetMultiDimentionalElements($paths) as $path)
         {
+            //LogCLI::MessageResult('Element: '.LogCLI::BLUE.$path.LogCLI::RESET, 6, LogCLI::INFO);
             $pathElements = explode('/', $path);
             //$lastElement = end($pathElements);
             //if(stripos($path, $lookFor) !== FALSE)

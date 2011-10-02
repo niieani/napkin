@@ -160,6 +160,30 @@ class Nginx extends ConfigScopes\Parser
             'action'      => 'StoreStringOrFalse'
         ));
 
+        /**
+         * shortcuts:
+         */
+        $this->parsers['server']->addSetting('redirect', array(
+            'path'        => 'redirect',
+            'action'      => 'StoreStringOrFalse'
+         // rewrite ^ redirect$uri permanent;
+        ));
+
+        $this->parsers['deny'] = new ConfigParser(array(
+            'name'        => 'nginx_deny',
+            'description' => 'nginx deny',
+            'template'    => &$templates['deny']
+        ));
+        $this->parsers['deny']->addSetting('deny', array(
+            'path'        => 'deny'
+            /**
+             *  location [[content]]
+             *  {
+             *      deny all;
+             *  }
+             */
+        ));
+
         $this->parsers['server']->addSetting('ssl', array(
             'path'        => 'support/ssl',
             'action'      => 'StoreStemOrFalse',
@@ -174,6 +198,11 @@ class Nginx extends ConfigScopes\Parser
             'path'        => 'support/php',
             'action'      => 'StoreStemOrFalse',
             'action_params' => array('template' => 'php')
+        ));
+        $this->parsers['server']->addSetting('deny', array(
+            'path'        => 'support/deny',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'deny', 'iterative' => true)
         ));
         
         $this->parsers['php'] = new ConfigParser(array(
@@ -271,7 +300,8 @@ class Nginx extends ConfigScopes\Parser
             $parser->addSetting('custom', array(
                 'path'        => 'custom',
                 'action'      => 'StoreStringOrFalse',
-                'description' => 'custom config'
+                'description' => 'custom config',
+                'divideBy'    => PHP_EOL
             ));
         }
     }

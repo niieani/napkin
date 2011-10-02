@@ -3,16 +3,11 @@
 namespace HypoConf;
 
 use HypoConf;
-//use HypoConf\ConfigParser;
-use \Tools\LogCLI;
-use \Tools\ParseTools;
-use \Tools\ArrayTools;
-use \Tools\StringTools;
-use \PEAR2\Console\CommandLine;
-//use ConfigParser\Setting as ConfigParser_Setting;
-
-//require_once 'Console/CommandLine.php';
-
+use Tools\LogCLI;
+use Tools\ParseTools;
+use Tools\ArrayTools;
+use Tools\StringTools;
+use PEAR2\Console\CommandLine;
 
 class ConfigParser extends CommandLine
 {
@@ -60,6 +55,9 @@ class ConfigParser extends CommandLine
         if (isset($params['template'])) {
             // cutting out the @@ from the dynamically loaded elements
             $this->template = preg_replace('/@@(\w+)@@/', '${1}', $params['template']);
+            //$this->template = preg_replace('/@!@(\w+)@!@/', '${1}', $this->template);
+
+            var_dump($this->template);
             //$this->template = $params['template'];
         }
         if (isset($params['configuration'])) {
@@ -118,6 +116,9 @@ class ConfigParser extends CommandLine
         $output = null;
         if(is_array($this->configuration))
         {
+            /*
+             * checking if this is iterative
+             */
             if(isset($this->configuration[0]) && is_array($this->configuration[0]))
             {
                 //var_dump($this->configuration);
@@ -155,6 +156,9 @@ class ConfigParser extends CommandLine
         $output = null;
         foreach ($this->options as $option)
         {
+            /*
+             * if there are multiple paths for one setting
+             */
             if(is_array($option->path))
             {
                 foreach($option->path as $config => $path)
@@ -175,7 +179,7 @@ class ConfigParser extends CommandLine
             {
                 //($setting = ArrayTools::accessArrayElementByPath($configuration, $option->path)) !== null ?: $setting = $option->default;
                 $setting = ArrayTools::accessArrayElementByPath($configuration, $option->path);
-                //var_dump($setting);
+
                 if ($setting === null)
                 {
                     $option->setDefaults();
@@ -184,12 +188,19 @@ class ConfigParser extends CommandLine
                     $setting = $option->default;
                 }
                 //var_dump($setting);
-                $value = StringTools::MakeList(&$setting);
+
+                /*
+                 *  If we got an array, how do we divide it?
+                 *  By default by ' ' (space), but sometimes we want eg. PHP_EOL, or comma.
+                 */
+                $value = StringTools::makeList(&$setting, $option->divideBy);
+
                 $this->_dispatchAction($option, $value, $result);
             }
         }
-        
-        foreach(preg_split("/(\r?\n)/", $this->template) as $line)
+
+        //foreach(preg_split("/(\r?\n)/", $this->template) as $line)
+        foreach(explode(PHP_EOL, $this->template) as $line)
         {
             //$parsedline = ParseTools::sprintfn($line, $result->options);
             $parsedline = ParseTools::parseStringWithReplacementList($line, $result->options);
@@ -198,8 +209,9 @@ class ConfigParser extends CommandLine
             if(strlen(rtrim($parsedline)) < 1) continue;
             
             // if we got a multiline responds we have to indent it
-            // TODO: maybe explode "\n" would be better?
-            if(count($lines = preg_split("/(\r?\n)/", $parsedline)) > 1)
+            // TODO: maybe explode "\n" or PHP_EOL would be better?
+//            if(count($lines = preg_split("/(\r?\n)/", $parsedline)) > 1)
+            if(count($lines = explode(PHP_EOL, $parsedline)) > 1)
             {
                 $indentedlines = array_shift($lines).PHP_EOL;
                 foreach($lines as &$multiline)

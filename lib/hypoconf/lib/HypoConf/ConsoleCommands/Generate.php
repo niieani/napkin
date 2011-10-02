@@ -26,7 +26,7 @@ class Generate extends Console\Command\Command
     protected function configure()
     {
         $this
-            ->setName('generateone')
+            ->setName('generate')
             //->setAliases(array('gen1'))
             ->setDescription('Generates and outputs the config file')
             ->setHelp('Generates and outputs the config file.')
@@ -43,16 +43,12 @@ class Generate extends Console\Command\Command
         // TODO: this should be USER or optionally GROUP/USER or ALL when generating everything
         $directories = $input->getArgument('directories');
         $files = array();
-        
-        //ApplicationsDB::LoadAll();
 
-        $configScopes = ApplicationsDB::LoadApplication($application);
 
         foreach($directories as $dir)
         {
             $filelist = FileOperation::getAllFilesByExtension(Paths::$db.Paths::$separator.Paths::$defaultGroup.Paths::$separator.$dir, 'yml');
 
-            //if(!isset($filelist) || $filelist !== false)
             if($filelist !== false)
             {
                 $files = array_merge($files, $filelist);
@@ -64,6 +60,10 @@ class Generate extends Console\Command\Command
             }
         }
 
+        //ApplicationsDB::LoadAll();
+
+        $configScopes = ApplicationsDB::LoadApplication($application);
+        
         $settingsDB = new ConfigScopes\SettingsDB();
 
         // merging the defaults

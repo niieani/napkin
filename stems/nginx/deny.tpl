@@ -1,0 +1,4 @@
+location [[%(deny)]]
+{
+    deny all;
+}
