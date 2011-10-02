@@ -69,7 +69,7 @@ class Commands
                     //$siteYML = array_search(strtolower($argument['text']),array_map('strtolower',$files));
                     //var_dump($files);
                     
-                    $siteYML = Paths::GetFullPath($argument['text']);
+                    $siteYML = Paths::getFullPath($argument['text']);
                     
                     if($siteYML !== false)
                         Commands\Set\Site::LoadAndSave($arguments, $siteYML);
@@ -117,8 +117,8 @@ class Commands
         }
 
         $nginx = new ConfigScopes\SettingsDB();
-        $nginx->MergeFromYAML(Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml', false, true, true); //true for compilation
-        $nginx->MergeFromYAMLs($files, 'server', true, true); //true for compilation
+        $nginx->mergeFromYAML(Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml', false, true, true); //true for compilation
+        $nginx->mergeFromYAMLs($files, 'server', true, true); //true for compilation
 
         ApplicationsDB::LoadConfig(&$nginx->DB);
 
@@ -165,7 +165,7 @@ class Commands
                 $path = Paths::$db.Paths::$separator.$group.Paths::$separator.$username.Paths::$separator;
                 if(file_exists($path))
                 {
-                    if(!file_exists($path.$website.'.yml') && Paths::GetFullPath($website) === false)
+                    if(!file_exists($path.$website.'.yml') && Paths::getFullPath($website) === false)
                     {
                         FileOperation::CreateEmptyFile($path.$website.'.yml');
                         LogCLI::Result(LogCLI::OK);

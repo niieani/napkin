@@ -72,7 +72,7 @@ class LoadSetAndSave extends Console\Command\Command
                  */
                 else // opening a site or default site
                 {
-                    $file = Paths::GetFullPath($argument['text']);
+                    $file = Paths::getFullPath($argument['text']);
 
                     if($file !== false)
                         $this->LoadAndSave($chain, $file, $values, 'server', $output);
@@ -116,14 +116,14 @@ class LoadSetAndSave extends Console\Command\Command
             $settingPath = StringTools::RemoveExclamation($settingPath); //remove the + from the beginning
 
 
-        if($path = Helpers::SearchConfigs(&$settings, $settingPath, $iterativeSetting))
+        if($path = SettingsDB::SearchConfigs(&$settings, $settingPath, $iterativeSetting))
         {
             $settingsDB = new ConfigScopes\SettingsDB();
 
             // load the original file first
-            $settingsDB->MergeFromYAML($file, false, false, false); //true for compilation
+            $settingsDB->mergeFromYAML($file, false, false, false); //true for compilation
 
-            $currentSetting = $settingsDB->ReturnOneByPath($settingPath);
+            $currentSetting = $settingsDB->returnOneByPath($settingPath);
 //            LogCLI::MessageResult('Replace? '.$currentSetting, 1, LogCLI::INFO);
 
             $dialog = $this->getHelperSet()->get('dialog');
@@ -154,19 +154,19 @@ class LoadSetAndSave extends Console\Command\Command
                 }
 
                 // 3. add value
-                $settingsDB->MergeOneIterativeByPath($path, $setting);
+                $settingsDB->mergeOneIterativeByPath($path, $setting);
             }
             else
             {
                 // make the tree
-                $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
+                $setting = Tree::addToTreeAndSet(explode('/', $path), $value, 1);
 
                 // add/replace the setting
-                $settingsDB->MergeFromArray($setting, false, false);
+                $settingsDB->mergeFromArray($setting, false, false);
             }
 
             // save the file with the new setting
-            $settingsDB->ReturnYAML($file);
+            $settingsDB->returnYAML($file);
         }
     }
 }
