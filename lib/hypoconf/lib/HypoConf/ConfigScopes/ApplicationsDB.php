@@ -117,7 +117,7 @@ class ApplicationsDB
     public function LoadConfigFromFiles(&$files, $compilation = false)
     {
         self::$SettingsDB = new ConfigScopes\SettingsDB();
-        self::$SettingsDB->MergeFromYAML($file, $compilation); //true for compilation
+        self::$SettingsDB->mergeFromYAML($file, $compilation); //true for compilation
     }
     */
 }

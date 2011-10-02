@@ -7,40 +7,13 @@ use Tools\StringTools;
 
 class Nginx extends ConfigScopes\Parser
 {
-    /*
-    public function FixPath($path, $iterativeSetting = 0)
-    {
-        if(is_string($iterativeSetting))
-        {
-            if(($pos = strpos($path, 'nginx/server')) !== false && $pos === 0)
-                $path = substr_replace($path, 'server/'.$iterativeSetting, 0, strlen('nginx/server'));
-        }
-        elseif(($pos = strpos($path, 'server/')) !== false && $pos === 0)
-        {
-            $path = StringTools::DropLastBit($path, -1);
-
-            if(($pos = strpos($path, 'listen/')) !== false && $pos === 0)
-            {
-//                $last = StringTools::ReturnLastBit($path);
-                $path = StringTools::DropLastBit($path);
-//                $path .= '/'.$last;
-//                $path .= '/'.$iterativeSetting.'/'.$last;
-            }
-        }
-        //    $path = substr_replace($path, 'server/'.$iterativeSetting.'/', 0, strlen('nginx/server'));
-            
-        return $path;
-    }
-    */
-    
     public function __construct(array &$templates)
     {
         /*
+         * wrzucić całość do jednej klasy a potem zrobić autoloader na zasadzie CommandLine
+         * i tak do każdej aplikacji
+         */
         
-            wrzucić całość do jednej klasy a potem zrobić autoloader na zasadzie CommandLine
-            i tak do każdej aplikacji
-        
-        */
         /*
          * NGINX ROOT SCOPE PARSER
          */

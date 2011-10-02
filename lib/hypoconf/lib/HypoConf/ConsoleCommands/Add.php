@@ -119,7 +119,7 @@ class Add extends Console\Command\Command
                 $path = Paths::$db.Paths::$separator.$group.Paths::$separator.$username.Paths::$separator;
                 if(file_exists($path))
                 {
-                    if(!file_exists($path.$website.'.yml') && Paths::GetFullPath($website) === false)
+                    if(!file_exists($path.$website.'.yml') && Paths::getFullPath($website) === false)
                     {
                         FileOperation::CreateEmptyFile($path.$website.'.yml');
                         LogCLI::Result(LogCLI::OK);

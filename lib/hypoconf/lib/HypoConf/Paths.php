@@ -21,7 +21,7 @@ class Paths
     public static $templates = '_templates';
     public static $defaultConfig = 'config.yml';
 
-    public static function GetFullPath($site)
+    public static function getFullPath($site)
     {
         $files = FileOperation::getAllFilesByExtension(Paths::$db, 'yml');
         $pathinfo = array();

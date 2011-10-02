@@ -17,7 +17,7 @@ use HypoConf\ConfigScopes\ApplicationsDB;
 use HypoConf\Paths;
 use Tools\XFormatterHelper;
 //use HypoConf\Commands;
-use HypoConf\Commands\Helpers;
+use HypoConf\ConfigScopes\SettingsDB;
 
 class LoadSetAndSave extends Console\Command\Command
 {
@@ -29,7 +29,7 @@ class LoadSetAndSave extends Console\Command\Command
             ->setDescription('Changes the value and updates the config file')
             ->setHelp('Changes the value and updates the config file.')
             ->addArgument('name', Console\Input\InputArgument::REQUIRED, 'Site, user (when prefixed with @) or template (when prefixed with +)')
-            ->addArgument('chain', Console\Input\InputArgument::REQUIRED, 'Configuration chain (eg. nginx/php)')
+            ->addArgument('path', Console\Input\InputArgument::REQUIRED, 'Configuration chain (eg. nginx/php)')
             ->addArgument('values', Console\Input\InputArgument::REQUIRED + Console\Input\InputArgument::IS_ARRAY, 'Values to set (can be multiple)');
 //        $this->addOption('more', 'm', Console\Input\InputOption::VALUE_NONE, 'Tell me more');
 
@@ -37,7 +37,7 @@ class LoadSetAndSave extends Console\Command\Command
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $name = $input->getArgument('name');
-        $chain = $input->getArgument('chain');
+        $settingPath = $input->getArgument('path');
         $values = $input->getArgument('values');
 
         ApplicationsDB::LoadAll();
@@ -52,34 +52,32 @@ class LoadSetAndSave extends Console\Command\Command
             else
             {
                 //siteYML
-                $file = Paths::GetFullPath($argument['text']);
+                $file = Paths::getFullPath($argument['text']);
 
                 if($file !== false)
                 {
                     $application = 'nginx';
                     $basicScope = 'server';
-//                    $basicScope = false;
 
                     $settings = ApplicationsDB::GetSettingsList($application, $basicScope);
-//                    $iterativeSetting = 0;
-                    var_dump($settings);
+
+                    //var_dump($settings);
 
                     $value = ArrayTools::dearraizeIfNotRequired($values);
 
-                    $chain = StringTools::Delimit($chain, '.');
-
-                    $settingPath = implode('/', $chain);
+                    //$chain = StringTools::Delimit($chain, '.');
+                    //$settingPath = implode('/', $chain);
 
                     LogCLI::MessageResult('Path of the setting: '.$settingPath, 4, LogCLI::INFO);
 
-                    if ($path = Helpers::SearchConfigs(&$settings, $settingPath, $application, $basicScope))
+                    if ($path = SettingsDB::findPathForSetting(&$settings, $settingPath, $basicScope))
                     {
                         $settingsDB = new ConfigScopes\SettingsDB();
 
                         // load the original file first
-                        $settingsDB->MergeFromYAML($file, false, false, false); //true for compilation
+                        $settingsDB->mergeFromYAML($file);
 
-                        $currentSetting = $settingsDB->ReturnOneByPath($settingPath);
+                        $currentSetting = $settingsDB->returnOneByPath($settingPath);
 
                         /**
                          * if there is a difference
@@ -87,13 +85,6 @@ class LoadSetAndSave extends Console\Command\Command
                          */
                         if(ArrayTools::dearraizeIfNotRequired($currentSetting) != $value)
                         {
-//                            $this->setHelperSet(new Console\Helper\HelperSet(
-//                                                    array(
-//                                                        new Console\Helper\FormatterHelper(),
-//                                                        new Console\Helper\DialogHelper(),
-//                                                        new XFormatterHelper()
-//                                                        )));
-
                             $formatter = $this->getHelperSet()->get('xformatter');
 
                             $toFormat = array(
@@ -107,30 +98,31 @@ class LoadSetAndSave extends Console\Command\Command
                             $output->writeln($formatter->formatMultipleBlocks($toFormat, ' ', true));
 
                             $dialog = $this->getHelperSet()->get('dialog');
-                            if (!$dialog->askConfirmation($output, 'Are you sure that you want to make this change? (type "y" to confirm) ', false)) {
+                            if (!$dialog->askConfirmation($output, 'Are you sure that you want to make this change? (type "y" to confirm) ', false))
+                            {
                                 return;
                             }
 
                             // make the tree
-                            $setting = Tree::addToTreeSet(explode('/', $path), $value, 1);
+                            $setting = Tree::addToTreeAndSet(explode('/', $path), $value);
 
                             // add/replace the setting
-                            $settingsDB->MergeFromArray($setting, false, false);
+                            $settingsDB->mergeFromArray($setting, false, false);
 
                             // save the file with the new setting
-                            $settingsDB->ReturnYAML($file);
+                            $settingsDB->returnYAML($file);
                         }
-                        /**
-                         * nothing to do, it's all the same
-                         */
                         else
                         {
+                            /**
+                             * nothing to do, it's all the same
+                             */
                             $output->writeln('<fg=yellow;other=bold>No need to change, the values are already identical!</fg=yellow;other=bold>');
                         }
                     }
                     else
                     {
-
+                        // TODO
                     }
                 }
                 else
@@ -139,6 +131,17 @@ class LoadSetAndSave extends Console\Command\Command
                 }
             }
         }
+    }
+
+    public static function doWeReplaceHelper(array $chain)
+    {
+        $testType = end(StringTools::TypeList(reset($chain), '+', false));
+
+        if($testType['exclamation'] !== false)
+        {
+            return true;
+        }
+        else return false;
     }
 
 }

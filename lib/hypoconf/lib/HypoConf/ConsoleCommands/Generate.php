@@ -67,10 +67,10 @@ class Generate extends Console\Command\Command
         $settingsDB = new ConfigScopes\SettingsDB();
 
         // merging the defaults
-        $settingsDB->MergeFromYAML(Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml', false, true, true); //true for compilation
+        $settingsDB->mergeFromYAML(Paths::$db.Paths::$separator.Paths::$hypoconf.Paths::$separator.Paths::$defaultUser.Paths::$separator.'config.yml', false, true, true); //true for compilation
 
         // merging the files
-        $settingsDB->MergeFromYAMLs($files, 'nginx/server', true, true, false, true); //true for compilation
+        $settingsDB->mergeFromYAMLs($files, 'nginx/server', true, true, false, true); //true for compilation
 
         //var_dump($settingsDB->DB);
         
