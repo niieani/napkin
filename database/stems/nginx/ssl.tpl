@@ -1,3 +1,5 @@
+## SSL
+ssl on;
 [[ssl_certificate %(cert);]]
 [[ssl_certificate_key %(key);]]
 [[ssl_session_timeout %(timeout);]]
