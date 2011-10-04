@@ -1,0 +1,6 @@
+support:
+  php: on
+php:
+  socket: /var/run/php.sock
+index: index.html index.htm index.php
+template: true

@@ -238,9 +238,9 @@ class SettingsDB
                     {
                         if($addFilename === true)
                         {
-    //                      $fileInfo = FileOperation::pathinfo_utf($file);
-    //                      $config['filename'] = $fileInfo['filename'];
-                            $config['filename'] = $file;
+                            $fileInfo = FileOperation::pathinfo_utf($file);
+                            $config['filename'] = $fileInfo['filename'];
+                            //$config['filename'] = $file;
                         }
                         if(!isset($config['template']) && (!isset($config['disabled']) || $config['disabled'] == false))
                         {

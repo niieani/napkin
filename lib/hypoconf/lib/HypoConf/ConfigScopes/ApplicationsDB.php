@@ -6,15 +6,16 @@ use HypoConf;
 //use \ConfigScopes\nginx;
 //use \ConfigScopes;
 
-use \Tools\FileOperation;
-use \Tools\ArrayTools;
-use \Tools\LogCLI;
+use Tools\FileOperation;
+use Tools\ArrayTools;
+use Tools\LogCLI;
+use HypoConf\Paths;
 
 class ApplicationsDB
 {
     //protected static $DB = array();
     protected static $DB = array();
-    protected static $AppsDir = 'stems/'; //TODO: move to Paths::
+//    protected static $AppsDir = 'stems/';
     protected static $SettingsDB;
 
     /**
@@ -45,7 +46,7 @@ class ApplicationsDB
     public static function LoadApplication($application)
     {
         // load templates:
-        $templateFiles = FileOperation::getAllFilesByExtension(self::$AppsDir.$application, 'tpl');
+        $templateFiles = FileOperation::getAllFilesByExtension(Paths::$apps.$application, 'tpl');
         self::$DB[$application]['templatesInstance'] = new TemplatesDB($templateFiles);
         self::$DB[$application]['templates'] = self::$DB[$application]['templatesInstance']->DB;
         

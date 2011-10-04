@@ -19,6 +19,7 @@ class Paths
     public static $disabled = '_disabled';
     public static $hypoconf = '_hypoconf';
     public static $templates = '_templates';
+    public static $apps = 'database/stems/';
     public static $defaultConfig = 'config.yml';
 
     public static function getFullPath($site)

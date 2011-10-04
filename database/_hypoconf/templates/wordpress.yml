@@ -1,0 +1,6 @@
+parent: php
+support:
+  simplerewrite: 1
+simplerewrite:
+  rewrite: '/index.php?q=$request_uri'
+template: true

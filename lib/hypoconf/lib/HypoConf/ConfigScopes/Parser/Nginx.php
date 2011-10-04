@@ -13,6 +13,7 @@ class Nginx extends ConfigScopes\Parser
          * wrzucić całość do jednej klasy a potem zrobić autoloader na zasadzie CommandLine
          * i tak do każdej aplikacji
          */
+        // http://kbeezie.com/view/nginx-configuration-examples/
         
         /*
          * NGINX ROOT SCOPE PARSER
@@ -213,6 +214,15 @@ class Nginx extends ConfigScopes\Parser
             // eg. 1248m
         ));
 
+        $this->parsers['simplerewrite'] = new ConfigParser(array(
+            'name'        => 'nginx_simplerewrite',
+            'description' => 'nginx simplerewrite',
+            'version'     => '0.9',
+            'template'    => &$templates['simplerewrite']
+        ));
+        $this->parsers['simplerewrite']->addSetting('rewrite', array(
+            'path'        => 'rewrite'
+        ));
 
         /*
          *          NGINX SERVER/GZIP SCOPE PARSER
@@ -347,6 +357,11 @@ class Nginx extends ConfigScopes\Parser
             'path'        => 'support/staticexpire',
             'action'      => 'StoreStemOrFalse',
             'action_params' => array('template' => 'staticexpire')
+        ));
+        $this->parsers['server']->addSetting('simplerewrite', array(
+            'path'        => 'support/simplerewrite',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'simplerewrite')
         ));
 
 

@@ -434,7 +434,7 @@ class ConfigScopes
 
 //                    var_dump($this->results["${fullScopePath}/${match}/${id}"]);
                     LogCLI::MessageResult("Adding up the iterative scope values: ".LogCLI::YELLOW."${fullScopePath}/${match}/${id}".LogCLI::RESET, 5);
-                    $this->results["${fullScopePath}/${match}"] .= $this->results["${fullScopePath}/${match}/${id}"].PHP_EOL;
+                    $this->results["${fullScopePath}/${match}"] .= trim($this->results["${fullScopePath}/${match}/${id}"]).PHP_EOL;
 
                     LogCLI::Result(LogCLI::INFO); // end children parse
 
