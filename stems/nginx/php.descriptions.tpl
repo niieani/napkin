@@ -28,12 +28,13 @@ location ~ \.php
     fastcgi_param  PATH_INFO          $fastcgi_path_info;
     fastcgi_param  PATH_TRANSLATED    $document_root$fastcgi_path_info;
 
-    # Just to be safe, disable PHP pathinfo fix
+    # Just to be safe, disable PHP's pathinfo fix
     fastcgi_param PHP_ADMIN_VALUE     "cgi.fix_pathinfo=0";
 
     [[fastcgi_pass unix:%(socket);]]
 
 
+    # Directive sets timeout period for connection with FastCGI-server. It should be noted that this value can't exceed 75 seconds.
     [[fastcgi_connect_timeout %(conntimeout);]]
     [[fastcgi_send_timeout %(sendtimeout);]]
     [[fastcgi_read_timeout %(readtimeout);]]
@@ -41,10 +42,15 @@ location ~ \.php
     [[fastcgi_busy_buffers_size %(busybuffersize)k;]]
     [[fastcgi_temp_file_write_size %(tempwritesize)k;]]
 
+    # This directive determines whether or not to transfer 4xx and 5xx errors back to the client or to allow Nginx to answer with directive error_page.
+    # Note: You need to explicitly define the error_page handler for this for it to be useful.
     [[fastcgi_intercept_errors %(intercepterrors);]]
 
+    # The name of the file which will be appended to the URI and stored in the variable $fastcgi_script_name if URI concludes with a slash.
     [[fastcgi_index %(index);]]
-
+    
+    # This directive determines if current request to the FastCGI-server must be aborted in case the client aborts the request to the server.
+    # Recommended: off
     [[fastcgi_ignore_client_abort %(ignoreabort);]]
 
     [[fastcgi_param HTTPS %(https);]]

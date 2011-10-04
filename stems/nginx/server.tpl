@@ -1,15 +1,27 @@
 [[# generated from: %(filename) #]]
 server[[ #%(comment)]]
 {
-    [[server_name %(domain);]]
     <!<listen>!>
-    [[root %(dir);]]
+
+    [[server_name %(domain);]]
+
+    [[root %(root);]]
+
+    [[access_log %(accesslog)[[ %(accesslogstyle)]];]]
+    [[error_log %(errorlog)[[ %(errorlogstyle)]];]]
+
+    [[rewrite ^ %(redirect)$uri permanent;]]
+
     [[index %(index);]]
-    [[access_log %(logaccessfile) %(logaccessstyle);]]
-    [[error_log %(logerrorfile) %(logerrorstyle);]]
+
+    [[client_max_body_size %(maxbodysize);]]
+
+    [[%(@@gzip@@)]]
+
     [[%(@@ssl@@)]]
-    [[%(@@faviconfix@@)]]
-    [[%(@@php@@)]]
+    [[%(@@drop@@)]]
+    [[%(@@staticexpire@@)]]
     [[%(@@deny@@)]]
+    [[%(@@php@@)]]
     [[%(custom)]]
 }

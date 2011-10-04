@@ -37,6 +37,11 @@ class Nginx extends ConfigScopes\Parser
             'default'     => 'www-data',
             'description' => 'group that runs nginx'
         ));
+        $this->parsers['nginx']->addSetting('processes', array(
+            'path'        => 'processes',
+            'action'      => 'StoreInt',
+            'default'     => 4
+        ));
 
         /*
          * NGINX EVENTS SCOPE PARSER
@@ -56,18 +61,24 @@ class Nginx extends ConfigScopes\Parser
             'action'      => 'StoreOnOff'
         ));
 
-
+        /*
+         * NGINX HTTP SCOPE PARSER
+         */
         $this->parsers['nginx']->addSetting('errorlog', array(
-            'path'        => 'errorlog/file'
+            'path'        => 'errorlog/file',
+            'action'      => 'StoreStringOrFalse'
         ));
         $this->parsers['nginx']->addSetting('errorlogstyle', array(
-            'path'        => 'errorlog/style'
+            'path'        => 'errorlog/style',
+            'action'      => 'StoreStringOrFalse'
         ));
-        $this->parsers['nginx']->addSetting('mimepath', array(
-            'path'        => 'mimepath'
+        $this->parsers['nginx']->addSetting('mimeinclude', array(
+            'path'        => 'mimeinclude',
+            'action'      => 'StoreStringOrFalse'
         ));
         $this->parsers['nginx']->addSetting('sendfile', array(
-            'path'        => 'sendfile'
+            'path'        => 'sendfile',
+            'action'      => 'StoreOnOff'
         ));
         $this->parsers['nginx']->addSetting('nopush', array(
             'path'        => 'tcp/nopush',
@@ -78,166 +89,24 @@ class Nginx extends ConfigScopes\Parser
             'action'      => 'StoreOnOff'
         ));
         $this->parsers['nginx']->addSetting('keepalivetimeout', array(
-            'path'        => 'keepalive/timeout',
+            'path'        => 'katimeout',
             'action'      => 'StoreInt',
             'default'     => '60'
-        ));
-        $this->parsers['nginx']->addSetting('max_body', array(
-            'path'        => 'max_body'
         ));
         $this->parsers['nginx']->addSetting('ignore_invalid_headers', array(
             'path'        => 'http/ignore_invalid_headers',
             'action'      => 'StoreOnOff'
         ));
+        $this->parsers['nginx']->addSetting('max_body', array(
+            'path'        => 'http/max_body',
+            'action'      => 'StoreStringOrFalse'
+        ));
         $this->parsers['nginx']->addSetting('tokens', array(
             'path'        => 'http/tokens',
-            'action'      => 'StoreOnOff'
-        ));
-
-
-        $this->parsers['nginx']->addSetting('gzip', array(
-            'path'        => 'gzip/gzip',
-            'action'      => 'StoreOnOff'
-        ));
-        $this->parsers['nginx']->addSetting('gzip_disable', array(
-            'path'        => 'gzip/disable'
-        ));
-        $this->parsers['nginx']->addSetting('gzip_min', array(
-            'path'        => 'gzip/min'
-        ));
-        $this->parsers['nginx']->addSetting('gzip_comp_level', array(
-            'path'        => 'gzip/level',
-            'action'      => 'StoreInt',
-            'default'     => '6'
-        ));
-        $this->parsers['nginx']->addSetting('gzip_proxied', array(
-            'path'        => 'gzip/proxied'
-        ));
-        $this->parsers['nginx']->addSetting('gzip_buffers_num', array(
-            'path'        => 'gzip/buffers',
-            'action'      => 'StoreInt',
-            'default'     => '16'
-        ));
-        $this->parsers['nginx']->addSetting('gzip_buffers_size', array(
-            'path'        => 'gzip/buffer_size'
-        ));
-        $this->parsers['nginx']->addSetting('gzip_types', array(
-            'path'        => 'gzip/types'
-        ));
-
-        /*
-         *   NGINX SERVER SCOPE PARSER [ITERATIVE]
-         * ITERATIVE SCOPES HAVE RELATIVE YML PATHS!
-         */
-        $this->parsers['server'] = new ConfigParser(array(
-            'name'        => 'nginx_server',
-            'description' => 'nginx server',
-            'version'     => '0.9',
-            'template'    => &$templates['server']
-        ));
-        
-        $this->parsers['server']->addSetting('domain', array(
-            'path'        => 'domain',
-            'action'      => 'StoreStringOrFalse',
-            'description' => 'listen options'
-        ));
-
-        $this->parsers['server']->addSetting('dir', array(
-            'path'        => 'dir',
             'action'      => 'StoreStringOrFalse'
         ));
 
-        $this->parsers['server']->addSetting('comment', array(
-            'path'        => 'name_comment',
-            'action'      => 'StoreStringOrFalse'
-        ));
-        $this->parsers['server']->addSetting('filename', array(
-            'path'        => 'filename',
-            'action'      => 'StoreStringOrFalse'
-        ));
-        $this->parsers['server']->addSetting('parent', array(
-            'path'        => 'parent',
-            'action'      => 'StoreStringOrFalse'
-        ));
 
-        /**
-         * shortcuts:
-         */
-        $this->parsers['server']->addSetting('redirect', array(
-            'path'        => 'redirect',
-            'action'      => 'StoreStringOrFalse'
-         // rewrite ^ redirect$uri permanent;
-        ));
-
-        $this->parsers['deny'] = new ConfigParser(array(
-            'name'        => 'nginx_deny',
-            'description' => 'nginx deny',
-            'template'    => &$templates['deny']
-        ));
-        $this->parsers['deny']->addSetting('deny', array(
-            'path'        => 'deny'
-            /**
-             *  location [[content]]
-             *  {
-             *      deny all;
-             *  }
-             */
-        ));
-
-        $this->parsers['server']->addSetting('ssl', array(
-            'path'        => 'support/ssl',
-            'action'      => 'StoreStemOrFalse',
-            'action_params' => array('template' => 'ssl')
-        ));
-        $this->parsers['server']->addSetting('faviconfix', array(
-            'path'        => 'support/faviconfix',
-            'action'      => 'StoreStemOrFalse',
-            'action_params' => array('template' => 'faviconfix')
-        ));
-        $this->parsers['server']->addSetting('php', array(
-            'path'        => 'support/php',
-            'action'      => 'StoreStemOrFalse',
-            'action_params' => array('template' => 'php')
-        ));
-        $this->parsers['server']->addSetting('deny', array(
-            'path'        => 'support/deny',
-            'action'      => 'StoreStemOrFalse',
-            'action_params' => array('template' => 'deny', 'iterative' => true)
-        ));
-        
-        $this->parsers['php'] = new ConfigParser(array(
-            'name'        => 'nginx_php',
-            'description' => 'nginx php',
-            'version'     => '0.9',
-            'template'    => &$templates['php']
-        ));
-        $this->parsers['php']->addSetting('index', array(
-            'path'        => 'index',
-            'description' => 'php index file'
-        ));
-
-        $this->parsers['ssl'] = new ConfigParser(array(
-            'name'        => 'nginx_ssl',
-            'description' => 'nginx ssl',
-            'version'     => '0.9',
-            'template'    => &$templates['ssl']
-        ));
-        $this->parsers['ssl']->addSetting('timeout', array(
-            'path'        => 'timeout'
-        ));
-        $this->parsers['ssl']->addSetting('cert', array(
-            'path'        => 'cert'
-        ));
-        $this->parsers['ssl']->addSetting('key', array(
-            'path'        => 'key'
-        ));
-
-        $this->parsers['faviconfix'] = new ConfigParser(array(
-            'name'        => 'nginx_faviconfix',
-            'description' => 'nginx no favicon fix',
-            'version'     => '0.9',
-            'template'    => &$templates['faviconfix']
-        ));
         /*
          *          NGINX LOGFORMAT SCOPE PARSER
          * SCOPES WITH ITERATIVE PARENTS HAVE RELATIVE YML PATHS!
@@ -253,6 +122,22 @@ class Nginx extends ConfigScopes\Parser
         ));
         $this->parsers['logformat']->addSetting('format', array(
             'path'        => 'format'
+        ));
+
+        /*
+         *   NGINX SERVER SCOPE PARSER [ITERATIVE]
+         * ITERATIVE SCOPES HAVE RELATIVE YML PATHS!
+         */
+        $this->parsers['server'] = new ConfigParser(array(
+            'name'        => 'nginx_server',
+            'description' => 'nginx server',
+            'version'     => '0.9',
+            'template'    => &$templates['server']
+        ));
+
+        $this->parsers['server']->addSetting('comment', array(
+            'path'        => 'name_comment',
+            'action'      => 'StoreStringOrFalse'
         ));
 
 
@@ -276,20 +161,215 @@ class Nginx extends ConfigScopes\Parser
         ));
         */
 
-
         $this->parsers['listen']->addSetting('listen', array(
             'path'        => 'listen',
             'action'      => 'StoreStringOrFalse',
             'description' => 'listen (ip and/or port)'
         ));
-
         /*
-        $this->parsers['listen']->addSetting('listen_options', array(
-            'path'        => 'listen_options',
-            'action'      => 'StoreStringOrFalse',
-            'description' => 'listen options'
+         * this can be intelligent
+        $this->parsers['listen']->addSetting('ssl', array(
+            'path'        => 'ssl',
+            'action'      => 'StoreStringOrFalse'
         ));
         */
+
+        
+        $this->parsers['server']->addSetting('domain', array(
+            'path'        => 'domain',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('root', array(
+            'path'        => 'root',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('accesslog', array(
+            'path'        => 'accesslog',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('accesslogstyle', array(
+            'path'        => 'accesslogstyle',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('errorlog', array(
+            'path'        => 'errorlog',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('errorlogstyle', array(
+            'path'        => 'errorlogstyle',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('redirect', array(
+            'path'        => 'redirect',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('index', array(
+            'path'        => 'index',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('maxbodysize', array(
+            'path'        => 'maxbodysize',
+            'action'      => 'StoreStringOrFalse'
+            // eg. 1248m
+        ));
+
+
+        /*
+         *          NGINX SERVER/GZIP SCOPE PARSER
+         * SCOPES WITH ITERATIVE PARENTS HAVE RELATIVE YML PATHS!
+         */
+        $this->parsers['gzip'] = new ConfigParser(array(
+            'name'        => 'nginx_gzip',
+            'description' => 'nginx gzip',
+            'version'     => '0.9',
+            'template'    => &$templates['gzip']
+        ));
+        $this->parsers['gzip']->addSetting('gzip_disable', array(
+            'path'        => 'disable'
+        ));
+        $this->parsers['gzip']->addSetting('gzip_min', array(
+            'path'        => 'min'
+        ));
+        $this->parsers['gzip']->addSetting('gzip_comp_level', array(
+            'path'        => 'level',
+            'action'      => 'StoreInt',
+            'default'     => '6'
+        ));
+        $this->parsers['gzip']->addSetting('gzip_proxied', array(
+            'path'        => 'proxied'
+        ));
+        $this->parsers['gzip']->addSetting('gzip_buffers_num', array(
+            'path'        => 'buffers',
+            'action'      => 'StoreInt',
+            'default'     => '16'
+        ));
+        $this->parsers['gzip']->addSetting('gzip_buffers_size', array(
+            'path'        => 'buffer_size'
+        ));
+        $this->parsers['gzip']->addSetting('gzip_types', array(
+            'path'        => 'types'
+        ));
+        $this->parsers['gzip']->addSetting('gzip_vary', array(
+            'path'        => 'vary',
+            'action'      => 'StoreOnOff'
+        ));
+
+
+        $this->parsers['ssl'] = new ConfigParser(array(
+            'name'        => 'nginx_ssl',
+            'description' => 'nginx ssl',
+            'version'     => '0.9',
+            'template'    => &$templates['ssl']
+        ));
+        $this->parsers['ssl']->addSetting('cert', array(
+            'path'        => 'cert'
+        ));
+        $this->parsers['ssl']->addSetting('key', array(
+            'path'        => 'key'
+        ));
+        $this->parsers['ssl']->addSetting('timeout', array(
+            'path'        => 'timeout'
+        ));
+        $this->parsers['ssl']->addSetting('openssl_cipherlist_spec', array(
+            'path'        => 'cyphers'
+        ));
+        $this->parsers['ssl']->addSetting('protocols', array(
+            'path'        => 'protocols'
+        ));
+
+        $this->parsers['drop'] = new ConfigParser(array(
+            'name'        => 'nginx_drop',
+            'description' => 'nginx drop',
+            'version'     => '0.9',
+            'template'    => &$templates['drop']
+        ));
+        $this->parsers['staticexpire'] = new ConfigParser(array(
+            'name'        => 'nginx_staticexpire',
+            'description' => 'nginx staticexpire',
+            'version'     => '0.9',
+            'template'    => &$templates['staticexpire']
+        ));
+
+        $this->parsers['deny'] = new ConfigParser(array(
+            'name'        => 'nginx_deny',
+            'description' => 'nginx deny',
+            'template'    => &$templates['deny']
+        ));
+        $this->parsers['deny']->addSetting('deny', array(
+            'path'        => 'deny'
+            /**
+             *  location [[content]]
+             *  {
+             *      deny all;
+             *  }
+             */
+        ));
+
+
+        $this->parsers['server']->addSetting('parent', array(
+            'path'        => 'parent',
+            'action'      => 'StoreStringOrFalse'
+        ));
+
+        $this->parsers['server']->addSetting('filename', array(
+            'path'        => 'filename',
+            'action'      => 'StoreStringOrFalse'
+        ));
+
+
+
+        $this->parsers['server']->addSetting('ssl', array(
+            'path'        => 'support/ssl',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'ssl')
+        ));
+        $this->parsers['server']->addSetting('php', array(
+            'path'        => 'support/php',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'php')
+        ));
+        $this->parsers['server']->addSetting('deny', array(
+            'path'        => 'support/deny',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'deny', 'iterative' => true)
+        ));
+        $this->parsers['server']->addSetting('gzip', array(
+            'path'        => 'support/gzip',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'gzip')
+        ));
+        $this->parsers['server']->addSetting('drop', array(
+            'path'        => 'support/drop',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'drop')
+        ));
+        $this->parsers['server']->addSetting('staticexpire', array(
+            'path'        => 'support/staticexpire',
+            'action'      => 'StoreStemOrFalse',
+            'action_params' => array('template' => 'staticexpire')
+        ));
+
+
+
+        $this->parsers['php'] = new ConfigParser(array(
+            'name'        => 'nginx_php',
+            'description' => 'nginx php',
+            'version'     => '0.9',
+            'template'    => &$templates['php']
+        ));
+        $this->parsers['php']->addSetting('socket', array(
+            'path'        => 'socket'
+        ));
+        $this->parsers['php']->addSetting('index', array(
+            'path'        => 'index',
+            'description' => 'php index file'
+        ));
+        $this->parsers['php']->addSetting('https', array(
+            'path'        => 'ssl',
+            'action'      => 'StoreOnOff'
+        ));
+
+
         
         /*
          * COMMON 'CUSTOM' SETTING FOR INSERTING CUSTOM CODE

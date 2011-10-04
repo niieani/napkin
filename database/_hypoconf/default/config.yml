@@ -1,19 +1,30 @@
 nginx:
   user: www-data
-  group: grupa
-  connections: '8000'
-  multi_accept: '1'
+  group: www-data
+  connections: 4096
+  use: epoll
+  multi_accept: 1
   errorlog:
-    file: pliczek.log
-    style: styl-szmyl
-  use: drugi
-  sendfile: on
-  gzip:
-    gzip: '0'
-  max_body: '80'
+    file: '/var/log/nginx/error.log'
+    style: 'error'
+  sendfile: 1
+  nodelay: 1
+  katimeout: 60
   http:
     ignore_invalid_headers: on
-    tokens: prod
+    tokens: off
+    max_body: 1024m
   server:
     defaults:
-      listen: 1000
+      listen: 80
+      gzip:
+        vary: 1
+      index: index.html index.htm
+      drop: FIX_ME #TODO
+      staticexpire: FIX_ME #TODO
+      php: FIX_ME #TODO
+      simplerewrite: FIX_ME #TODO
+      support:
+        drop: on
+        gzip: on
+        staticexpire: on

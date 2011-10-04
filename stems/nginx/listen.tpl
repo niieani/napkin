@@ -1,1 +1,1 @@
-[[listen %(listen);]]
+[[listen %(listen)[[ %(ssl)]];]]

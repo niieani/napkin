@@ -57,7 +57,7 @@ class ConfigParser extends CommandLine
             $this->template = preg_replace('/@@(\w+)@@/', '${1}', $params['template']);
             //$this->template = preg_replace('/@!@(\w+)@!@/', '${1}', $this->template);
 
-            var_dump($this->template);
+            //var_dump($this->template);
             //$this->template = $params['template'];
         }
         if (isset($params['configuration'])) {

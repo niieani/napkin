@@ -8,22 +8,15 @@ events
 }
 http
 {
-    [[error_log %(errorlog)]][[ %(errorlogstyle);]]
-    [[include %(mimepath);]]
+    [[error_log %(errorlog)[[ %(errorlogstyle);]]]]
+    [[include %(mimeinclude);]]
     [[sendfile %(sendfile);]]
     [[tcp_nopush %(nopush);]]
     [[tcp_nodelay %(nodelay);]]
     [[keepalive_timeout %(keepalivetimeout);]]
+    [[ignore_invalid_headers %(ignore_invalid_headers);]]
     [[client_max_body_size %(max_body);]]
-
-    ## Gzip Compression
-    [[gzip %(gzip);]]
-    [[gzip_disable %(gzip_disable);]]
-    [[gzip_min_length %(gzip_min);]]
-    [[gzip_comp_level %(gzip_comp_level);]]
-    [[gzip_proxied %(gzip_proxied);]]
-    [[gzip_buffers %(gzip_buffers_num)s %(gzip_buffers_size)k;]]
-    [[gzip_types %(gzip_types);]]
+    [[server_tokens %(tokens);]]
 
     ## Log Format
     <<logformat>>
