@@ -205,6 +205,11 @@ class SettingsDB
         }
     }
 
+    /*
+     * TODO: whole logic of parsing multiple files should be extracted and put somewhere else
+     * we should hold all the file contents and merge/override them only when needed (on demand)
+     * this way we can do some nice dynamic things
+     */
     /**
      * @param string $file          path to a YAML file
      * @param string|bool $path     start the merge at designated settings path

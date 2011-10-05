@@ -137,7 +137,7 @@ class Nginx extends ConfigScopes\Parser
         ));
 
         $this->parsers['server']->addSetting('comment', array(
-            'path'        => 'name_comment',
+            'path'        => 'comment',
             'action'      => 'StoreStringOrFalse'
         ));
 
@@ -150,7 +150,8 @@ class Nginx extends ConfigScopes\Parser
             'name'        => 'nginx_listen',
             'description' => 'nginx listen',
             'version'     => '0.9',
-            'template'    => &$templates['listen']
+            'template'    => &$templates['listen'],
+            'foreignSettings' => array(array(2, 'support/ssl', 'ssl'))
         ));
         /*
         $this->parsers['listen']->addSetting('listen', array(
@@ -168,12 +169,14 @@ class Nginx extends ConfigScopes\Parser
             'description' => 'listen (ip and/or port)'
         ));
         /*
-         * this can be intelligent
+         * this is intelligent
+         */
         $this->parsers['listen']->addSetting('ssl', array(
             'path'        => 'ssl',
-            'action'      => 'StoreStringOrFalse'
+            'action'      => 'StoreOnOff',
+            'action_params' => array('onValue' => 'ssl', 'offValue' => ''),
+            'settable'    => false //TODO
         ));
-        */
 
         
         $this->parsers['server']->addSetting('domain', array(
@@ -185,19 +188,27 @@ class Nginx extends ConfigScopes\Parser
             'action'      => 'StoreStringOrFalse'
         ));
         $this->parsers['server']->addSetting('accesslog', array(
-            'path'        => 'accesslog',
+            'path'        => 'logs/accesslog',
             'action'      => 'StoreStringOrFalse'
         ));
-        $this->parsers['server']->addSetting('accesslogstyle', array(
-            'path'        => 'accesslogstyle',
+        $this->parsers['server']->addSetting('accesslogprefix', array(
+            'path'        => 'logs/accesslogprefix',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('accessstyle', array(
+            'path'        => 'logs/accessstyle',
             'action'      => 'StoreStringOrFalse'
         ));
         $this->parsers['server']->addSetting('errorlog', array(
-            'path'        => 'errorlog',
+            'path'        => 'logs/errorlog',
             'action'      => 'StoreStringOrFalse'
         ));
-        $this->parsers['server']->addSetting('errorlogstyle', array(
-            'path'        => 'errorlogstyle',
+        $this->parsers['server']->addSetting('errorlogprefix', array(
+            'path'        => 'logs/errorlogprefix',
+            'action'      => 'StoreStringOrFalse'
+        ));
+        $this->parsers['server']->addSetting('errorstyle', array(
+            'path'        => 'logs/errorstyle',
             'action'      => 'StoreStringOrFalse'
         ));
         $this->parsers['server']->addSetting('redirect', array(
@@ -370,7 +381,13 @@ class Nginx extends ConfigScopes\Parser
             'name'        => 'nginx_php',
             'description' => 'nginx php',
             'version'     => '0.9',
-            'template'    => &$templates['php']
+            'template'    => &$templates['php'],
+            'foreignSettings' => array(array(1, 'filename', 'filename'), array(1, 'support/ssl', 'ssl'))
+            //one level higher, filename // TODO: reimplement with ../../ paths
+            /* array content: how many level higher, name, localy available name */
+        ));
+        $this->parsers['php']->addSetting('socketprefix', array(
+            'path'        => 'socketprefix'
         ));
         $this->parsers['php']->addSetting('socket', array(
             'path'        => 'socket'
@@ -381,10 +398,13 @@ class Nginx extends ConfigScopes\Parser
         ));
         $this->parsers['php']->addSetting('https', array(
             'path'        => 'ssl',
-            'action'      => 'StoreOnOff'
+            'action'      => 'StoreOnOff',
+            'settable'    => false //TODO
         ));
-
-
+        $this->parsers['php']->addSetting('filename', array(
+            'path'        => 'filename',
+            'settable'    => false //TODO
+        ));
         
         /*
          * COMMON 'CUSTOM' SETTING FOR INSERTING CUSTOM CODE

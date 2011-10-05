@@ -16,6 +16,7 @@ class Setting extends Console\CommandLine\Option
     public $required_one = false;
     public $action = 'StoreStringOrFalse';
     public $divideBy = ' ';
+    public $settable = true;
     //public $default = false;
     
     // }}}

@@ -20,10 +20,9 @@ nginx:
       gzip:
         vary: 1
       index: index.html index.htm
-      drop: FIX_ME #TODO
-      staticexpire: FIX_ME #TODO
-      php: FIX_ME #TODO
-      simplerewrite: FIX_ME #TODO
+      logs:
+        errorstyle: main
+        accessstyle: main
       support:
         drop: on
         gzip: on

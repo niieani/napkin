@@ -7,7 +7,7 @@ namespace HypoConf\ConfigParser\Action;
 use PEAR2\Console\CommandLine;
 
 /**
- * Class that represent the StoreStringFalse action.
+ * Class that represent the StoreOnOff action.
  */
 class StoreOnOff extends CommandLine\Action
 {
@@ -23,10 +23,15 @@ class StoreOnOff extends CommandLine\Action
      */
     public function execute($value = -1, $params = array())
     {
+        if(!isset($params['onValue'])) $onValue = 'on';
+        else $onValue = $params['onValue'];
+        if(!isset($params['offValue'])) $offValue = 'off';
+        else $offValue = $params['offValue'];
+        
         if($value !== -1)
         {
-            if($value == true) $this->setResult('on');
-            if($value == false) $this->setResult('off');
+            if($value == true) $this->setResult($onValue);
+            elseif($value == false) $this->setResult($offValue);
         }
         else $this->setResult(false);
     }

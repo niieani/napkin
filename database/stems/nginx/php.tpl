@@ -31,8 +31,8 @@ location ~ \.php
     # Just to be safe, disable PHP pathinfo fix
     fastcgi_param PHP_ADMIN_VALUE     "cgi.fix_pathinfo=0";
 
+    [[fastcgi_pass unix:%(socketprefix)[[%(filename)]].sock;]]
     [[fastcgi_pass unix:%(socket);]]
-
 
     [[fastcgi_connect_timeout %(conntimeout);]]
     [[fastcgi_send_timeout %(sendtimeout);]]

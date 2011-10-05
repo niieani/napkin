@@ -62,7 +62,7 @@ class ArrayTools
         return $output;
     }
 
-    public static function accessArrayElementByPath(&$arr, $path = null, $checkEmpty = false, $emptyResponse = null) //$trimPath=0
+    public static function &accessArrayElementByPath(&$arr, $path = null, $checkEmpty = false, $emptyResponse = null) //$trimPath=0
     {
         // Check path
         if (!$path) user_error("Missing array path for array", E_USER_WARNING);
@@ -88,7 +88,7 @@ class ArrayTools
         return $path;
     }
     
-    public static function mergeArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0, $noOverride = false) //$trimPath=0
+    public static function &mergeArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0, $noOverride = false) //$trimPath=0
     {
         // Check path
         if (!$path) user_error("Missing array path for array", E_USER_WARNING);
@@ -116,7 +116,7 @@ class ArrayTools
         return $path;
     }
     
-    public static function replaceArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0)
+    public static function &replaceArrayElementByPath(&$arr, $path = null, $value = null, $skipN = 0)
     {
         // Check path
         if (!$path) user_error("Missing array path for array", E_USER_WARNING);
@@ -142,7 +142,7 @@ class ArrayTools
         return $path;
     }
     
-    public static function unsetArrayElementByPath(&$arr, $path = null, $skipN = 0)
+    public static function &unsetArrayElementByPath(&$arr, $path = null, $skipN = 0)
     {
         // Check path
         if (!$path) user_error("Missing array path for array", E_USER_WARNING);

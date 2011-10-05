@@ -13,7 +13,8 @@ class ConfigParser extends CommandLine
 {
     public $template;
     public $configuration = array();
-    
+    public $foreignSettings = array();
+
     /**
      * Array of options that must be dispatched at the end.
      *
@@ -56,12 +57,12 @@ class ConfigParser extends CommandLine
             // cutting out the @@ from the dynamically loaded elements
             $this->template = preg_replace('/@@(\w+)@@/', '${1}', $params['template']);
             //$this->template = preg_replace('/@!@(\w+)@!@/', '${1}', $this->template);
-
-            //var_dump($this->template);
-            //$this->template = $params['template'];
         }
         if (isset($params['configuration'])) {
             $this->configuration = $params['configuration'];
+        }
+        if (isset($params['foreignSettings'])) {
+            $this->foreignSettings = $params['foreignSettings'];
         }
         
         //parent::__construct();
@@ -73,7 +74,59 @@ class ConfigParser extends CommandLine
         $this->outputter        = new CommandLine\Outputter_Default();
         $this->message_provider = new CommandLine\MessageProvider_Default();
     }
-    
+
+    public function loadConfiguration(&$configuration, $path = null, $iterativeScope = null)
+    {
+        if(!is_array($configuration)) $configuration = (array) $configuration;
+        if(!empty($configuration))
+        {
+            LogCLI::MessageResult("Mapping configuration to: ".LogCLI::BLUE."$path".LogCLI::RESET, LogCLI::INFO);
+            $this->configuration = empty($path) ? $configuration : ArrayTools::accessArrayElementByPath($configuration, $path);
+            /*
+            if(!empty($iterativeScope) && !ArrayTools::isIterativeScope($this->configuration))
+            {
+                LogCLI::MessageResult('Non-iterative format, translating...', LogCLI::INFO);
+                $this->configuration = ArrayTools::translateToIterativeScope($iterativeScope, $this->configuration);
+            }
+            */
+
+            if(!empty($this->foreignSettings))
+            {
+                foreach($this->foreignSettings as $foreignSetting)
+                {
+                    $foreignPath = StringTools::DropLastBit($path, $foreignSetting[0]); //.'/'.$foreignSetting[1]
+                    $foreignValue = ArrayTools::accessArrayElementByPath(&$configuration, $foreignPath.'/'.$foreignSetting[1]);
+                    $this->configuration[$foreignSetting[2]] = $foreignValue;
+                }
+            }
+            return $this->configuration;
+        }
+        return false;
+        //return $this->configuration = self::makeConfiguration(&$configuration, $path, $iterativeScope);
+    }
+
+    /*
+    public static function makeConfiguration(&$configuration, $path = null, $iterativeScope = null)
+    {
+        if(is_array($configuration) && !empty($configuration))
+        {
+            $outConfiguration = empty($path) ? $configuration : ArrayTools::accessArrayElementByPath($configuration, $path);
+            if(!empty($iterativeScope) && !ArrayTools::isIterativeScope($outConfiguration))
+            {
+                LogCLI::MessageResult('Non-iterative format, translating...', LogCLI::INFO);
+                $outConfiguration = ArrayTools::translateToIterativeScope($iterativeScope, $outConfiguration);
+            }
+            return $outConfiguration;
+        }
+        return false;
+    }
+    */
+
+    public function getParsed()
+    {
+        return trim($this->parse()->parsed);
+    }
+
     // }}}
     // addSetting() {{{
     
@@ -114,6 +167,8 @@ class ConfigParser extends CommandLine
         $result = new CommandLine\Result();
         
         $output = null;
+
+        //TODO: checking for is_array probably not required anymore
         if(is_array($this->configuration))
         {
             /*

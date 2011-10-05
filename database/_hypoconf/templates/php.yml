@@ -1,6 +1,9 @@
 support:
   php: on
 php:
-  socket: /var/run/php.sock
+  socketprefix: /var/run/php-
 index: index.html index.htm index.php
+logs:
+  errorlogprefix: /var/log/nginx-
+  accesslogprefix: /var/log/nginx-
 template: true

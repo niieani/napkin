@@ -2,15 +2,14 @@
 server[[ #%(comment)]]
 {
     <!<listen>!>
-
     [[server_name %(domain);]]
 
     [[root %(root);]]
 
     [[access_log %(accesslog)[[ %(accesslogstyle)]];]]
     [[error_log %(errorlog)[[ %(errorlogstyle)]];]]
-    [[access_log /var/log/nginx/%(filename).access.log main;]]
-    [[error_log /var/log/nginx/%(filename).error.log main;]]
+    [[access_log %(accesslogprefix)%(filename).access.log[[ %(accesslogstyle)]];]]
+    [[error_log %(errorlogprefix)%(filename).error.log[[ %(accesslogstyle)]];]]
 
     [[rewrite ^ %(redirect)$uri permanent;]]
 
