@@ -4,6 +4,6 @@ php:
   socketprefix: /var/run/php-
 index: index.html index.htm index.php
 logs:
-  errorlogprefix: /var/log/nginx-
-  accesslogprefix: /var/log/nginx-
+  errorlogprefix: /var/log/nginx/
+  accesslogprefix: /var/log/nginx/
 template: true

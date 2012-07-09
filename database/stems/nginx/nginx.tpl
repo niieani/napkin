@@ -18,6 +18,9 @@ http
     [[client_max_body_size %(max_body);]]
     [[server_tokens %(tokens);]]
 
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
     ## Log Format
     <<logformat>>
 

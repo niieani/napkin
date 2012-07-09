@@ -1,12 +1,12 @@
 [submodule "submodules/PEAR2_Console_Color"]
 	path = submodules/PEAR2_Console_Color
-	url = https://github.com/pear2/PEAR2_Console_Color.git
+	url = https://github.com/pear2/Console_Color.git
 [submodule "submodules/PEAR2_Console_CommandLine"]
 	path = submodules/PEAR2_Console_CommandLine
-	url = https://github.com/pear2/PEAR2_Console_CommandLine.git
+	url = https://github.com/pear2/Console_CommandLine.git
 [submodule "submodules/PEAR2_Exception"]
 	path = submodules/PEAR2_Exception
-	url = https://github.com/pear2/PEAR2_Exception.git
+	url = https://github.com/pear2/Exception.git
 [submodule "vendor/Symfony/Component/Console"]
 	path = vendor/Symfony/Component/Console
 	url = https://github.com/symfony/Console.git
