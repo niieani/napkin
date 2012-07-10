@@ -214,7 +214,17 @@ class StringTools
         return $pos;
     }
     */
-    
+
+    function removeNewLines($content)
+    {
+        $output = null;
+        foreach(preg_split("/(\r?\n)/", $content) as $line)
+        {
+            $output .= $line;
+        }
+        return $output;
+    }
+
     /**
      * version of sprintf for cases where named arguments are desired (python syntax)
      *
