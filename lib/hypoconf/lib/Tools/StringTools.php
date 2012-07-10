@@ -220,7 +220,7 @@ class StringTools
         $output = null;
         foreach(preg_split("/(\r?\n)/", $content) as $line)
         {
-            if($cleanEverythingAfter != null)
+            if($cleanEverythingAfter !== false)
             {
                 if(FALSE !== ($pos = strpos($line, $cleanEverythingAfter)))
                     $line = substr($line, 0, $pos);

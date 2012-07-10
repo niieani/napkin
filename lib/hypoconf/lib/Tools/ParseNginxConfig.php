@@ -13,7 +13,7 @@ class ParseNginxConfig
 {
     public static function doParse($toFormat)
     {
-        $toFormat = StringTools::removeNewLines($toFormat);
+        $toFormat = StringTools::removeNewLines($toFormat, true, false);
         return SuperStack::StackUp($toFormat, '{', '}');
     }
 }
