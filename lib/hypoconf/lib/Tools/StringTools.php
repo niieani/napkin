@@ -215,11 +215,17 @@ class StringTools
     }
     */
 
-    public static function removeNewLines($content)
+    public static function removeNewLines($content, $cleanSpaces = true, $cleanEverythingAfter = '#')
     {
         $output = null;
         foreach(preg_split("/(\r?\n)/", $content) as $line)
         {
+            if($cleanEverythingAfter != null)
+            {
+                if(FALSE !== ($pos = strpos($line, $cleanEverythingAfter)))
+                    $line = substr($line, 0, $pos);
+            }
+            if($cleanSpaces === true) $line = trim($line);
             $output .= $line;
         }
         return $output;
