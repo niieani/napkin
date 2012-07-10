@@ -215,7 +215,7 @@ class StringTools
     }
     */
 
-    function removeNewLines($content)
+    public static function removeNewLines($content)
     {
         $output = null;
         foreach(preg_split("/(\r?\n)/", $content) as $line)
