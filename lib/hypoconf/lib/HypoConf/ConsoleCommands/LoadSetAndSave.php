@@ -96,7 +96,7 @@ class LoadSetAndSave extends Console\Command\Command
 
                     LogCLI::MessageResult('Path of the setting: '.$settingPath, 4, LogCLI::INFO);
 
-                    if ($path = SettingsDB::findPathForSetting(&$settings, $settingPath, $basicScope))
+                    if ($path = SettingsDB::findPathForSetting($settings, $settingPath, $basicScope))
                     {
                         $settingsDB = new ConfigScopes\SettingsDB();
 

@@ -95,7 +95,7 @@ class ConfigParser extends CommandLine
                 foreach($this->foreignSettings as $foreignSetting)
                 {
                     $foreignPath = StringTools::DropLastBit($path, $foreignSetting[0]); //.'/'.$foreignSetting[1]
-                    $foreignValue = ArrayTools::accessArrayElementByPath(&$configuration, $foreignPath.'/'.$foreignSetting[1]);
+                    $foreignValue = ArrayTools::accessArrayElementByPath($configuration, $foreignPath.'/'.$foreignSetting[1]);
                     $this->configuration[$foreignSetting[2]] = $foreignValue;
                 }
             }
@@ -248,7 +248,7 @@ class ConfigParser extends CommandLine
                  *  If we got an array, how do we divide it?
                  *  By default by ' ' (space), but sometimes we want eg. PHP_EOL, or comma.
                  */
-                $value = StringTools::makeList(&$setting, $option->divideBy);
+                $value = StringTools::makeList($setting, $option->divideBy);
 
                 $this->_dispatchAction($option, $value, $result);
             }

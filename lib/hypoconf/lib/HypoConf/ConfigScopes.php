@@ -107,7 +107,7 @@ class ConfigScopes
             $scope = StringTools::ReturnLastBit($path);
             if(isset($this->settingsList[$scope]))
             {
-                ArrayTools::mergeArrayElementByPath(&$settingsInPaths, $path, $this->settingsList[$scope]);
+                ArrayTools::mergeArrayElementByPath($settingsInPaths, $path, $this->settingsList[$scope]);
                 //var_dump($this->settingsList[$scope]);
             }
             else
@@ -279,7 +279,7 @@ class ConfigScopes
                 if($parentIterative === true)
                 {
                     $path = $scope.'/'.$match;
-                    if(!$this->parsers[$match]->loadConfiguration(&$this->config, $path))
+                    if(!$this->parsers[$match]->loadConfiguration($this->config, $path))
                     {
                         LogCLI::MessageResult('No configuration data for: '.LogCLI::BLUE.$scope.LogCLI::RESET, LogCLI::INFO);
                     }
@@ -292,7 +292,7 @@ class ConfigScopes
                 }
                 elseif(!isset($this->results[$match]))
                 {
-                    $this->parsers[$match]->loadConfiguration(&$this->config, $match);
+                    $this->parsers[$match]->loadConfiguration($this->config, $match);
 
                     LogCLI::Message("Ordering parsing of: ".LogCLI::BLUE.$match.LogCLI::RESET." at depth = $depth", 3);
                     LogCLI::MessageResult('Parent scope is not iterative: '.LogCLI::BLUE.$scope.LogCLI::RESET, LogCLI::INFO);
@@ -325,7 +325,7 @@ class ConfigScopes
                  */
 
                 //$currentConfig = $this->parsers[$match]->loadConfiguration(&$this->config, $path, $match);
-                $currentConfig =& ArrayTools::accessArrayElementByPath(&$this->config, $path);
+                $currentConfig =& ArrayTools::accessArrayElementByPath($this->config, $path);
                 //$parentConfig = ArrayTools::accessArrayElementByPath(&$this->config, $fullScopePath);
 
                 // translation:
@@ -344,7 +344,7 @@ class ConfigScopes
 
                     $iterativePath = "${fullScopePath}/${match}/${id}";
 
-                    $this->parsers[$match]->loadConfiguration(&$this->config, $iterativePath);
+                    $this->parsers[$match]->loadConfiguration($this->config, $iterativePath);
                     // at this moment it's still the same configuration, just cut out
 
                     $this->results[$iterativePath] = $this->parsers[$match]->getParsed();
@@ -378,7 +378,7 @@ class ConfigScopes
         
         if($depth == 1)
         {
-            $this->parsers[$scope]->loadConfiguration(&$this->config, $scope);
+            $this->parsers[$scope]->loadConfiguration($this->config, $scope);
             $this->results[$scope] = $this->parsers[$scope]->getParsed();
             $all_matches = array_merge_recursive($matches, $matchesIterative);
             if(!empty($all_matches['name']))

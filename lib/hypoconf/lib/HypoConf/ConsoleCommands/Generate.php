@@ -74,7 +74,7 @@ class Generate extends Console\Command\Command
 
         //var_dump($settingsDB->DB);
         
-        ApplicationsDB::LoadConfig(&$settingsDB->DB);
+        ApplicationsDB::LoadConfig($settingsDB->DB);
 
         $parsedFile = $configScopes->parseTemplateRecursively($application);
 //        echo PHP_EOL.$parsedFile;

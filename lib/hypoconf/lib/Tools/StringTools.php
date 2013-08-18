@@ -102,7 +102,7 @@ class StringTools
      * @param string $delimiter
      * @return string
      */
-    public static function makeList($array, $delimiter = ' ')
+    public static function makeList(&$array, $delimiter = ' ')
     {
         return is_array($array) ? implode($delimiter, $array) : $array;
 //        if(is_array($array)) return implode($delimiter, $array);
