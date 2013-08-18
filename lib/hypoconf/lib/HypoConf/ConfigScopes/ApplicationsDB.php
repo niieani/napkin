@@ -65,7 +65,7 @@ class ApplicationsDB
         self::$DB[$application]['parserInstance'] = new $className(self::$DB[$application]['templates']);
         self::$DB[$application]['parsers'] = self::$DB[$application]['parserInstance']->GetSubParsers();
         
-        self::$DB[$application]['scopesInstance'] = new HypoConf\ConfigScopes(&self::$DB[$application]['parsers'], &self::$DB[$application]['templates']);
+        self::$DB[$application]['scopesInstance'] = new HypoConf\ConfigScopes(self::$DB[$application]['parsers'], self::$DB[$application]['templates']);
         self::$DB[$application]['scopesInstance']->rootscope = $application;
         
         return self::$DB[$application]['scopesInstance'];

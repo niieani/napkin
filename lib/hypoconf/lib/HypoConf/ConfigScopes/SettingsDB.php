@@ -49,10 +49,10 @@ class SettingsDB
             $parent = $path;
         }
 
-        $parentConfig = ArrayTools::accessArrayElementByPath(&$setting, $parent);
+        $parentConfig = ArrayTools::accessArrayElementByPath($setting, $parent);
 
         if($directDefinition === false)
-            $thisDefault = ArrayTools::accessArrayElementByPath(&$defaultsDefinitions, $parent);
+            $thisDefault = ArrayTools::accessArrayElementByPath($defaultsDefinitions, $parent);
         else
             $thisDefault = &$defaultsDefinitions;
 
@@ -115,7 +115,7 @@ class SettingsDB
      *
      * @return int                number of iteration of the newly merged/added element
      */
-    public function mergeOneIterativeByPath($path, $setting)
+    public function mergeOneIterativeByPath($path, &$setting)
     {
         return end(array_keys(ArrayTools::mergeArrayElementByPath($this->DB, $path, array($setting), 0, true))); //do not override, iterative element!
         //return number of iteration
@@ -123,7 +123,7 @@ class SettingsDB
 
     public function mergeFromArray(array $settingsArray, $applyDefaults = false, $mergeDefaults = true, $path = 'defaults')
     {
-        if($mergeDefaults === true) $this->mergeDefinitionsDB($settingsArray, &$this->defaultsDefinitions, $applyDefaults, $path);
+        if($mergeDefaults === true) $this->mergeDefinitionsDB($settingsArray, $this->defaultsDefinitions, $applyDefaults, $path);
         $this->DB = ArrayTools::MergeArrays($this->DB, $settingsArray);
     }
     
@@ -161,7 +161,7 @@ class SettingsDB
                 LogCLI::MessageResult('Copying to definitions storage: '.LogCLI::BLUE.$definitionsPath.LogCLI::RESET, 5, LogCLI::INFO);
 
                 // let's copy all the definitions and merge them, overriding any previously set settings in this instance
-                ArrayTools::mergeArrayElementByPath(&$definitions, $definitionsPath, ArrayTools::accessArrayElementByPath($settingsArray, $definitionsPath), 0);
+                ArrayTools::mergeArrayElementByPath($definitions, $definitionsPath, ArrayTools::accessArrayElementByPath($settingsArray, $definitionsPath), 0);
 
                 // remove the defaults, they are not needed anymore, we have them in a separated array
                 $this->removeByPath($definitionsPath);
@@ -169,7 +169,7 @@ class SettingsDB
                 // optionally apply them to all elements
                 if($applyDefaults === true)
                 {
-                    $this->applyDefaults(&$this->DB, &$definitions, $definitionsPath, $path, false, true);
+                    $this->applyDefaults($this->DB, $definitions, $definitionsPath, $path, false, true);
                 }
             }
         }
@@ -177,7 +177,7 @@ class SettingsDB
 
     public static function findPathForSetting(&$settings, $settingPath, $basicScope = false)
     {
-        $searchResults = ArrayTools::TraverseTreeWithPath(&$settings, $settingPath);
+        $searchResults = ArrayTools::TraverseTreeWithPath($settings, $settingPath);
         if(empty($searchResults))
         {
             LogCLI::MessageResult(LogCLI::YELLOW.'Sorry, no settings found for: '.LogCLI::BLUE.$settingPath.LogCLI::RESET, 0, LogCLI::INFO);
@@ -196,7 +196,7 @@ class SettingsDB
                     $path = StringTools::DropLastBit($path, -1);
             }
 
-            $parent = ArrayTools::accessArrayElementByPath(&$settings, StringTools::DropLastBit($searchResults['best']));
+            $parent = ArrayTools::accessArrayElementByPath($settings, StringTools::DropLastBit($searchResults['best']));
             if(isset($parent['iterative']))
                 $path = StringTools::DropLastBit($path, -1);
 
@@ -237,7 +237,7 @@ class SettingsDB
                     if($path === false)
                     {
                         $this->DB = ArrayTools::MergeArrays($this->DB, $config);
-                        if($mergeDefaults === true) $this->mergeDefinitionsDB($config, &$this->defaultsDefinitions, $applyDefaults, 'defaults');
+                        if($mergeDefaults === true) $this->mergeDefinitionsDB($config, $this->defaultsDefinitions, $applyDefaults, 'defaults');
                     }
                     else
                     {
@@ -249,7 +249,7 @@ class SettingsDB
                         }
                         if(!isset($config['template']) && (!isset($config['disabled']) || $config['disabled'] == false))
                         {
-                            $iteration = $this->mergeOneIterativeByPath($path, &$config);
+                            $iteration = $this->mergeOneIterativeByPath($path, $config);
                             //var_dump($this->defaultsDefinitions);
 
                             /**
@@ -274,9 +274,9 @@ class SettingsDB
                                             {
                                                 $parentConfig = array('parent' => Yaml::parse($parentFile));
                                                 $this->parentDefinitions[$parentFile] = array();
-                                                $this->mergeDefinitionsDB($parentConfig, &$this->parentDefinitions[$parentFile], false, 'parent');
+                                                $this->mergeDefinitionsDB($parentConfig, $this->parentDefinitions[$parentFile], false, 'parent');
                                             }
-                                            $this->applyDefaults(&$this->DB, &$this->parentDefinitions[$parentFile], $path.'/'.$iteration, 'parent', true, false);
+                                            $this->applyDefaults($this->DB, $this->parentDefinitions[$parentFile], $path.'/'.$iteration, 'parent', true, false);
                                             LogCLI::Result(LogCLI::OK);
                                         }
                                         //var_dump($this->parentDefinitions);
@@ -284,7 +284,7 @@ class SettingsDB
                                 }
                             }
 
-                            if($applyDefaults === true) $this->applyDefaults(&$this->DB, &$this->defaultsDefinitions, $path.'/'.$iteration, 'defaults', false, false);
+                            if($applyDefaults === true) $this->applyDefaults($this->DB, $this->defaultsDefinitions, $path.'/'.$iteration, 'defaults', false, false);
                         }
                     }
 

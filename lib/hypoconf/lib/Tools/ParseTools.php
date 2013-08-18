@@ -35,18 +35,20 @@ class ParseTools
         return StringTools::rimplode(null, $parsed);
     }
 
-    public static function parseArray(array $formatArray, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/', $ifNoMatchReturnFalse = true)
+    public static function parseArray(array &$formatArray, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/', $ifNoMatchReturnFalse = true)
     {
-        return current(self::parseRecursive(array($formatArray), &$args, $pattern, $ifNoMatchReturnFalse));
+        $parsingContext = array(&$formatArray);
+        return current(self::parseRecursive($parsingContext, $args, $pattern, $ifNoMatchReturnFalse));
     }
 
-    public static function parseRecursive(array $formatArray, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/', $ifNoMatchReturnFalse = true)
+    public static function parseRecursive(array &$formatArray, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/', $ifNoMatchReturnFalse = true)
     {
         foreach($formatArray as $id => &$format)
         {
             if(is_array($format))
             {
-                $returnValue = self::parseRecursive(&$format, &$args, $pattern, $ifNoMatchReturnFalse);
+                $returnValue = self::parseRecursive($format, $args, $pattern, $ifNoMatchReturnFalse);
+#                $returnValue = self::parseRecursive(&$format, &$args, $pattern, $ifNoMatchReturnFalse);
                 if(is_array($returnValue) && array_key_exists('unset', $returnValue))
                 {
                     unset($format[$returnValue['unset']]);
@@ -58,7 +60,8 @@ class ParseTools
             }
             else
             {
-                if(self::parse(&$format, &$args, $pattern, $ifNoMatchReturnFalse) === false)
+                // $format was &$format
+                if(self::parse($format, $args, $pattern, $ifNoMatchReturnFalse) === false)
                 {
                     return false;
                 }
@@ -67,7 +70,7 @@ class ParseTools
         return $formatArray;
     }
 
-    public static function parse($format, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/', $ifNoMatchReturnFalse = true)
+    public static function parse(&$format, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/', $ifNoMatchReturnFalse = true)
     {
         preg_match_all($pattern, $format, $matches, PREG_SET_ORDER);
         foreach($matches as $match)

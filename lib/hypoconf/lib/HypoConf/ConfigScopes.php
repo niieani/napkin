@@ -29,7 +29,7 @@ class ConfigScopes
     protected $templateTree = array();
     protected $pathsList = array();
     
-    public function __construct(array $parsers, array $templates, array $config = null)
+    public function __construct(array &$parsers, array &$templates, array $config = null)
     {
         $this->templates = $templates;
         $this->parsers = $parsers;
