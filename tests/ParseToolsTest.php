@@ -124,7 +124,7 @@ function r_implode( $glue, $pieces )
 
 function parseArray(array $formatArray, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/')
 {
-    return current(parseRecursive(array($formatArray), &$args, $pattern));
+    return current(parseRecursive(array($formatArray), $args, $pattern));
 }
 
 function parseRecursive(array $formatArray, array &$args, $pattern = '/%\(([a-zA-Z_]\w*)\)/')
@@ -133,7 +133,7 @@ function parseRecursive(array $formatArray, array &$args, $pattern = '/%\(([a-zA
     {
         if(is_array($format))
         {
-            $returnValue = parseRecursive(&$format, &$args, $pattern);
+            $returnValue = parseRecursive($format, $args, $pattern);
             if(is_array($returnValue) && array_key_exists('unset', $returnValue))
             {
                 unset($format[$returnValue['unset']]);

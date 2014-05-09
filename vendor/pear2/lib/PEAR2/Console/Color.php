@@ -1,1 +1,1 @@
-../../../../../submodules/PEAR2_Console_Color/src/Console/Color.php
+../../../../../submodules/PEAR2_Console_Color/src/PEAR2/Console/Color.php
