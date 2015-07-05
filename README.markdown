@@ -3,6 +3,11 @@ napkin
 
 napkin /*napkin*/ - **n**ginx **a**nd **P**HP (**k**)configuration **i**s **n**eat
 
+In short
+------
+
+A unique and advanced, yet simple-to-use tool that manages configuration files through Linux command line. Originally designed for generating nginx and PHP-FPM configuration files, but with an universal core that can be adapted to suit any configuration file.
+
 A little about the project
 ------
 
